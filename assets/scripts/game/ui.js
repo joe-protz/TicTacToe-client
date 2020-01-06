@@ -15,6 +15,7 @@ const resetBoard = function () {
     box.removeClass('clicked').text('')
   })
   $('#messages').text('')
+  $('.warnings').text('')
   $('#currentTurn').text('Current player is X')
 }
 module.exports = {

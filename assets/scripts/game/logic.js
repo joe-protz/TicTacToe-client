@@ -7,14 +7,20 @@ let gameOver = false
 const onAttemptTurn = function (event) {
   if (!gameOver) {
     if (!($(`#${this.id}`).hasClass('clicked'))) { // if the spot on the board does not have the class clicked ,  add the move to the board and add the class to the spot
+      $('.warnings').text('')
       $(`#${this.id}`).text(store.currentTurn).addClass('clicked')
       occupiedSpots[this.id.slice(3)] = store.currentTurn // add the move to the occupiedSpots array
       if (checkWin()) {
         ui.displayWinner(store.currentTurn)
       }
       ui.updatePlayer()
-
     }
+    else{
+        $('.warnings').text('Please click an open space')
+    }
+  }
+  else {
+    $('.warnings').text('Please click reset!')
   }
 }
 
@@ -36,7 +42,7 @@ const checkWin = function () {
 const gameReset = function () {
   store.currentTurn = 'X'
   gameOver = false
-  occupiedSpots = occupiedSpots.map(slot => '')
+  occupiedSpots = new Array(9)
   ui.resetBoard()
 
 }
