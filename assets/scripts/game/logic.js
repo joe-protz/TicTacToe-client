@@ -1,18 +1,19 @@
 const ui = require('./ui')
-let currentTurn = 'x'
-const occupiedSpots = new Array(9)
+const store = require('../store')
+
+let occupiedSpots = new Array(9)
 let gameOver = false
 
 const onAttemptTurn = function (event) {
   if (!gameOver) {
     if (!($(`#${this.id}`).hasClass('clicked'))) { // if the spot on the board does not have the class clicked ,  add the move to the board and add the class to the spot
-      $(`#${this.id}`).text(currentTurn).addClass('clicked')
-      occupiedSpots[this.id.slice(3)] = currentTurn // add the move to the occupiedSpots array
+      $(`#${this.id}`).text(store.currentTurn).addClass('clicked')
+      occupiedSpots[this.id.slice(3)] = store.currentTurn // add the move to the occupiedSpots array
       if (checkWin()) {
-        ui.displayWinner(currentTurn)
+        ui.displayWinner(store.currentTurn)
       }
-      // ui.updatePlayer()
-      currentTurn === 'x' ? currentTurn = 'o' : currentTurn = 'x'
+      ui.updatePlayer()
+
     }
   }
 }
@@ -24,14 +25,22 @@ const checkWin = function () {
     [0, 3, 6], [1, 4, 7], [2, 5, 8], // vertical
     [0, 4, 8], [2, 4, 6]]// diagonal
   for (const condition of winConditions) {
-    if (occupiedSpots[condition[0]] === currentTurn && occupiedSpots[condition[1]] === currentTurn && occupiedSpots[condition[2]] === currentTurn) {
+    if (occupiedSpots[condition[0]] === store.currentTurn && occupiedSpots[condition[1]] === store.currentTurn && occupiedSpots[condition[2]] === store.currentTurn) {
       won = true
       gameOver = true
     }
   }
   return won
 }
+
+const gameReset = function () {
+  store.currentTurn = 'X'
+  gameOver = false
+  occupiedSpots = occupiedSpots.map(slot => '')
+  ui.resetBoard()
+
+}
 module.exports = {
   onAttemptTurn,
-  currentTurn
+  gameReset
 }

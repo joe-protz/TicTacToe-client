@@ -1,15 +1,24 @@
-const logic = require('./logic')
-
+const store = require('../store')
+console.log(store.currentTurn)
 const displayWinner = function (currentTurn) {
  $('#messages').text(currentTurn.toUpperCase() + ' is the winner!!')
 }
 
 
 const updatePlayer = function () {
-  logic.currentTurn === 'x' ? logic.currentTurn = 'o' : logic.currentTurn = 'x'
+  store.currentTurn === 'X' ? store.currentTurn = 'O' : store.currentTurn = 'X'
+  $('#currentTurn').text((`Current player is ${store.currentTurn}`))
+}
 
+const resetBoard = function () {
+  store.boxes.forEach(box => {
+    box.removeClass('clicked').text('')
+  })
+  $('#messages').text('')
+  $('#currentTurn').text('Current player is X')
 }
 module.exports = {
   displayWinner,
-  updatePlayer
+  updatePlayer,
+  resetBoard
 }
