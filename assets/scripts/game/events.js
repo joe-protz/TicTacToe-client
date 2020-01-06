@@ -1,5 +1,6 @@
 const onAttemptTurn = function (event) {
-  console.log(event.target)
+  console.log(this.id)
+  $(`#box${this.id.slice(3)}`).text(this.id.slice(3))
 }
 
 
