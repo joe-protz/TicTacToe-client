@@ -13,7 +13,7 @@ const onAttemptTurn = function (event) {
       if (checkWin()) {
         ui.displayWinner(store.currentTurn)
       }
-      ui.updatePlayer()
+      ui.updatePlayer() // this updates both the variable as well as the ui
     }
     else{
         $('.warnings').text('Please click an open space')
