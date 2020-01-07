@@ -1,7 +1,7 @@
 @import '~bootstrap/scss/bootstrap';
 @import 'variables';
 body{
-  background: rgb(37, 35, 37);
+  background: scale-color(#157AF6,$lightness:80%);
   color: #157AF6;
 }//TODO: add colors to variables.scss
 
