@@ -2,6 +2,7 @@
 
 const store = {
   currentTurn: 'X',
+  gameOver: false,
   boxes: [
     $('#box0'),
     $('#box1'),

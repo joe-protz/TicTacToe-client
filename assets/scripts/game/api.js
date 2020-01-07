@@ -26,7 +26,8 @@ const updateGame = function () {
           "index": store.currentIndex,
           "value": store.currentTurn
         },
-        "over": false
+        "over": store.gameOver
+
       }
 }
   })

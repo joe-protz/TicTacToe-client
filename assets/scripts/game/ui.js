@@ -23,13 +23,11 @@ const showGame = function () {
   $('#play').show()
   $('#currentTurn').show()
 }
-const updateGameSuccess = function () {
-console.log('you updated a game bitch!')
-
+const updateGameSuccess = function (response) {
+  console.log(response)
 }
 const updateGameFail = function () {
-console.log('you did not updated a game bitch!')
-
+  $('.warnings').text('Sorry, your game file could not be updated')
 }
 
 module.exports = {

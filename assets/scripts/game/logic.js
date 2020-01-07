@@ -11,6 +11,10 @@ const onCreateGame = function () {
     .then(gameCreate)
     .catch()//ADD A CATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+    // Added the ability to update the current game within the API . Haven't
+    // yet updated API with whether the game is over, and the game needs
+    // to stop you from playing if the update is unsuccessful.
+
 }
 
 const onAttemptTurn = function (event) {
@@ -20,18 +24,24 @@ const onAttemptTurn = function (event) {
       $(`#${this.id}`).text(store.currentTurn).addClass('clicked')
       occupiedSpots[this.id.slice(3)] = store.currentTurn // add the move to the occupiedSpots array
       store.currentIndex = this.id.slice(3)
-      console.log('current index is '+ store.currentIndex)
-      console.log('current game id is' + store.game.id)
       api.updateGame()
         .then(ui.updateGameSuccess)
         .catch(ui.updateGameFail)
 
       if (checkWin()) {
         ui.displayWinner(store.currentTurn)
+        api.updateGame()
+          .then(ui.updateGameSuccess)
+          .catch(ui.updateGameFail)
       }
       ui.updatePlayer() // this updates both the variable as well as the ui
       if (checkforTie(occupiedSpots)) {
         $('#messages').text('Its a tie! Please click create game to play again')
+        gameOver = true
+        store.gameOver = true
+        api.updateGame()
+          .then(ui.updateGameSuccess)
+          .catch(ui.updateGameFail)
       }
     } else {
       $('.warnings').text('Please click an open space')
@@ -51,6 +61,7 @@ const checkWin = function () {
     if (occupiedSpots[condition[0]] === store.currentTurn && occupiedSpots[condition[1]] === store.currentTurn && occupiedSpots[condition[2]] === store.currentTurn) {
       won = true
       gameOver = true
+      store.gameOver = true
     }
   }
   return won
