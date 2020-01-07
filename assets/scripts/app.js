@@ -1,8 +1,11 @@
 'use strict'
-const events = require('./game/events')
+const gameEvents = require('./game/events')
+const authEvents = require('./auth/events')
 
 $(() => {
-  events.addHandlers()
   $('.gameBoard').hide()
   $('#currentTurn').hide()
+  gameEvents.addHandlers()
+  authEvents.addHandlers()
+
 })
