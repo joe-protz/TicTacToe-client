@@ -24,10 +24,13 @@ const showGame = function () {
   $('#currentTurn').show()
 }
 const updateGameSuccess = function (response) {
-  console.log(response)
+  //TODO: Rethink logic, can we make it so we can only make a move AFTER the game is updated????
 }
 const updateGameFail = function () {
   $('.warnings').text('Sorry, your game file could not be updated')
+}
+const createGameFail = function () {
+  $('.warnings').text('Sorry, your game could not be created')
 }
 
 module.exports = {
@@ -36,5 +39,6 @@ module.exports = {
   resetBoard,
   showGame,
   updateGameSuccess,
-  updateGameFail
+  updateGameFail,
+  createGameFail
 }

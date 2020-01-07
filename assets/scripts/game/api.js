@@ -21,17 +21,16 @@ const updateGame = function () {
       Authorization: 'Token token=' + store.user.token
     },
     data: {
-      "game": {
-        "cell": {
-          "index": store.currentIndex,
-          "value": store.currentTurn
+      'game': {
+        'cell': {
+          'index': store.currentIndex,
+          'value': store.currentTurn
         },
-        "over": store.gameOver
+        'over': store.gameOver
 
       }
-}
+    }
   })
-
 }
 module.exports = {
   createGame,

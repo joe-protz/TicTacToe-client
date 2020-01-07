@@ -9,12 +9,11 @@ let gameOver = false
 const onCreateGame = function () {
   api.createGame()
     .then(gameCreate)
-    .catch()//ADD A CATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    .catch(ui.createGameFail)
 
     // Added the ability to update the current game within the API . Haven't
     // yet updated API with whether the game is over, and the game needs
     // to stop you from playing if the update is unsuccessful.
-
 }
 
 const onAttemptTurn = function (event) {
@@ -85,8 +84,6 @@ const gameCreate = function (response) {
   ui.resetBoard()
   ui.showGame()
   store.game = response.game
-  console.log(store.game)
-
 }
 module.exports = {
   onAttemptTurn,

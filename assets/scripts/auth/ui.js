@@ -15,7 +15,6 @@ const signInSuccess = function (response) {
   store.user = response.user
   loggedIn = true
   changeView()
-
 }
 
 const signInFailure = function (error) {
@@ -54,7 +53,6 @@ const openPWChange = function () {
   $('.gameBoard').hide()
   $('#currentTurn').hide()
   $('#messages').hide()
-
 }
 
 let loggedIn = false
@@ -67,13 +65,10 @@ const changeView = function () {
   } else {
     $('.signedOut').hide()
     $('#create-game').show()
-     $('.gameBoard').show()
-     $('#play').hide()
-
+    $('.gameBoard').show()
+    $('#play').hide()
   }
 }
-
-
 
 module.exports = {
   signUpFailure,
@@ -84,6 +79,6 @@ module.exports = {
   signOutSuccess,
   openPWChange,
   changePasswordFailure,
-  changePasswordSuccess,
+  changePasswordSuccess
 
 }
