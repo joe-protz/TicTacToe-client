@@ -10,19 +10,21 @@ const onAttemptTurn = function (event) {
       $('.warnings').text('')
       $(`#${this.id}`).text(store.currentTurn).addClass('clicked')
       occupiedSpots[this.id.slice(3)] = store.currentTurn // add the move to the occupiedSpots array
+
       if (checkWin()) {
         ui.displayWinner(store.currentTurn)
       }
       ui.updatePlayer() // this updates both the variable as well as the ui
+      if (checkforTie(occupiedSpots)) {
+        $('#messages').text('Its a tie! Please click retry to play again')
+      }
+    } else {
+      $('.warnings').text('Please click an open space')
     }
-    else{
-        $('.warnings').text('Please click an open space')
-    }
-  }
-  else {
+  } else {
     $('.warnings').text('Please click reset!')
   }
-}
+} // main function called each time a click is made
 
 const checkWin = function () {
   let won = false
@@ -37,14 +39,24 @@ const checkWin = function () {
     }
   }
   return won
-}
+} // returns if a player has won
+
+const checkforTie = function (array) {
+  const positionIsEmpty = []
+  for (const spot of array) {
+    if (spot === 'X' || spot === 'O') {
+      positionIsEmpty.push(spot)
+    }
+  }
+
+  return (positionIsEmpty.length === 9)
+} // return true if tie is reached
 
 const gameReset = function () {
   store.currentTurn = 'X'
   gameOver = false
   occupiedSpots = new Array(9)
   ui.resetBoard()
-
 }
 module.exports = {
   onAttemptTurn,

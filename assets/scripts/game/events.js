@@ -10,7 +10,7 @@ const addHandlers = function () {
   $('#box6').on('click', logic.onAttemptTurn)
   $('#box7').on('click', logic.onAttemptTurn)
   $('#box8').on('click', logic.onAttemptTurn)
-  $('#reset').on('click',logic.gameReset)
+  $('#reset').on('click', logic.gameReset)
 }
 
 module.exports = {

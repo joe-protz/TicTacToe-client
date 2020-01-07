@@ -1,9 +1,8 @@
 const store = require('../store')
-console.log(store.currentTurn)
-const displayWinner = function (currentTurn) {
- $('#messages').text(currentTurn.toUpperCase() + ' is the winner!!')
-}
 
+const displayWinner = function (currentTurn) {
+  $('#messages').text(currentTurn.toUpperCase() + ' is the winner!!')
+}
 
 const updatePlayer = function () {
   store.currentTurn === 'X' ? store.currentTurn = 'O' : store.currentTurn = 'X'
@@ -17,7 +16,7 @@ const resetBoard = function () {
   $('#messages').text('')
   $('.warnings').text('')
   $('#currentTurn').text('Current player is X')
-}
+} // removes clicked class from boxes, resets text, resets all messages
 module.exports = {
   displayWinner,
   updatePlayer,
