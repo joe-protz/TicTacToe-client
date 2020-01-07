@@ -1,3 +1,4 @@
+'use strict'
 const store = require('../store')
 
 const displayWinner = function (currentTurn) {

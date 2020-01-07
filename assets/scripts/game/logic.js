@@ -1,3 +1,5 @@
+'use strict'
+
 const ui = require('./ui')
 const store = require('../store')
 
