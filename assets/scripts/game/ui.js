@@ -23,9 +23,20 @@ const showGame = function () {
   $('#play').show()
   $('#currentTurn').show()
 }
+const updateGameSuccess = function () {
+console.log('you updated a game bitch!')
+
+}
+const updateGameFail = function () {
+console.log('you did not updated a game bitch!')
+
+}
+
 module.exports = {
   displayWinner,
   updatePlayer,
   resetBoard,
-  showGame
+  showGame,
+  updateGameSuccess,
+  updateGameFail
 }

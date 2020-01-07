@@ -9,7 +9,7 @@ let gameOver = false
 const onCreateGame = function () {
   api.createGame()
     .then(gameCreate)
-    .catch(console.log('nope'))
+    .catch()//ADD A CATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 }
 
@@ -19,6 +19,12 @@ const onAttemptTurn = function (event) {
       $('.warnings').text('')
       $(`#${this.id}`).text(store.currentTurn).addClass('clicked')
       occupiedSpots[this.id.slice(3)] = store.currentTurn // add the move to the occupiedSpots array
+      store.currentIndex = this.id.slice(3)
+      console.log('current index is '+ store.currentIndex)
+      console.log('current game id is' + store.game.id)
+      api.updateGame()
+        .then(ui.updateGameSuccess)
+        .catch(ui.updateGameFail)
 
       if (checkWin()) {
         ui.displayWinner(store.currentTurn)
