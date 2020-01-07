@@ -12,22 +12,34 @@
       <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
     </head>
     <body>
-      <h1>Tic Tac Toe!</h1>
-      <div id = messages class = "text-center"> </div>
-      <div class = "text-center warnings"> </div>
-      <div id = currentTurn class = "text-center"> Current player is X</div>
-      <div class = "container gameBoard" >
+      <h1 class="text-primary">Tic Tac Toe!</h1>
+      <div class = "container">
+      <div class = "row">
+      <div id = messages class = "col-12 text-center alerts"> </div>
+      <div class = "col-12 text-center warnings alerts"> </div>
+      <div id = currentTurn class = "col-12 text-center pb-3"> Current player is X</div>
+    </div>
+    </div>
+
+      <div class = "container gameBoard square" >
       <div class="row">
-  <div id="box0" class="col-4 col d-flex align-items-center board justify-content-center border-bottom border-right border-dark"> </div>
-  <div id="box1" class="col-4 col d-flex align-items-center board justify-content-center border border-top-0 border-dark"></div>
-  <div id="box2" class="col-4 col d-flex align-items-center board justify-content-center border-bottom border-left border-dark"> </div>
-  <div id="box3" class="col-4 col d-flex align-items-center board justify-content-center border border-left-0 border-dark"></div>
-  <div id="box4" class="col-4 col d-flex align-items-center board justify-content-center border border-dark"> </div>
-  <div id="box5" class="col-4 col d-flex align-items-center board justify-content-center border border-right-0 border-dark"></div>
-  <div id="box6" class="col-4 col d-flex align-items-center board justify-content-center border-top border-right border-dark"></div>
-  <div id="box7" class="col-4 col d-flex align-items-center board justify-content-center border border-bottom-0 border-dark"></div>
-  <div id="box8" class="col-4 col d-flex align-items-center board justify-content-center border-top border-left border-dark"> </div>
-  <button id = "reset">Reset</button>
+  <div id="box0" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-bottom border-right border-dark"> </div>
+  <div id="box1" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-top-0 border-dark"></div>
+  <div id="box2" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-bottom border-left border-dark"> </div>
+  <div id="box3" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-left-0 border-dark"></div>
+  <div id="box4" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-dark"> </div>
+  <div id="box5" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-right-0 border-dark"></div>
+  <div id="box6" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-top border-right border-dark"></div>
+  <div id="box7" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-bottom-0 border-dark"></div>
+  <div id="box8" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-top border-left border-dark"> </div>
+      </div>
+      <div class= "row mt-3">
+        <div class="col-0 col-md-4">&nbsp;</div>
+        <div class="col-12 col-md-4 text-align-center">
+          <button id = "reset" class ="btn btn-primary btn-block">Reset</button>
+        </div>
+        <div class="col-0 col-md-4">&nbsp;</div>
+
       </div>
     </div>
     </body>
