@@ -41,6 +41,8 @@ const changePasswordSuccess = function (response) {
   $('#pw-form').hide()
   $('.gameBoard').show()
   $('.warnings').text('')
+  $('#currentTurn').show()
+  $('#messages').show()
 }
 
 const changePasswordFailure = function (response) {
@@ -50,6 +52,9 @@ const changePasswordFailure = function (response) {
 const openPWChange = function () {
   $('#pw-form').show()
   $('.gameBoard').hide()
+  $('#currentTurn').hide()
+  $('#messages').hide()
+
 }
 
 let loggedIn = false
