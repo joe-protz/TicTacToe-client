@@ -35,11 +35,26 @@ const signOutFailure = function (error) {
   console.error('signOutFailure ran. Error is :', error)
 }
 
+const changePasswordSuccess = function (response) {
+  $('form').trigger('reset')
+  $('#messages').text('Successfully Changed Password')
+  $('#pw-form').hide()
+  $('.gameBoard').show()
+  $('.warnings').text('')
+}
 
+const changePasswordFailure = function (response) {
+  $('form').trigger('reset')
+  $('.warnings').text('Failed to Change Password')
+}
+const openPWChange = function () {
+  $('#pw-form').show()
+  $('.gameBoard').hide()
+}
 
 let loggedIn = false
 const changeView = function () {
-  //TODO: ADD signed in and signed out classes to other HTML ELEMENTS for clarity!!!!!!
+  // TODO: ADD signed in and signed out classes to other HTML ELEMENTS for clarity!!!!!!
   if (!loggedIn) {
     $('.signedOut').show()
     $('.gameBoard').hide()
@@ -57,5 +72,8 @@ module.exports = {
   signInSuccess,
   signInFailure,
   signOutFailure,
-  signOutSuccess
+  signOutSuccess,
+  openPWChange,
+  changePasswordFailure,
+  changePasswordSuccess
 }

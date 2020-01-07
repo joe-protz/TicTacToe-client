@@ -32,10 +32,22 @@ const onSignOut = function (event) {
     .catch(ui.signOutFailure)
 }
 
+const onChangePassword = function (event) {
+  event.preventDefault()
+  console.log('change password ran!')
+
+  const data = getFormFields(this)
+  api.changePassword(data)
+    .then(ui.changePasswordSuccess)
+    .catch(ui.changePasswordFailure)
+}
+
 const addHandlers = () => {
   $('#sign-up').on('submit', onSignUp)
   $('#sign-in').on('submit', onSignIn)
   $('#sign-out').on('click', onSignOut)
+  $('#change-password-form').on('submit', onChangePassword)
+  $('#change-password').on('click', ui.openPWChange)
 }
 
 module.exports = {
