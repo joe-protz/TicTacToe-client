@@ -6,6 +6,7 @@ $(() => {
   $('.gameBoard').hide()
   $('#currentTurn').hide()
   $('#pw-form').hide()
+  $('#create-game').hide()
   gameEvents.addHandlers()
   authEvents.addHandlers()
 })

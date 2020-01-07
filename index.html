@@ -17,14 +17,19 @@
   <h1 class="text-primary">Tic Tac Toe!</h1>
   <div class="container">
     <div class="row">
-      <div id=messages class="col-12 text-center alerts font-weight-bold""> </div>
+      <div id="messages" class="col-12 text-center alerts font-weight-bold"> </div>
       <div class="col-12 text-center warnings alerts"> </div>
       <div id=currentTurn class="col-12 text-center pb-3"> Current player is X</div>
+    </div>
+    <div class = "row">
+      <div class = "col">
+          <button id="create-game" class="btn btn-primary btn-block">Create Game</button>
+      </div>
     </div>
   </div>
 
   <div class="container gameBoard square ">
-    <div class="row">
+    <div class="row" id ="play">
       <div id="box0" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-bottom border-right border-dark"> </div>
       <div id="box1" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-top-0 border-dark"></div>
       <div id="box2" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-bottom border-left border-dark"> </div>
@@ -41,7 +46,7 @@
           <button id="change-password" class="btn btn-secondary btn-block">Change Password</button>
       </div>
       <div class="col-12 col-md-4 text-align-center">
-        <button id="reset" class="btn btn-primary btn-block">Reset</button>
+
       </div>
       <div class="col-0 col-md-4">
          <button id="sign-out" class="btn btn-secondary btn-block">Sign Out</button>

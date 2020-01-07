@@ -11,11 +11,11 @@ const signUpFailure = function (error) {
 }
 
 const signInSuccess = function (response) {
-  $('#messages').text('Successfully Signed In!')
+  $('#messages').text('Successfully Signed In! Click on Create Game to play!')
   store.user = response.user
   loggedIn = true
   changeView()
-  console.log(store.user['token'])
+
 }
 
 const signInFailure = function (error) {
@@ -66,10 +66,14 @@ const changeView = function () {
     $('#currentTurn').hide()
   } else {
     $('.signedOut').hide()
-    $('.gameBoard').show()
-    $('#currentTurn').show()
+    $('#create-game').show()
+     $('.gameBoard').show()
+     $('#play').hide()
+
   }
 }
+
+
 
 module.exports = {
   signUpFailure,
@@ -80,5 +84,6 @@ module.exports = {
   signOutSuccess,
   openPWChange,
   changePasswordFailure,
-  changePasswordSuccess
+  changePasswordSuccess,
+
 }

@@ -1,10 +1,17 @@
 'use strict'
-
+const api = require('./api')
 const ui = require('./ui')
 const store = require('../store')
 
 let occupiedSpots = new Array(9)
 let gameOver = false
+
+const onCreateGame = function () {
+  api.createGame()
+    .then(gameCreate)
+    .catch(console.log('nope'))
+
+}
 
 const onAttemptTurn = function (event) {
   if (!gameOver) {
@@ -18,7 +25,7 @@ const onAttemptTurn = function (event) {
       }
       ui.updatePlayer() // this updates both the variable as well as the ui
       if (checkforTie(occupiedSpots)) {
-        $('#messages').text('Its a tie! Please click retry to play again')
+        $('#messages').text('Its a tie! Please click create game to play again')
       }
     } else {
       $('.warnings').text('Please click an open space')
@@ -54,13 +61,17 @@ const checkforTie = function (array) {
   return (positionIsEmpty.length === 9)
 } // return true if tie is reached
 
-const gameReset = function () {
+const gameCreate = function (response) {
   store.currentTurn = 'X'
   gameOver = false
   occupiedSpots = new Array(9)
   ui.resetBoard()
+  ui.showGame()
+  store.game = response.game
+  console.log(store.game)
+
 }
 module.exports = {
   onAttemptTurn,
-  gameReset
+  onCreateGame
 }

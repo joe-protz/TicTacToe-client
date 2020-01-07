@@ -18,8 +18,14 @@ const resetBoard = function () {
   $('.warnings').text('')
   $('#currentTurn').text('Current player is X')
 } // removes clicked class from boxes, resets text, resets all messages
+
+const showGame = function () {
+  $('#play').show()
+  $('#currentTurn').show()
+}
 module.exports = {
   displayWinner,
   updatePlayer,
-  resetBoard
+  resetBoard,
+  showGame
 }
