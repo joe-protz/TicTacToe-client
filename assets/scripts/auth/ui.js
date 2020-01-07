@@ -3,13 +3,10 @@ const store = require('../store')
 
 const signUpSuccess = function (response) {
   $('#messages').text('Successfully Signed Up!')
-  console.log(response)
 }
 
 const signUpFailure = function (error) {
-  $('#sign-in').trigger('reset')
-  $('#sign-up').trigger('reset')
-  $('#messages').text('Failed to Sign Up!')
+  $('.warnings').text('Failed to Sign Up!')
   console.log(error)
 }
 
@@ -22,10 +19,20 @@ const signInSuccess = function (response) {
 }
 
 const signInFailure = function (error) {
-  $('#messages').text('Failed to Sign In!')
-  $('#sign-in').trigger('reset')
-  $('#sign-up').trigger('reset')
+  $('.warnings').text('Failed to Sign In!')
   console.log(error)
+}
+
+const signOutSuccess = function () {
+  $('#messages').text('Signed out successfully')
+  store.user = null
+  loggedIn = false
+  changeView()
+}
+
+const signOutFailure = function (error) {
+  $('.warnings').text('Error on sign out')
+  console.error('signOutFailure ran. Error is :', error)
 }
 
 
@@ -34,12 +41,11 @@ let loggedIn = false
 const changeView = function () {
   //TODO: ADD signed in and signed out classes to other HTML ELEMENTS for clarity!!!!!!
   if (!loggedIn) {
-    $('.signedOut').hide()
+    $('.signedOut').show()
     $('.gameBoard').hide()
     $('#currentTurn').hide()
   } else {
     $('.signedOut').hide()
-
     $('.gameBoard').show()
     $('#currentTurn').show()
   }
@@ -49,5 +55,7 @@ module.exports = {
   signUpFailure,
   signUpSuccess,
   signInSuccess,
-  signInFailure
+  signInFailure,
+  signOutFailure,
+  signOutSuccess
 }

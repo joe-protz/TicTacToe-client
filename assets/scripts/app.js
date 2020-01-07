@@ -7,5 +7,4 @@ $(() => {
   $('#currentTurn').hide()
   gameEvents.addHandlers()
   authEvents.addHandlers()
-
 })
