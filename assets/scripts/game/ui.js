@@ -1,5 +1,6 @@
 'use strict'
 const store = require('../store')
+const api = require('./api')
 
 const displayWinner = function (currentTurn) {
   $('#messages').text(currentTurn.toUpperCase() + ' is the winner!! Please click Create Game to play again')
@@ -17,6 +18,10 @@ const resetBoard = function () {
   $('#messages').text('')
   $('.warnings').text('')
   $('#currentTurn').text('Current player is X')
+  api.getGames()
+    .then(getGamesSuccess)
+    .catch(getGamesFail)
+
 } // removes clicked class from boxes, resets text, resets all messages
 
 const showGame = function () {
