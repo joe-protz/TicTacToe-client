@@ -16,6 +16,7 @@ const onSignUp = function (event) {
 }
 
 const onSignIn = function (event) {
+
   event.preventDefault()
   const data = getFormFields(this)
   $('form').trigger('reset')

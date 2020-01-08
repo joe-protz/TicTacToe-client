@@ -1,8 +1,11 @@
 'use strict'
 const store = require('../store')
+const gameApi = require('../game/api')
+const gameUi = require('../game/ui')
 
 const signUpSuccess = function (response) {
   $('#messages').text('Successfully Signed Up!')
+
 }
 
 const signUpFailure = function () {
@@ -16,6 +19,9 @@ const signInSuccess = function (response) {
   $('#messages').text('Successfully Signed In! Click on Create Game to play!')
   store.user = response.user
   loggedIn = true
+  gameApi.getGames()
+    .then(gameUi.getGamesSuccess)
+    .catch(gameUi.getGamesFail)
   changeView()
 }
 
@@ -28,6 +34,7 @@ const signInFailure = function () {
 
 const signOutSuccess = function () {
   $('#messages').text('Signed out successfully')
+  $('#stats').text('')
   store.user = null
   loggedIn = false
   changeView()

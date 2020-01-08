@@ -33,6 +33,13 @@ const createGameFail = function () {
   $('.warnings').text('Sorry, your game could not be created')
 }
 
+const getGamesSuccess = function (response) {
+  store.completedGames = response.games
+  $('#stats').text("Hello " + store.user.email + "! You have completed " + store.completedGames.length + " games!")
+}
+const getGamesFail = function () {
+
+}
 module.exports = {
   displayWinner,
   updatePlayer,
@@ -40,5 +47,7 @@ module.exports = {
   showGame,
   updateGameSuccess,
   updateGameFail,
-  createGameFail
+  createGameFail,
+  getGamesFail,
+  getGamesSuccess
 }
