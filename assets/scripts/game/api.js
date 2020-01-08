@@ -39,8 +39,7 @@ const getGames = function () {
     method: 'GET',
     headers: {
       Authorization: 'Token token=' + store.user.token
-    },
-    data: '{}'
+    }
   })
 }
 module.exports = {
