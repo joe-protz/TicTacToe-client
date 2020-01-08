@@ -2,12 +2,15 @@
 const store = require('../store')
 const gameApi = require('../game/api')
 const gameUi = require('../game/ui')
+const events = require('./events')
 
 const signUpSuccess = function (response) {
-  $('#messages').text('Successfully Signed Up!')
+  $('#messages').text('Successfully Signed Up! Automatically Logging in')
+  setTimeout(function () {
+    events.autoSignIn()
+  }, 2000)
 
 }
-
 const signUpFailure = function () {
   $('.warnings').text('Failed to Sign Up!')
   setTimeout(function () {
@@ -35,7 +38,9 @@ const signInFailure = function () {
 const signOutSuccess = function () {
   $('#messages').text('Signed out successfully')
   $('#stats').text('')
+  $('.warnings').text('')
   store.user = null
+  store.temp = null
   loggedIn = false
   changeView()
 }
