@@ -8,21 +8,21 @@ const store = require('../store')
 const onSignUp = function (event) {
   event.preventDefault()
   const data = getFormFields(this)
-  store.temp = data
   $('#sign-in').trigger('reset')
   $('#sign-up').trigger('reset')
   $('form').trigger('reset')
+  // sign up request
   api.signUp(data)
-    .then(ui.signUpSuccess)
+    // if sign up successful then make sign in request
+    .then(response => {
+      return api.signIn(data)
+    })
+    // if sign in successful then run signInSuccess
+    .then(ui.signInSuccess)
     .catch(ui.signUpFailure)
 }
 
-// const autoSignIn = function () {
-//   const data = store.temp
-//   api.signIn(data)
-//     .then(ui.signInSuccess)
-//     .catch(ui.signInFailure)
-// }
+
 
 const onSignIn = function (event) {
 
@@ -59,5 +59,4 @@ const addHandlers = () => {
 
 module.exports = {
   addHandlers
-  //, autoSignIn
 }
