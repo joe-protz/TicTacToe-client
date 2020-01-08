@@ -25,18 +25,18 @@ Unregistered User
       As a user, I would like to be able to access an unfinished game by selecting it from a list<br/>
 
 
-    Technologies used: <br/>
-      HTML<br/>
-      CSCC<br/>
-      Bootstrap<<br/>
-      Javascript<br/>
-      game api <br/>
-      node <br/>
-      jquery<br/>
-      AJAX<br/>
-      getFormFields (provided by General Assembly)<br/>
+    Technologies used:
+      HTML
+      CSCC
+      Bootstrap<
+      Javascript
+      game api 
+      node 
+      jquery
+      AJAX
+      getFormFields (provided by General Assembly)
 
-      Development Process:<br/>
+      Development Process:
       I began with an html template of a game board using bootstrap to create a 3x3 'board' with borders all around the elements in order to create a grid. I added Id's to each element with a number that would later represent it's position in an array.<br/>
 
       After the board was created, I worked on allowing a click to add an X to the correct spot using  Jquery. I then began the game logic.js file. I needed to switch between x and o on click, so I had a variable to keep track. I had to make sure it was a valid click, and if it was, allow the click, and switch the player. To check for a valid click, I use classes in the HTML elements and jquery.
