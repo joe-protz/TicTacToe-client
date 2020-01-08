@@ -46,7 +46,10 @@ const onAttemptTurn = function (event) {
       $('.warnings').text('Please click an open space')
     }
   } else {
-    $('.warnings').text('Please click reset!')
+    $('.warnings').text('Please click Create Game to play again!')
+    setTimeout(function () {
+    $('.warnings').text('')
+    }, 2000)
   }
 } // main function called each time a click is made
 

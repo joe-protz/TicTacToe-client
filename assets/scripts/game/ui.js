@@ -2,7 +2,7 @@
 const store = require('../store')
 
 const displayWinner = function (currentTurn) {
-  $('#messages').text(currentTurn.toUpperCase() + ' is the winner!!')
+  $('#messages').text(currentTurn.toUpperCase() + ' is the winner!! Please click Create Game to play again')
 }
 
 const updatePlayer = function () {

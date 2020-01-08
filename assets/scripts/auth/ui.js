@@ -5,9 +5,11 @@ const signUpSuccess = function (response) {
   $('#messages').text('Successfully Signed Up!')
 }
 
-const signUpFailure = function (error) {
+const signUpFailure = function () {
   $('.warnings').text('Failed to Sign Up!')
-  console.log(error)
+  setTimeout(function () {
+  $('.warnings').text('')
+  }, 2000)
 }
 
 const signInSuccess = function (response) {
@@ -17,9 +19,11 @@ const signInSuccess = function (response) {
   changeView()
 }
 
-const signInFailure = function (error) {
+const signInFailure = function () {
   $('.warnings').text('Failed to Sign In!')
-  console.log(error)
+  setTimeout(function () {
+  $('.warnings').text('')
+  }, 2000)
 }
 
 const signOutSuccess = function () {
@@ -42,6 +46,7 @@ const changePasswordSuccess = function (response) {
   $('.warnings').text('')
   $('#currentTurn').show()
   $('#messages').show()
+  $('#create-game').show()
 }
 
 const changePasswordFailure = function (response) {
@@ -53,6 +58,15 @@ const openPWChange = function () {
   $('.gameBoard').hide()
   $('#currentTurn').hide()
   $('#messages').hide()
+  $('#create-game').hide()
+}
+
+const closePWChange = function () {
+  $('#pw-form').hide()
+  $('.gameBoard').show()
+  $('#currentTurn').show()
+  $('#messages').show()
+  $('#create-game').show()
 }
 
 let loggedIn = false
@@ -62,6 +76,7 @@ const changeView = function () {
     $('.signedOut').show()
     $('.gameBoard').hide()
     $('#currentTurn').hide()
+    $('#create-game').hide()
   } else {
     $('.signedOut').hide()
     $('#create-game').show()
@@ -78,6 +93,7 @@ module.exports = {
   signOutFailure,
   signOutSuccess,
   openPWChange,
+  closePWChange,
   changePasswordFailure,
   changePasswordSuccess
 
