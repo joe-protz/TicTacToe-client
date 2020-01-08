@@ -6,6 +6,7 @@ const events = require('./events')
 
 const signUpSuccess = function (response) {
   $('#messages').text('Successfully Signed Up! Please Sign In')
+  $('.warnings').text('')
   // setTimeout(function () {
   //   events.autoSignIn()
   // }, 2000)
@@ -13,13 +14,14 @@ const signUpSuccess = function (response) {
 }
 const signUpFailure = function () {
   $('.warnings').text('Failed to Sign Up!')
-  setTimeout(function () {
-  $('.warnings').text('')
-  }, 2000)
+  $('#messages').text('')
+
+
 }
 
 const signInSuccess = function (response) {
   $('#messages').text('Successfully Signed In! Click on Create Game to play!')
+  $('.warnings').text('')
   store.user = response.user
   loggedIn = true
   gameApi.getGames()
@@ -30,6 +32,7 @@ const signInSuccess = function (response) {
 
 const signInFailure = function () {
   $('.warnings').text('Failed to Sign In!')
+  $('#messages').text('')
   setTimeout(function () {
   $('.warnings').text('')
   }, 2000)
@@ -45,9 +48,8 @@ const signOutSuccess = function () {
   changeView()
 }
 
-const signOutFailure = function (error) {
+const signOutFailure = function () {
   $('.warnings').text('Error on sign out')
-  console.error('signOutFailure ran. Error is :', error)
 }
 
 const changePasswordSuccess = function (response) {
