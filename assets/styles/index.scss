@@ -12,6 +12,9 @@ h3 {
 .board {
   min-height: 1px;
   font-size: 5vw;
+  &:hover {
+    background:#6C757D;
+  }
 }
 .alerts {
   min-height: 24px;//this is needed to stop the space from shifting
@@ -25,3 +28,10 @@ h3 {
     max-height: 60vh;
     max-width: 60vh;
 }
+.buttonFix{
+  min-height: 1px;
+  font-size: 5vw;
+}
+// .innerGameBoard{
+//   transform: rotate3d(1, .4, 0, 70deg);
+// }

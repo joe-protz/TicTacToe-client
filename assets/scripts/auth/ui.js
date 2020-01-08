@@ -67,7 +67,7 @@ const openPWChange = function () {
   $('#currentTurn').hide()
   $('#messages').hide()
   $('.alerts').text('')
-  $('#create-game').hide()
+  $('.light-toggle').show()
 }
 
 const closePWChange = function () {
@@ -75,8 +75,8 @@ const closePWChange = function () {
   $('.gameBoard').show()
   $('#currentTurn').show()
   $('#messages').show()
-  $('#create-game').show()
   $('.alerts').text('')
+  $('.light-toggle').hide()
 }
 
 let loggedIn = false
@@ -87,11 +87,13 @@ const changeView = function () {
     $('.gameBoard').hide()
     $('#currentTurn').hide()
     $('#create-game').hide()
+    $('.light-toggle').show()
   } else {
     $('.signedOut').hide()
     $('#create-game').show()
     $('.gameBoard').show()
     $('#play').hide()
+    $('.light-toggle').hide()
   }
 }
 

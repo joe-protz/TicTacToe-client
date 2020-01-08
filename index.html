@@ -29,6 +29,7 @@
   </div>
 
   <div class="container gameBoard square ">
+    <div class = innerGameBoard>
     <div class="row" id ="play">
       <div id="box0" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-bottom border-right border-dark"> </div>
       <div id="box1" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-top-0 border-dark"></div>
@@ -40,11 +41,20 @@
       <div id="box7" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-bottom-0 border-dark"></div>
       <div id="box8" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-top border-left border-dark"> </div>
     </div>
-
+  </div>
     <div class="row mt-3 btn-group">
           <button id="change-password" class="btn btn-secondary btn-lg btn-block ">Change Password</button>
             <button id="create-game" class="btn btn-primary btn-lg btn-block ">Create Game</button>
          <button id="sign-out" class="btn btn-secondary btn-lg btn-block ">Sign Out</button>
+         <div class="btn-block btn-group btn-group-toggle mt-2" data-toggle="buttons">
+         <label class="btn btn-secondary">
+           <input type="radio" name="options" id="dark-mode2" autocomplete="off"> Dark Mode
+         </label>
+         <label class="btn btn-secondary ml-1">
+           <input type="radio" name="options" id="light-mode2" autocomplete="off"> Light Mode
+         </label>
+       </div>
+
     </div>
   </div>
 
@@ -115,9 +125,10 @@
       </div>
     </div>
   </div>
-  <div class = "container">
+</br>
+  <div class = "container light-toggle pt-5 mt-5">
     <div class = "row">
-      <div class = "board col-10"></div>
+      <div class = "buttonFix col-10"></div>
         <div class = "col-2">
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <label class="btn btn-secondary">
@@ -127,8 +138,9 @@
             <input type="radio" name="options" id="light-mode" autocomplete="off"> Light Mode
           </label>
         </div>
+    </div>
+  </div>
 </div>
-</div>
-</div>
+<div></div>
 </body>
 </html>
