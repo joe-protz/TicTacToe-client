@@ -5,10 +5,10 @@ const gameUi = require('../game/ui')
 const events = require('./events')
 
 const signUpSuccess = function (response) {
-  $('#messages').text('Successfully Signed Up! Automatically Logging in')
-  setTimeout(function () {
-    events.autoSignIn()
-  }, 2000)
+  $('#messages').text('Successfully Signed Up! Please Sign In')
+  // setTimeout(function () {
+  //   events.autoSignIn()
+  // }, 2000)
 
 }
 const signUpFailure = function () {
@@ -70,6 +70,7 @@ const openPWChange = function () {
   $('.gameBoard').hide()
   $('#currentTurn').hide()
   $('#messages').hide()
+  $('.alerts').text('')
   $('#create-game').hide()
 }
 
@@ -79,6 +80,7 @@ const closePWChange = function () {
   $('#currentTurn').show()
   $('#messages').show()
   $('#create-game').show()
+  $('.alerts').text('')
 }
 
 let loggedIn = false

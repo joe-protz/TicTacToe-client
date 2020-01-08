@@ -17,12 +17,12 @@ const onSignUp = function (event) {
     .catch(ui.signUpFailure)
 }
 
-const autoSignIn = function () {
-  const data = store.temp
-  api.signIn(data)
-    .then(ui.signInSuccess)
-    .catch(ui.signInFailure)
-}
+// const autoSignIn = function () {
+//   const data = store.temp
+//   api.signIn(data)
+//     .then(ui.signInSuccess)
+//     .catch(ui.signInFailure)
+// }
 
 const onSignIn = function (event) {
 
@@ -58,6 +58,6 @@ const addHandlers = () => {
 }
 
 module.exports = {
-  addHandlers,
-  autoSignIn
+  addHandlers
+  //, autoSignIn
 }
