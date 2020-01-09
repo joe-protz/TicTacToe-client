@@ -23,8 +23,6 @@ const takeTurn = function (event) {
         .then(aiMove)
         .catch(ui.updateGameFail)
       ui.updatePlayer() // this updates both the variable as well as the ui
-
-
     } else {
       $('.warnings').text('Please click an open space')
     }
@@ -35,7 +33,6 @@ const takeTurn = function (event) {
     }, 2000)
   }
 }
-
 
 const aiMove = function () {
   if (!store.gameOver) {
