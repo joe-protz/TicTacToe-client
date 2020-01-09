@@ -2,13 +2,13 @@
 const api = require('./api')
 const ui = require('./ui')
 const store = require('../store')
+const ai = require('./ai')
 
-let player1 = 'X'
-let ai = 'O'
+
 let playAi = false
 
-let occupiedSpots = new Array(9)
-let gameOver = false
+
+
 
 const onCreateGame = function () {
   api.createGame()
@@ -17,15 +17,20 @@ const onCreateGame = function () {
 }
 
 const onAttemptTurn = function (event) {
-if (!playAi) {
-  if (!gameOver) {
+  if (!playAi) {
+    takeTurn(event)
+  } else {
+    ai.takeTurn(event)
+  }
 
-    if (!($(`#${this.id}`).hasClass('clicked'))) { // if the spot on the board does not have the class clicked ,  add the move to the board and add the class to the spot
+}
+const takeTurn = function (event) {
+  if (!store.gameOver) {
+    if (!($(`#${event.target.id}`).hasClass('clicked'))) { // if the spot on the board does not have the class clicked ,  add the move to the board and add the class to the spot
       $('.warnings').text('')
-
-      $(`#${this.id}`).text(store.currentTurn).addClass('clicked')
-      occupiedSpots[this.id.slice(3)] = store.currentTurn // add the move to the occupiedSpots array
-      store.currentIndex = this.id.slice(3)
+      $(`#${event.target.id}`).text(store.currentTurn).addClass('clicked')
+      store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
+      store.currentIndex = event.target.id.slice(3)
       api.updateGame()
         .then(ui.updateGameSuccess)
         .catch(ui.updateGameFail)
@@ -37,9 +42,9 @@ if (!playAi) {
           .catch(ui.updateGameFail)
       }
       ui.updatePlayer() // this updates both the variable as well as the ui
-      if (checkforTie(occupiedSpots)) {
+      if (checkforTie(store.occupiedSpots)) {
         $('#messages').text('Its a tie! Please click create game to play again')
-        gameOver = true
+
         store.gameOver = true
         api.updateGame()
           .then(ui.updateGameSuccess)
@@ -55,8 +60,8 @@ if (!playAi) {
     }, 2000)
   }
 }
-}
- // main function called each time a click is made
+
+// main function called each time a click is made
 
 const checkWin = function () {
   let won = false
@@ -65,9 +70,8 @@ const checkWin = function () {
     [0, 3, 6], [1, 4, 7], [2, 5, 8], // vertical
     [0, 4, 8], [2, 4, 6]]// diagonal
   for (const condition of winConditions) {
-    if (occupiedSpots[condition[0]] === store.currentTurn && occupiedSpots[condition[1]] === store.currentTurn && occupiedSpots[condition[2]] === store.currentTurn) {
+    if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
       won = true
-      gameOver = true
       store.gameOver = true
     }
   }
@@ -102,13 +106,24 @@ const checkforTie = function (array) {
 
 const gameCreate = function (response) {
   store.currentTurn = 'X'
-  gameOver = false
-  occupiedSpots = new Array(9)
+  store.gameOver = false
+  store.occupiedSpots = new Array(9)
   ui.resetBoard()
   ui.showGame()
   store.game = response.game
 }
+
+const toggleAi = function () {
+  !playAi
+    ? $('#toggle-ai').removeClass('btn-outline-secondary').addClass('btn-outline-primary')
+    : $('#toggle-ai').removeClass('btn-outline-primary').addClass('btn-outline-secondary')
+
+  playAi = !playAi
+  console.log(playAi)
+}
+
 module.exports = {
   onAttemptTurn,
-  onCreateGame
+  onCreateGame,
+  toggleAi
 }

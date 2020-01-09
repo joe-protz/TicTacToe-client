@@ -40,9 +40,7 @@ const createGameFail = function () {
 const getGamesSuccess = function (response) {
   store.completedGames = response.games
   let wins = 0
-  console.log(store.completedGames)
   for (let i = 0; i < store.completedGames.length; i++) {
-    console.log(store.checkPastWins(store.completedGames[i]))
     if (store.checkPastWins(store.completedGames[i])) {
       wins++
     }

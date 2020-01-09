@@ -3,6 +3,7 @@
 const store = {
   currentTurn: 'X',
   gameOver: false,
+  occupiedSpots: new Array(9),
   boxes: [
     $('#box0'),
     $('#box1'),

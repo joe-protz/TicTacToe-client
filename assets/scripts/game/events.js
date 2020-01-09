@@ -12,6 +12,7 @@ const addHandlers = function () {
   $('#box7').on('click', logic.onAttemptTurn)
   $('#box8').on('click', logic.onAttemptTurn)
   $('#create-game').on('click', logic.onCreateGame)
+  $('#toggle-ai').on('click', logic.toggleAi)
 }
 
 module.exports = {
