@@ -26,23 +26,20 @@ const takeTurn = function (event) {
       $(`#${event.target.id}`).text(store.currentTurn).addClass('clicked')
       store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
       store.currentIndex = event.target.id.slice(3)
-      api.updateGame()
-        .then(ui.updateGameSuccess)
-        .catch(ui.updateGameFail)
+
 
       if (checkWin()) {
         ui.displayWinner(store.currentTurn)
-        api.updateGame()
-          .then(ui.updateGameSuccess)
-          .catch(ui.updateGameFail)
+
       } else if (checkforTie(store.occupiedSpots)) {
         $('#messages').text('Its a tie! Please click create game to play again')
 
         store.gameOver = true
-        api.updateGame()
-          .then(ui.updateGameSuccess)
-          .catch(ui.updateGameFail)
+
       }
+      api.updateGame()
+        .then(ui.updateGameSuccess)
+        .catch(ui.updateGameFail)
       ui.updatePlayer() // this updates both the variable as well as the ui
     } else {
       $('.warnings').text('Please click an open space')

@@ -2,8 +2,6 @@
 const api = require('./api')
 const ui = require('./ui')
 const store = require('../store')
-const player1 = 'X'
-const computer = 'O'
 
 const takeTurn = function (event) {
   if (!store.gameOver) {
@@ -12,49 +10,43 @@ const takeTurn = function (event) {
       $(`#${event.target.id}`).text(store.currentTurn).addClass('clicked')
       store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
       store.currentIndex = event.target.id.slice(3)
-      api.updateGame()
-        .then(ui.updateGameSuccess)
-        .catch(ui.updateGameFail)
 
       if (store.checkWin()) {
         ui.displayWinner(store.currentTurn)
-        api.updateGame()
-          .then(ui.updateGameSuccess)
-          .catch(ui.updateGameFail)
+
+
       } else if (store.checkforTie(store.occupiedSpots)) {
         $('#messages').text('Its a tie! Please click create game to play again')
 
         store.gameOver = true
-        api.updateGame()
-          .then(ui.updateGameSuccess)
-          .catch(ui.updateGameFail)
+
       }
+      api.updateGame()
+        .then(ui.updateGameSuccess)
+        .catch(ui.updateGameFail)
       ui.updatePlayer() // this updates both the variable as well as the ui
 
       if (!store.gameOver) {
-        const availableSpots = store.boxes.filter(box => !(box.hasClass('clicked')))
-        availableSpots[0].text(store.currentTurn).addClass('clicked')
-        const spotID = availableSpots[0].attr('id').slice(3)
-        store.occupiedSpots[spotID] = store.currentTurn
+        const availableSpots = store.boxes.filter(box => !(box.hasClass('clicked')))// filter the spots left for only spots that haven't been clicked
+        availableSpots[0].text(store.currentTurn).addClass('clicked') // just add an x and a class clicked to the first available spot.
+        const spotID = availableSpots[0].attr('id').slice(3) // the ID of this spot
+        store.occupiedSpots[spotID] = store.currentTurn // put the play into the board array
+        store.currentIndex = spotID // store the current index to use for the update game
 
-        api.updateGame()
-          .then(ui.updateGameSuccess)
-          .catch(ui.updateGameFail)
         if (store.checkWin()) {
           ui.displayWinner(store.currentTurn)
-          api.updateGame()
-            .then(ui.updateGameSuccess)
-            .catch(ui.updateGameFail)
+
         } else if (store.checkforTie(store.occupiedSpots)) {
           $('#messages').text('Its a tie! Please click create game to play again')
 
           store.gameOver = true
-          api.updateGame()
-            .then(ui.updateGameSuccess)
-            .catch(ui.updateGameFail)
-        }
 
+        }
+        api.updateGame()
+          .then(ui.updateGameSuccess)
+          .catch(ui.updateGameFail)
         ui.updatePlayer()
+
       }
     } else {
       $('.warnings').text('Please click an open space')
