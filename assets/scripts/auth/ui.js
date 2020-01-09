@@ -2,6 +2,7 @@
 const store = require('../store')
 const gameApi = require('../game/api')
 const gameUi = require('../game/ui')
+const ui_toggles = require('../ui_toggles/ui')
 
 const signUpSuccess = function (response) {
   $('#messages').text('Successfully Signed Up! Please Sign In')
@@ -40,6 +41,7 @@ const signOutSuccess = function () {
   store.temp = null
   loggedIn = false
   changeView()
+  ui_toggles.endCrazyMode()
 }
 
 const signOutFailure = function () {

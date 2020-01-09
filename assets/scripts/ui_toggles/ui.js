@@ -1,32 +1,40 @@
 'use strict'
+const store = require('../store')
 let crazyMode = false
-let darkMode = false
-let lightMode = false
+let lightMode = true
 const activateDarkMode = function () {
   if (crazyMode) {
     clearInterval(crazyTimer)
     crazyMode = false
+    $('.innerGameBoard').removeClass('rotated')
+    store.boxes.forEach(element => element.removeClass('rotated'))
   }
   $('body').css('background', 'rgb(45, 50, 57)')
   $('.board').removeClass('border-dark').addClass('border-secondary')
+    .removeClass('border-white')
   lightMode = false
-  darkMode = true
+
 }
 const activateLightMode = function () {
   if (crazyMode) {
     clearInterval(crazyTimer)
     crazyMode = false
+    $('.innerGameBoard').removeClass('rotated')
+    store.boxes.forEach(element => element.removeClass('rotated'))
   }
   $('body').css('background', '#D0E4FC')
   $('.board').addClass('border-dark').removeClass('border-secondary')
+    .removeClass('border-white')
   lightMode = true
-  darkMode = false
+
 
 }
 let crazyTimer
 
 const toggleCrazyMode = function () {
   if (crazyMode) {
+      $('.innerGameBoard').removeClass('rotated')
+      store.boxes.forEach(element => element.removeClass('rotated'))
     clearInterval(crazyTimer)
     if (lightMode) {
       activateLightMode()
@@ -39,7 +47,8 @@ const toggleCrazyMode = function () {
     const body = $('body')
     const colors = ['red', 'green', 'blue', 'yellow', 'pink', 'purple', 'orange', 'black', 'teal']
     let currentIndex = 0
-    $('.innerGameBoard').css('transform', 'rotate3d(1, .4, 0, 70deg)')
+    $('.innerGameBoard').addClass('rotated')
+    store.boxes.forEach(element => element.addClass('rotated'))
     crazyTimer = setInterval(function () {
       body.css({
         backgroundColor: colors[currentIndex]
@@ -52,8 +61,14 @@ const toggleCrazyMode = function () {
     }, 100)
   }
 }
+
+const endCrazyMode = function () {
+  crazyMode = true
+  toggleCrazyMode()
+}
 module.exports = {
   activateDarkMode,
   activateLightMode,
+  endCrazyMode,
   toggleCrazyMode
 }

@@ -34,6 +34,16 @@ h3 {
   min-height: 1px;
   font-size: 5vw;
 }
-// .innerGameBoard{
-//   transform: rotate3d(1, .4, 0, 70deg);
-// }
+.rotated {
+
+animation: rotation 10s infinite linear;
+}
+@keyframes rotation {
+  from {
+transform: rotate3d(0, 0, 0, 0deg);
+
+  }
+  to {
+    transform: rotate3d(1, 1, 5, 359deg);
+  }
+}
