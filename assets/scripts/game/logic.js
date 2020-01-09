@@ -3,6 +3,10 @@ const api = require('./api')
 const ui = require('./ui')
 const store = require('../store')
 
+let player1 = 'X'
+let ai = 'O'
+let playAi = false
+
 let occupiedSpots = new Array(9)
 let gameOver = false
 
@@ -13,9 +17,12 @@ const onCreateGame = function () {
 }
 
 const onAttemptTurn = function (event) {
+if (!playAi) {
   if (!gameOver) {
+
     if (!($(`#${this.id}`).hasClass('clicked'))) { // if the spot on the board does not have the class clicked ,  add the move to the board and add the class to the spot
       $('.warnings').text('')
+
       $(`#${this.id}`).text(store.currentTurn).addClass('clicked')
       occupiedSpots[this.id.slice(3)] = store.currentTurn // add the move to the occupiedSpots array
       store.currentIndex = this.id.slice(3)
@@ -47,7 +54,9 @@ const onAttemptTurn = function (event) {
       $('.warnings').text('')
     }, 2000)
   }
-} // main function called each time a click is made
+}
+}
+ // main function called each time a click is made
 
 const checkWin = function () {
   let won = false
