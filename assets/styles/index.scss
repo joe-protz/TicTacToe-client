@@ -1,9 +1,10 @@
 @import '~bootstrap/scss/bootstrap';
 @import 'variables';
 body{
-  background: scale-color(#157AF6,$lightness:80%);
-  color: #157AF6;
-}//TODO: add colors to variables.scss
+  background: $text-accent;
+  color: $text-color;
+  transition: 200ms ease;
+}
 
 h1,
 h3 {
@@ -12,6 +13,7 @@ h3 {
 .board {
   min-height: 1px;
   font-size: 5vw;
+  transition: 2000ms ease;
   &:hover {
     background:#6C757D;
   }

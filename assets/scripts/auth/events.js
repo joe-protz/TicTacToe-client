@@ -21,10 +21,7 @@ const onSignUp = function (event) {
     .catch(ui.signUpFailure)
 }
 
-
-
 const onSignIn = function (event) {
-
   event.preventDefault()
   const data = getFormFields(this)
   $('form').trigger('reset')

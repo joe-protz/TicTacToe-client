@@ -21,7 +21,6 @@ const resetBoard = function () {
   api.getGames()
     .then(getGamesSuccess)
     .catch(getGamesFail)
-
 } // removes clicked class from boxes, resets text, resets all messages
 
 const showGame = function () {
@@ -29,7 +28,7 @@ const showGame = function () {
   $('#currentTurn').show()
 }
 const updateGameSuccess = function (response) {
-  //TODO: Rethink logic, can we make it so we can only make a move AFTER the game is updated????
+  // TODO: Rethink logic, can we make it so we can only make a move AFTER the game is updated????
 }
 const updateGameFail = function () {
   $('.warnings').text('Sorry, your game file could not be updated')
@@ -40,7 +39,7 @@ const createGameFail = function () {
 
 const getGamesSuccess = function (response) {
   store.completedGames = response.games
-  $('#stats').text("Hello " + store.user.email + "! You have completed " + store.completedGames.length + " games!")
+  $('#stats').text('Hello ' + store.user.email + '! You have completed ' + store.completedGames.length + ' games!')
 }
 const getGamesFail = function () {
 

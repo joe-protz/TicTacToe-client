@@ -28,7 +28,7 @@ const signInFailure = function () {
   $('.warnings').text('Failed to Sign In!')
   $('#messages').text('')
   setTimeout(function () {
-  $('.warnings').text('')
+    $('.warnings').text('')
   }, 2000)
 }
 

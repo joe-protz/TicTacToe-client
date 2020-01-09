@@ -44,7 +44,7 @@ const onAttemptTurn = function (event) {
   } else {
     $('.warnings').text('Please click Create Game to play again!')
     setTimeout(function () {
-    $('.warnings').text('')
+      $('.warnings').text('')
     }, 2000)
   }
 } // main function called each time a click is made
