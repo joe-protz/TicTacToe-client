@@ -3,6 +3,20 @@ const api = require('./api')
 const ui = require('./ui')
 const store = require('../store')
 const ai = require('./ai')
+store.currentTurn = 'X'
+store.gameOver = false
+store.occupiedSpot = new Array(9)
+store.boxes = [
+  $('#box0'),
+  $('#box1'),
+  $('#box2'),
+  $('#box3'),
+  $('#box4'),
+  $('#box5'),
+  $('#box6'),
+  $('#box7'),
+  $('#box8')
+]
 
 let playAi = false
 
@@ -27,15 +41,12 @@ const takeTurn = function (event) {
       store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
       store.currentIndex = event.target.id.slice(3)
 
-
       if (checkWin()) {
         ui.displayWinner(store.currentTurn)
-
       } else if (checkforTie(store.occupiedSpots)) {
         $('#messages').text('Its a tie! Please click create game to play again')
 
         store.gameOver = true
-
       }
       api.updateGame()
         .then(ui.updateGameSuccess)
@@ -113,7 +124,6 @@ const toggleAi = function () {
     : $('#toggle-ai').removeClass('btn-outline-primary').addClass('btn-outline-secondary')
 
   playAi = !playAi
-  console.log(playAi)
 }
 
 module.exports = {
