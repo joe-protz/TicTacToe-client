@@ -41,8 +41,8 @@ const takeTurn = function (event) {
           .then(ui.updateGameSuccess)
           .catch(ui.updateGameFail)
       }
-      ui.updatePlayer() // this updates both the variable as well as the ui
-      if (checkforTie(store.occupiedSpots)) {
+
+      else if (checkforTie(store.occupiedSpots)) {
         $('#messages').text('Its a tie! Please click create game to play again')
 
         store.gameOver = true
@@ -50,6 +50,7 @@ const takeTurn = function (event) {
           .then(ui.updateGameSuccess)
           .catch(ui.updateGameFail)
       }
+      ui.updatePlayer() // this updates both the variable as well as the ui
     } else {
       $('.warnings').text('Please click an open space')
     }
@@ -77,6 +78,7 @@ const checkWin = function () {
   }
   return won
 } // returns if a player has won
+store.checkWin = checkWin
 
 const checkPastWins = function (game) {
   const cells = game.cells
@@ -93,6 +95,7 @@ const checkPastWins = function (game) {
   return hasWon
 }
 store.checkPastWins = checkPastWins
+
 const checkforTie = function (array) {
   const positionIsEmpty = []
   for (const spot of array) {
@@ -103,6 +106,7 @@ const checkforTie = function (array) {
 
   return (positionIsEmpty.length === 9)
 } // return true if tie is reached
+store.checkforTie = checkforTie
 
 const gameCreate = function (response) {
   store.currentTurn = 'X'
