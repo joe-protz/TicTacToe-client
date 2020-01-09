@@ -13,7 +13,6 @@ const activateDarkMode = function () {
   $('.board').removeClass('border-dark').addClass('border-secondary')
     .removeClass('border-white')
   lightMode = false
-
 }
 const activateLightMode = function () {
   if (crazyMode) {
@@ -26,15 +25,13 @@ const activateLightMode = function () {
   $('.board').addClass('border-dark').removeClass('border-secondary')
     .removeClass('border-white')
   lightMode = true
-
-
 }
 let crazyTimer
 
 const toggleCrazyMode = function () {
   if (crazyMode) {
-      $('.innerGameBoard').removeClass('rotated')
-      store.boxes.forEach(element => element.removeClass('rotated'))
+    $('.innerGameBoard').removeClass('rotated')
+    store.boxes.forEach(element => element.removeClass('rotated'))
     clearInterval(crazyTimer)
     if (lightMode) {
       activateLightMode()

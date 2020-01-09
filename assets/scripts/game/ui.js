@@ -18,9 +18,6 @@ const resetBoard = function () {
   $('#messages').text('')
   $('.warnings').text('')
   $('#currentTurn').text('Current player is X')
-  api.getGames()
-    .then(getGamesSuccess)
-    .catch(getGamesFail)
 } // removes clicked class from boxes, resets text, resets all messages
 
 const showGame = function () {
@@ -28,6 +25,9 @@ const showGame = function () {
   $('#currentTurn').show()
 }
 const updateGameSuccess = function (response) {
+  api.getGames()
+    .then(getGamesSuccess)
+    .catch(getGamesFail)
   // TODO: Rethink logic, can we make it so we can only make a move AFTER the game is updated????
 }
 const updateGameFail = function () {
@@ -39,10 +39,20 @@ const createGameFail = function () {
 
 const getGamesSuccess = function (response) {
   store.completedGames = response.games
-  $('#stats').text('Hello ' + store.user.email + '! You have completed ' + store.completedGames.length + ' games!')
-}
-const getGamesFail = function () {
+  let wins = 0
+  console.log(store.completedGames)
+  for (let i = 0; i < store.completedGames.length; i++) {
+    console.log(store.checkPastWins(store.completedGames[i]))
+    if (store.checkPastWins(store.completedGames[i])) {
+      wins++
+    }
+  }
 
+  $('#stats').text('Hello ' + store.user.email + '! You have completed ' + store.completedGames.length + ' games, and you have won ' + wins)
+}
+
+const getGamesFail = function () {
+  $('.warnings').text('Sorry, your game files were not able to be loaded')
 }
 module.exports = {
   displayWinner,

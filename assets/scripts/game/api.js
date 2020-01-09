@@ -42,6 +42,7 @@ const getGames = function () {
     }
   })
 }
+
 module.exports = {
   createGame,
   updateGame,

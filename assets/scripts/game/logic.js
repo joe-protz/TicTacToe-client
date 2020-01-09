@@ -65,6 +65,21 @@ const checkWin = function () {
   return won
 } // returns if a player has won
 
+const checkPastWins = function (game) {
+  const cells = game.cells
+  let hasWon = false
+  const winConditions = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]]
+  for (const condition of winConditions) {
+    if (cells[condition[0]] === 'X' && cells[condition[1]] === 'X' && cells[condition[2]] === 'X') {
+      hasWon = true
+    }
+  }
+  return hasWon
+}
+store.checkPastWins = checkPastWins
 const checkforTie = function (array) {
   const positionIsEmpty = []
   for (const spot of array) {
