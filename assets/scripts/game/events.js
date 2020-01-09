@@ -1,6 +1,21 @@
 'use strict'
 const logic = require('./logic')
-
+const store = require('../store')
+store.currentTurn = 'X'
+store.gameOver = false
+console.log(store)
+store.occupiedSpot = new Array(9)
+store.boxes = [
+  $('#box0'),
+  $('#box1'),
+  $('#box2'),
+  $('#box3'),
+  $('#box4'),
+  $('#box5'),
+  $('#box6'),
+  $('#box7'),
+  $('#box8')
+]
 const addHandlers = function () {
   $('#box0').on('click', logic.onAttemptTurn)
   $('#box1').on('click', logic.onAttemptTurn)

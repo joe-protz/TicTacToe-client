@@ -20,9 +20,10 @@ const takeTurn = function (event) {
       }
       api.updateGame()
         .then(ui.updateGameSuccess)
+        .then(ui.updatePlayer)
         .then(aiMove)
         .catch(ui.updateGameFail)
-      ui.updatePlayer() // this updates both the variable as well as the ui
+      // ui.updatePlayer() // this updates both the variable as well as the ui
     } else {
       $('.warnings').text('Please click an open space')
     }
@@ -35,10 +36,12 @@ const takeTurn = function (event) {
 }
 
 const aiMove = function () {
+  //console.log(store.gameOver)
   if (!store.gameOver) {
     const availableSpots = store.boxes.filter(box => !(box.hasClass('clicked')))// filter the spots left for only spots that haven't been clicked
-    availableSpots[Math.floor((Math.random() * availableSpots.length) )].text(store.currentTurn).addClass('clicked') // just add an x and a class clicked to the first available spot.
-    const spotID = availableSpots[0].attr('id').slice(3) // the ID of this spot
+  const currentChoice = availableSpots[Math.floor((Math.random() * availableSpots.length))]
+  currentChoice.text(store.currentTurn).addClass('clicked') // just add an x and a class clicked to the first available spot.
+    const spotID = currentChoice.attr('id').slice(3) // the ID of this spot
     store.occupiedSpots[spotID] = store.currentTurn // put the play into the board array
     store.currentIndex = spotID // store the current index to use for the update game
 

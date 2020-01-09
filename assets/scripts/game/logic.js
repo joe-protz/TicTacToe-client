@@ -3,20 +3,6 @@ const api = require('./api')
 const ui = require('./ui')
 const store = require('../store')
 const ai = require('./ai')
-store.currentTurn = 'X'
-store.gameOver = false
-store.occupiedSpot = new Array(9)
-store.boxes = [
-  $('#box0'),
-  $('#box1'),
-  $('#box2'),
-  $('#box3'),
-  $('#box4'),
-  $('#box5'),
-  $('#box6'),
-  $('#box7'),
-  $('#box8')
-]
 
 let playAi = false
 
@@ -98,6 +84,7 @@ const checkPastWins = function (game) {
 store.checkPastWins = checkPastWins
 
 const checkforTie = function (array) {
+  console.log('array is ' + array)
   const positionIsEmpty = []
   for (const spot of array) {
     if (spot === 'X' || spot === 'O') {
