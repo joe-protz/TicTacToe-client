@@ -4,11 +4,7 @@ const ui = require('./ui')
 const store = require('../store')
 const ai = require('./ai')
 
-
 let playAi = false
-
-
-
 
 const onCreateGame = function () {
   api.createGame()
@@ -22,7 +18,6 @@ const onAttemptTurn = function (event) {
   } else {
     ai.takeTurn(event)
   }
-
 }
 const takeTurn = function (event) {
   if (!store.gameOver) {
@@ -40,9 +35,7 @@ const takeTurn = function (event) {
         api.updateGame()
           .then(ui.updateGameSuccess)
           .catch(ui.updateGameFail)
-      }
-
-      else if (checkforTie(store.occupiedSpots)) {
+      } else if (checkforTie(store.occupiedSpots)) {
         $('#messages').text('Its a tie! Please click create game to play again')
 
         store.gameOver = true
