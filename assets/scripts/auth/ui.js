@@ -8,7 +8,6 @@ const signUpSuccess = function (response) {
   $('#messages').text('Successfully Signed Up! Please Sign In')
   $('.warnings').text('')
 }
-
 const signUpFailure = function () {
   $('.warnings').text('Failed to Sign Up!')
   $('#messages').text('')
@@ -24,7 +23,6 @@ const signInSuccess = function (response) {
     .catch(gameUi.getGamesFail)
   changeView()
 }
-
 const signInFailure = function () {
   $('.warnings').text('Failed to Sign In!')
   $('#messages').text('')
@@ -43,7 +41,6 @@ const signOutSuccess = function () {
   changeView()
   ui_toggles.endCrazyMode()
 }
-
 const signOutFailure = function () {
   $('.warnings').text('Error on sign out')
 }
@@ -59,11 +56,11 @@ const changePasswordSuccess = function (response) {
   $('#create-game').show()
   $('.light-toggle').hide()
 }
-
 const changePasswordFailure = function (response) {
   $('form').trigger('reset')
   $('.warnings').text('Failed to Change Password')
 }
+
 const openPWChange = function () {
   $('#pw-form').show()
   $('.gameBoard').hide()
@@ -72,7 +69,6 @@ const openPWChange = function () {
   $('.alerts').text('')
   $('.light-toggle').show()
 }
-
 const closePWChange = function () {
   $('#pw-form').hide()
   $('.gameBoard').show()
@@ -98,7 +94,7 @@ const changeView = function () {
     $('#play').hide()
     $('.light-toggle').hide()
   }
-}
+} // toggle several elements based on logged in state
 
 module.exports = {
   signUpFailure,

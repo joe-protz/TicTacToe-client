@@ -5,6 +5,7 @@ const store = require('../store')
 const ai = require('./ai')
 
 let playAi = false
+let turnComplete = true // TODO: Make sure this is working as intended
 
 const onCreateGame = function () {
   api.createGame()
@@ -21,25 +22,31 @@ const onAttemptTurn = function (event) {
 }
 const takeTurn = function (event) {
   if (!store.gameOver) {
-    if (!($(`#${event.target.id}`).hasClass('clicked'))) { // if the spot on the board does not have the class clicked ,  add the move to the board and add the class to the spot
-      $('.warnings').text('')
-      $(`#${event.target.id}`).text(store.currentTurn).addClass('clicked')
-      store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
-      store.currentIndex = event.target.id.slice(3)
+    if (turnComplete) { // dont let one player override the other if network connection is bad
+      if (!($(`#${event.target.id}`).hasClass('clicked'))) { // if the spot on the board does not have the class clicked ,  add the move to the board and add the class to the spot
+        $('.warnings').text('')
+        turnComplete = false
+        $(`#${event.target.id}`).text(store.currentTurn).addClass('clicked')
+        store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
+        store.currentIndex = event.target.id.slice(3)
 
-      if (checkWin()) {
-        ui.displayWinner(store.currentTurn)
-      } else if (checkforTie(store.occupiedSpots)) {
-        $('#messages').text('Its a tie! Please click create game to play again')
+        if (checkWin()) {
+          ui.displayWinner(store.currentTurn)
+        } else if (checkforTie(store.occupiedSpots)) {
+          $('#messages').text('Its a tie! Please click create game to play again')
 
-        store.gameOver = true
+          store.gameOver = true
+        }
+        api.updateGame()
+          .then(ui.updateGameSuccess)
+          .then(turnComplete = true)
+          .catch(ui.updateGameFail)
+        ui.updatePlayer() // this updates both the variable as well as the ui
+      } else {
+        $('.warnings').text('Please click an open space')
       }
-      api.updateGame()
-        .then(ui.updateGameSuccess)
-        .catch(ui.updateGameFail)
-      ui.updatePlayer() // this updates both the variable as well as the ui
     } else {
-      $('.warnings').text('Please click an open space')
+      $('.warnings').text('Please wait for game to update')
     }
   } else {
     $('.warnings').text('Please click Create Game to play again!')
@@ -80,8 +87,8 @@ const checkPastWins = function (game) {
     }
   }
   return hasWon
-}
-store.checkPastWins = checkPastWins
+} // accepts array of gmames and returns amt of wins for X
+store.checkPastWins = checkPastWins // for ui to access
 
 const checkforTie = function (array) {
   const positionIsEmpty = []
@@ -110,7 +117,7 @@ const toggleAi = function () {
     : $('#toggle-ai').removeClass('btn-outline-primary').addClass('btn-outline-secondary')
 
   playAi = !playAi
-}
+} // if button is pressed, play AI
 
 module.exports = {
   onAttemptTurn,
