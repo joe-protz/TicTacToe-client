@@ -4,7 +4,7 @@ const ui = require('./ui')
 const store = require('../store')
 let aiTurnFinished = true
 
-const takeTurn = function (event) { // TODO: Add check for even clicks ('AI has taken turn')
+const takeTurn = function (event) {
   if (aiTurnFinished) {
     if (!store.gameOver) {
       if (!($(`#${event.target.id}`).hasClass('clicked'))) { // if the spot on the board does not have the class clicked ,  add the move to the board and add the class to the spot
@@ -63,7 +63,7 @@ const aiMove = function () {
     } else if (availableIndexes.includes('6') && store.occupiedSpots[2] === getOtherPlayer()) {
       currentChoice = store.boxes[6]
     } else if (availableIndexes.includes('8') && store.occupiedSpots[0] === getOtherPlayer()) {
-      currentChoice = store.boxes[8] // opponent took took corner, and opposite is empty, take that spot
+      currentChoice = store.boxes[8] // opponent took corner, and opposite is empty, take that spot
     }
 
     currentChoice.text(store.currentTurn).addClass('clicked') // just add an x and a class clicked to the first available spot.
