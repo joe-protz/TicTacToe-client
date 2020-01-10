@@ -57,6 +57,7 @@ const changePasswordSuccess = function (response) {
   $('#currentTurn').show()
   $('#messages').show()
   $('#create-game').show()
+  $('.light-toggle').hide()
 }
 
 const changePasswordFailure = function (response) {
