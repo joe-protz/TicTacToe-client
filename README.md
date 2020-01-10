@@ -42,6 +42,28 @@ Finally I needed to allow for some statistics using the API. For now, when logge
 
 After these minimum reuirements were met, I spent some time debugging, making sure that errors and messages were only shown as needed. I spent some time on the ui, I wanted everything to look even and clean. I created a "cancel" button that would change the view from "change password view" back to "signed in". I made sure to clear all forms as needed.
 
+After I had completed the base game, I chained some functions together to allow sign in on sign up. I will need to take a second look at this, but for now I store the sign up data in a temp object and pass it into sign in.
+
+Next dark mode was added. Adding a button to turn on night mode was easy enough, but I wanted to be able to switch back and forth. I could have created a single button toggle and may look into this in the future, but for now there are two buttons to toggle back and forth.
+
+After this, for fun I added a 'crazy mode' where the user can play a spinning disorienting and color-changing version of tic tac toe. It is only available to authorized logins, and automatically disables on logout. In addition, it remembers which mode was on last, so when toggled it defaults back to the last view.
+
+Finally I have implemented an AI. I started with just adding a button and a check to see if the user has toggled this button. I added a new .js file called ai.js to hold the function where if the button was toggled, run that instead. The beginning was just making sure the toggle worked. I added the same game logic to this file, but used console logs to allow me to be sure I was ending up where I wanted.
+
+After that, I had to think about how to represent a computer playing. I decided it should happen automatically after each valid turn the user takes, so it is shown as a function a the end of the player's turn. It started with checking the DOM board representation for all elements that have yet to be clicked, and clicking the first one. Once this worked, I had to implement the same logic as it would normally take, checking for a win, a tie, a game over, etc.
+
+Once this was working, as far as I could tell, the next step was to randomize the choice made by the computer. This worked fairly well, but I quickly noticed that the user stats weren't updating correctly. I spent some time problem solving and noted that the return from the API was defintely incorrect 'some' of the time. I found out this was caused from a race condition. Basically I was doing things before the API was finished , and causing data to get jumbled, so I then refactored the code to only take the AI turn AFTER the promise was returned from the user.
+
+This seemingly solved all of my issues, except that the 'check for tie' function was no longer reliable. After several hours, I realied that I had randomized the AI's choice, but had forgot to push the correct move into the javascript representation of the board. Finally it was working as inteneded.
+
+After all of this, I spent some time adding AI logic. According to wikipedia, TicTacToe is a solved game, and there are optimal moves, so I began implementing some of them. For example, if there is a spot to win, just take it. If the opponent could win, take that spot. I have only implemented some logic and it defaults to random if no criteria are met, I would like to add more later.
+
+On the way to my classes on a train, I noticed that I was allowed to play against the AI many turns in a row. This was because the AI was waiting for me to click, but I had no check to see if the AI had completed it's update. I could click 3 x's in a row before the ai went. I got around this with a variable asking if the AI was finished, which was changed on player click and as a promise after the ai updated the game.
+
+For sake of consistency, I added the same gate to single player ('no ai').
+
+
+
 ### User Stories
 
 Unregistered User:
@@ -79,10 +101,6 @@ Unregistered User:
 
 ### Unsolved Problems
 
-- I want the user to be able to login on sign up. The functionality is already in the code, but unused because I am having trouble getting my pages to talk to eachother, and I am attempting to keep it modular.
-
-- I would like a night mode. This is a fairly simple implement, I'll just add a toggle in the corner and change some CSS.
-
-- I would like either AI or multiplayer. Both are quite a step up from the current functionality.
-
 - I want to be able to finish unfinished games, I am working on the logic for this now.
+
+-I would like to add more AI logic.
