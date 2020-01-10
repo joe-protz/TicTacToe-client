@@ -142,6 +142,11 @@ const getOtherPlayer = function () {
   store.currentTurn === 'X' ? otherPlayer = 'O' : otherPlayer = 'X'
   return otherPlayer
 } // returns opposite player
+
+const resetAiTurnFinished = function () {
+  aiTurnFinished = true
+}
 module.exports = {
-  takeTurn
+  takeTurn,
+  resetAiTurnFinished
 }

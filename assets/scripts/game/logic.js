@@ -106,6 +106,8 @@ const gameCreate = function (response) {
   store.currentTurn = 'X'
   store.gameOver = false
   store.occupiedSpots = new Array(9)
+  turnComplete = true
+  ai.resetAiTurnFinished()
   ui.resetBoard()
   ui.showGame()
   store.game = response.game
