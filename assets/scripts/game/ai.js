@@ -40,14 +40,22 @@ const aiMove = function () {
     const availableSpots = store.boxes.filter(box => !(box.hasClass('clicked')))
     // filter the spots left for only spots that haven't been clicked
     let currentChoice = availableSpots[Math.floor((Math.random() * availableSpots.length))]
-    let aiChoice
-    console.log(checkAiWins(getOtherPlayer()))
-  //  const availableIndexes = availableSpots.map(spot => spot.attr('id').slice(3))
-    if (checkAiWins(store.currentTurn) !== false) {
+    const availableIndexes = availableSpots.map(spot => spot.attr('id').slice(3))
+    if (checkAiWins(store.currentTurn) !== false) { // if there is a win spot, take it
       currentChoice = store.boxes[checkAiWins(store.currentTurn)]
-    } else if (checkAiWins(getOtherPlayer()) !== false) {
-       currentChoice = store.boxes[checkAiWins(getOtherPlayer())]
-     }
+    } else if (checkAiWins(getOtherPlayer()) !== false) { // if there is a way to block a win, take it
+      currentChoice = store.boxes[checkAiWins(getOtherPlayer())]
+    } else if (availableIndexes.includes('4')) {
+      currentChoice = store.boxes[4] // take center
+    } else if (availableIndexes.includes('0')) {
+      currentChoice = store.boxes[0]
+    } else if (availableIndexes.includes('2')) {
+      currentChoice = store.boxes[2]
+    } else if (availableIndexes.includes('6')) {
+      currentChoice = store.boxes[6]
+    } else if (availableIndexes.includes('8')) {
+      currentChoice = store.boxes[8]
+    }
 
     currentChoice.text(store.currentTurn).addClass('clicked') // just add an x and a class clicked to the first available spot.
     const spotID = currentChoice.attr('id').slice(3) // the ID of this spot
@@ -67,7 +75,6 @@ const aiMove = function () {
     ui.updatePlayer()
   }
 }
-
 
 const checkAiWins = function (turn) {
   if (store.occupiedSpots[0] === turn && store.occupiedSpots[1] === turn && store.occupiedSpots[2] === undefined) {
