@@ -84,7 +84,6 @@ const checkPastWins = function (game) {
 store.checkPastWins = checkPastWins
 
 const checkforTie = function (array) {
-  console.log('array is ' + array)
   const positionIsEmpty = []
   for (const spot of array) {
     if (spot === 'X' || spot === 'O') {

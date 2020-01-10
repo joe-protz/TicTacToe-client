@@ -3,7 +3,6 @@ const logic = require('./logic')
 const store = require('../store')
 store.currentTurn = 'X'
 store.gameOver = false
-console.log(store)
 store.occupiedSpot = new Array(9)
 store.boxes = [
   $('#box0'),
