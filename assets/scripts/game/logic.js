@@ -4,6 +4,10 @@ const ui = require('./ui')
 const store = require('../store')
 const ai = require('./ai')
 
+const winConditions = [
+  [0, 1, 2], [3, 4, 5], [6, 7, 8], // horizontal
+  [0, 3, 6], [1, 4, 7], [2, 5, 8], // vertical
+  [0, 4, 8], [2, 4, 6]]// diagonal
 let playAi = false
 let turnComplete = true // TODO: Make sure this is working as intended
 
@@ -60,10 +64,6 @@ const takeTurn = function (event) {
 
 const checkWin = function () {
   let won = false
-  const winConditions = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8], // horizontal
-    [0, 3, 6], [1, 4, 7], [2, 5, 8], // vertical
-    [0, 4, 8], [2, 4, 6]]// diagonal
   for (const condition of winConditions) {
     if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
       won = true
@@ -77,10 +77,6 @@ store.checkWin = checkWin
 const checkPastWins = function (game) {
   const cells = game.cells
   let hasWon = false
-  const winConditions = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8],
-    [0, 3, 6], [1, 4, 7], [2, 5, 8],
-    [0, 4, 8], [2, 4, 6]]
   for (const condition of winConditions) {
     if (cells[condition[0]] === 'X' && cells[condition[1]] === 'X' && cells[condition[2]] === 'X') {
       hasWon = true
