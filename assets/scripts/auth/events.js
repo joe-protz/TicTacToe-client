@@ -7,8 +7,6 @@ const ui = require('./ui')
 const onSignUp = function (event) {
   event.preventDefault()
   const data = getFormFields(this)
-  $('#sign-in').trigger('reset')
-  $('#sign-up').trigger('reset')
   $('form').trigger('reset')
   // sign up request
   api.signUp(data)
