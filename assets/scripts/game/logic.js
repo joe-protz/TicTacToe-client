@@ -60,6 +60,9 @@ const checkWin = function () {
   let won = false
   for (const condition of winConditions) { // if any combination of win conditions are met, then don't check for a tie , change game state, and display winner
     if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
+      store.boxes[condition[0]].css('color', '#11ed46')
+      store.boxes[condition[1]].css('color', '#11ed46')
+      store.boxes[condition[2]].css('color', '#11ed46')
       won = true
       store.gameOver = true
       ui.displayWinner(store.currentTurn)
@@ -100,6 +103,10 @@ const checkforTie = function (array) {
 store.checkforTie = checkforTie
 
 const gameCreate = function (response) {
+  const color = $('body').css('color')
+  for (const box of store.boxes) {
+    box.css('color', `${color}`)
+  }
   store.currentTurn = 'X'
   store.gameOver = false
   store.occupiedSpots = new Array(9)
