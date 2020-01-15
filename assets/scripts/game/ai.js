@@ -169,7 +169,7 @@ const perfectAI = function () {
   return move
 } // initiates minimax and returns the index of the optimal move
 
-const scoreReturn = function () { // dont
+const scoreReturn = function () {
   let result = null
   for (const condition of store.winConditions) { // loop through each win condition and see iff the current player is in all 3 spots return 10 because we are maximizing score
     if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
