@@ -20,6 +20,7 @@ h3 {
 }
 .alerts {
   min-height: 24px;//this is needed to stop the space from shifting
+  font-size: 3vh;
 }
 .warnings {
   color: $warnings;
@@ -59,4 +60,7 @@ transition: 200ms ease;
 }
 .nav-tabs {
   transition: 200ms ease;
+}
+#stats{
+  font-size: 1.2rem;
 }
