@@ -145,8 +145,14 @@ const difficultyToggle = function (event) {
   const button = event.target.id
   if (button === 'easy-mode') {
     difficulty = 'easy'
+    $('#change-color-easy').removeClass('btn-secondary').addClass('btn-primary')
+    $('#change-color-hard').removeClass('btn-primary').addClass('btn-secondary')
+    $('#change-color-single').removeClass('btn-primary').addClass('btn-secondary')
   } else if (button === 'hard-mode') {
     difficulty = 'hard'
+    $('#change-color-hard').removeClass('btn-secondary').addClass('btn-primary')
+    $('#change-color-easy').removeClass('btn-primary').addClass('btn-secondary')
+    $('#change-color-single').removeClass('btn-primary').addClass('btn-secondary')
   }
 }
 const perfectAI = function () {

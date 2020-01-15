@@ -114,6 +114,9 @@ const gameCreate = function (response) {
 const playAiToggle = function (event) {
   const button = event.target.id
   if (button === 'single-player') {
+    $('#change-color-single').removeClass('btn-secondary').addClass('btn-primary')
+    $('#change-color-easy').removeClass('btn-primary').addClass('btn-secondary')
+    $('#change-color-hard').removeClass('btn-primary').addClass('btn-secondary')
     playAi = false
   } else {
     playAi = true
