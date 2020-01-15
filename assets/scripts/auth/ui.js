@@ -66,7 +66,7 @@ const openPWChange = function () {
   $('.gameBoard').hide()
   $('#currentTurn').hide()
   $('#messages').hide()
-  $('.alerts').text('')
+  $('.alerts').hide()
   $('.light-toggle').show()
 }
 const closePWChange = function () {
@@ -74,7 +74,7 @@ const closePWChange = function () {
   $('.gameBoard').show()
   $('#currentTurn').show()
   $('#messages').show()
-  $('.alerts').text('')
+  $('.alerts').show()
   $('.light-toggle').hide()
 }
 
