@@ -13,7 +13,7 @@ const takeTurn = function (event) {
         store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
         store.currentIndex = event.target.id.slice(3)
 
-       store.checkWin()
+        store.checkWin()
         api.updateGame()
           .then(ui.updateGameSuccess)
           .then(ui.updatePlayer)

@@ -49,5 +49,6 @@ transform: rotate3d(0, 0, 0, 0deg);
 }
 
 small {
-  font-size: 1vw;
+  font-size: 75%;
+  color: $warnings;
 }
