@@ -122,8 +122,15 @@ const playAiToggle = function (event) {
     playAi = true
   }
 }
+const turnAiOff = function () {
+   playAi = false
+   $('#change-color-single').removeClass('btn-secondary').addClass('btn-primary')
+   $('#change-color-easy').removeClass('btn-primary').addClass('btn-secondary')
+   $('#change-color-hard').removeClass('btn-primary').addClass('btn-secondary')
+}
 module.exports = {
   onAttemptTurn,
   onCreateGame,
-  playAiToggle
+  playAiToggle,
+  turnAiOff
 }

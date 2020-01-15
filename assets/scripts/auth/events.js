@@ -3,6 +3,7 @@
 const getFormFields = require('../../../lib/get-form-fields')
 const api = require('./api')
 const ui = require('./ui')
+const logic = require('../game/logic')
 
 const onSignUp = function (event) {
   event.preventDefault()
@@ -31,6 +32,7 @@ const onSignOut = function (event) {
   event.preventDefault()
   api.signOut()
     .then(ui.signOutSuccess)
+    .then(logic.turnAiOff)
     .catch(ui.signOutFailure)
 }
 
