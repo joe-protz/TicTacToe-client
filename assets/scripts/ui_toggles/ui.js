@@ -26,10 +26,10 @@ const activateLightMode = function () {
     store.boxes.forEach(element => element.removeClass('rotated'))
   }
   $('body').css('background', '#D0E4FC')
-    $('.tab-content').css('background', 'white')
-    $('.nav-tabs').css('background', '#D0E4FC')
-    $('.nav-tabs').css('border-bottom', '#D0E4FC')
-    $('.nav-link active').css('background', 'white')
+  $('.tab-content').css('background', 'white')
+  $('.nav-tabs').css('background', '#D0E4FC')
+  $('.nav-tabs').css('border-bottom', '#D0E4FC')
+  $('.nav-link active').css('background', 'white')
   $('.board').addClass('border-dark').removeClass('border-secondary')
     .removeClass('border-white')
   lightMode = true
