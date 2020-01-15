@@ -26,9 +26,9 @@ const takeTurn = function (event) {
         $('.warnings').text('Please click an open space')
       }
     } else {
-      $('.warnings').text()
+      $('.warnings').text('Please wait for AI to finish turn.')
       setTimeout(function () {
-        $('.warnings').text('Please wait for AI to finish turn.')
+        $('.warnings').text('')
       }, 2000)
     }
   } else {
@@ -67,15 +67,22 @@ const aiMove = function () {
       store.occupiedSpots[spotID] = store.currentTurn // put the play into the board array
       store.currentIndex = spotID // store the current index to use for the update game
     } else {
-      const availableSpots = store.boxes.filter(box => !(box.hasClass('clicked')))
-      const availableIndexes = availableSpots.map(spot => spot.attr('id').slice(3))
+      // console.log('avail index' + availableIndexes)
       ai = store.currentTurn
-      const perfectIndex = perfectAI()
-      store.currentTurn = ai
-      let currentChoice = availableSpots[perfectIndex]
-      console.log('hardmode time bb')
+      const perfectIndex = perfectAI() // find the index representation of the best move
+      // console.log(perfectIndex + 'perfindex')
+      store.currentTurn = ai // TODO: check if this is needed, it shouldn't be
 
-
+      const currentChoice = store.boxes[perfectIndex] // the current choice of the ai representation in the dom
+      currentChoice.text(store.currentTurn).addClass('clicked') // add the x or o and don't let me click it
+      store.occupiedSpots[perfectIndex] = store.currentTurn // take the turn in the board representation
+      console.log(store.occupiedSpots)
+      console.log(store.currentTurn)
+      console.log(store.winConditions)
+      console.log(scoreReturn())
+      store.currentIndex = perfectIndex // for API, change the current index
+      // console.log(store.occupiedSpots)
+      // console.log()
     }
     store.checkWin()
     api.updateGame()
@@ -158,73 +165,83 @@ const difficultyToggle = function (event) {
   }
 }
 const perfectAI = function () {
-  let bestScore = -Infinity
+  let bestScore = -Infinity // any move is better
   let move
-  for (let i = 0; i < 9; i++) {
-    if (store.occupiedSpots[i] === undefined) {
-      store.occupiedSpots[i] = store.currentTurn
-      const score = minimax(store.occupiedSpots, 0, false)
-      store.occupiedSpots[i] = undefined
-      if (score > bestScore) {
+  for (let i = 0; i < 9; i++) { // loop through all spots
+    // console.log((store.occupiedSpots[i] === undefined))
+    if (store.occupiedSpots[i] === undefined) { // find available spots
+      store.occupiedSpots[i] = store.currentTurn // add the x or o to the board representation
+      // //console.log(store.occupiedSpots)
+      // for (const condition of store.winConditions) {
+      // console.log(store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn)}
+      //  console.log(scoreReturn())
+      const score = minimax(store.occupiedSpots, 0, false) // run the minimax function for each available spot , is not maximizing because AI already 'took a turn '
+
+      // console.log(score)
+      store.occupiedSpots[i] = undefined // after each loop put the board back to how it was
+      if (score > bestScore) { // if the returned score is better than the previous score, keep it
         bestScore = score
-        move = i
+        // console.log(i)
+        move = i // the index of the best move
       }
     }
   }
+  // console.log(move)
   return move
 } // initiates minimax and returns the index of the optimal move
 
 const scoreReturn = function () {
-  let result
-  for (const condition of store.winConditions) {
+  let result = null
+  for (const condition of store.winConditions) { // loop through each win condition and see iff the current player is in all 3 spots return 10 because we are maximizing score
     if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
       result = 10
-    } else if (store.occupiedSpots[condition[0]] === getOtherPlayer() && store.occupiedSpots[condition[1]] === getOtherPlayer() && store.occupiedSpots[condition[2]] === getOtherPlayer()) {
+    } else if (store.occupiedSpots[condition[0]] === getOtherPlayer() && store.occupiedSpots[condition[1]] === getOtherPlayer() && store.occupiedSpots[condition[2]] === getOtherPlayer()) { // if the other player would win, return -10 because their goal is to minimize their score
+      // console.log(getOtherPlayer())
       result = -10
     } else if (store.checkforTie(store.occupiedSpots)) {
-      result = 0
-    } else {
-      result = null
+      result = 0 // if tie, return 0
     }
   }
+  // console.log(result)
   return result
 }// returns 10 if ai wins this turn, 0 if tie, -10 if player wins, null if none of these
 
 const minimax = function (board, depth, isMaximizing) {
-  const result = scoreReturn
+  const result = scoreReturn() // at the beginning of each pass, see if the current state of the board is a terminal condition and if so, return the score
   if (result !== null) {
+    // console.log(result)
     return result
   }
 
-  if (isMaximizing) {
-    let bestScore = -Infinity;
-        for (let i = 0; i < 9; i++) {
-
-            // Is the spot available?
-            if (board[i] === undefined) {
-              board[i] = store.currentTurn
-              let score = minimax(board, depth + 1, false)
-              board[i] = undefined
-              bestScore = Math.max(score, bestScore)
-            }
-
-        }
-        return bestScore
+  if (isMaximizing) { // this happens second if player clicks first,
+    let bestScore = -Infinity // the best score would be anything better than -Infinity
+    for (let i = 0; i < 9; i++) {
+      // Is the spot available?
+      // console.log(board[i])
+      if (board[i] === undefined) {
+        board[i] = store.currentTurn // temportarily place the move on the board representation
+        const score = minimax(board, depth + 1, false) // re-run minimax as minimizing, checking for a terminal condition first
+        board[i] = undefined // put board back
+        bestScore = Math.max(score, bestScore) // find the best score and return it after all loops
+      }
+    }
+    // console.log(bestScore)
+    return bestScore
   } else {
-    let bestScore = Infinity
-        for (let i = 0; i < 9; i++) {
-
-            // Is the spot available?
-            if (board[i] === undefined) {
-              board[i] = getOtherPlayer()
-              let score = minimax(board, depth + 1, true)
-              board[i] = undefined
-              bestScore = Math.min(score, bestScore)
-            }
-
-        }
-        return bestScore
-
+    let bestScore = Infinity // begin at Infinity because we're minimizing
+    for (let i = 0; i < 9; i++) { // loop through the available spots left
+      if (board[i] === undefined) { // pick the next available spot
+        board[i] = getOtherPlayer() // getOtherPlayer will return (X) if player clicked first
+        // console.log(board)
+        const score = minimax(board, depth + 1, true) // run minimax for this version of the board, now maximizing
+        // console.log(score)
+        board[i] = undefined
+        // console.log(score < bestScore)
+        bestScore = Math.min(score, bestScore) // find the worst score and return it
+      }
+    }
+    // console.log(bestScore)
+    return bestScore
   }
 }
 module.exports = {

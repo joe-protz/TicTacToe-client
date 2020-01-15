@@ -8,17 +8,17 @@ const winConditions = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8], // horizontal
   [0, 3, 6], [1, 4, 7], [2, 5, 8], // vertical
   [0, 4, 8], [2, 4, 6]]// diagonal
-store.winConditions = winConditions
+store.winConditions = winConditions // for AI file
 let playAi = false
 let turnComplete = true // TODO: Make sure this is working as intended
 
-const onCreateGame = function () {
+const onCreateGame = function () { // create API game, then reset the logic and DOM to defaults
   api.createGame()
     .then(gameCreate)
     .catch(ui.createGameFail)
 }
 
-const onAttemptTurn = function (event) {
+const onAttemptTurn = function (event) { // allow toggle betweeen single play and AI play
   if (!playAi) {
     takeTurn(event)
   } else {
@@ -58,14 +58,14 @@ const takeTurn = function (event) {
 
 const checkWin = function () {
   let won = false
-  for (const condition of winConditions) {
+  for (const condition of winConditions) { // if any combination of win conditions are met, then don't check for a tie , change game state, and display winner
     if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
       won = true
       store.gameOver = true
       ui.displayWinner(store.currentTurn)
     }
   }
-  if (!won) {
+  if (!won) { // if nobody won, check for a tie , update the messages and game state
     if (checkforTie(store.occupiedSpots)) {
       $('#messages').text('Its a tie! Please click create game to play again')
 
@@ -73,7 +73,7 @@ const checkWin = function () {
     }
   }
 } // checks for a win and if no win, checks for a tie
-store.checkWin = checkWin
+store.checkWin = checkWin // for AI file
 
 const checkPastWins = function (game) {
   const cells = game.cells
@@ -96,7 +96,7 @@ const checkforTie = function (array) {
   }
 
   return (positionIsEmpty.length === 9)
-} // return true if tie is reached
+} // return true if tie is reached or false
 store.checkforTie = checkforTie
 
 const gameCreate = function (response) {
@@ -105,10 +105,11 @@ const gameCreate = function (response) {
   store.occupiedSpots = new Array(9)
   turnComplete = true
   ai.resetAiTurnFinished()
+  turnComplete = true
   ui.resetBoard()
   ui.showGame()
   store.game = response.game
-}
+} // just restore all defaults for  API, DOM, and JS representation
 
 const playAiToggle = function (event) {
   const button = event.target.id
