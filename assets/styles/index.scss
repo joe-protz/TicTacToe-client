@@ -50,8 +50,9 @@ transform: rotate3d(0, 0, 0, 0deg);
 }
 
 small {
-  font-size: 75%;
+  font-size: 85%;
   color: $warnings;
+  font-weight: bold;
 }
 .tab-content{
 background: white;
