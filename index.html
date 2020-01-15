@@ -21,151 +21,168 @@
       <div class="col-12 text-center warnings alerts"> </div>
       <div id=currentTurn class="col-12 text-center pb-3"> </div>
     </div>
-    <div class = "row">
-      <div id ="stats"class = "col alerts">
+    <div class="row">
+      <div id="stats" class="col alerts">
 
       </div>
     </div>
   </div>
 
   <div class="container gameBoard square ">
-    <div class = innerGameBoard>
-    <div class="row" id ="play">
-      <div id="box0" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-bottom border-right border-dark"> </div>
-      <div id="box1" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-top-0 border-dark"></div>
-      <div id="box2" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-bottom border-left border-dark"> </div>
-      <div id="box3" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-left-0 border-dark"></div>
-      <div id="box4" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-dark"> </div>
-      <div id="box5" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-right-0 border-dark"></div>
-      <div id="box6" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-top border-right border-dark"></div>
-      <div id="box7" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-bottom-0 border-dark"></div>
-      <div id="box8" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-top border-left border-dark"> </div>
+    <div class=innerGameBoard>
+      <div class="row" id="play">
+        <div id="box0" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-bottom border-right border-dark"> </div>
+        <div id="box1" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-top-0 border-dark"></div>
+        <div id="box2" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-bottom border-left border-dark"> </div>
+        <div id="box3" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-left-0 border-dark"></div>
+        <div id="box4" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-dark"> </div>
+        <div id="box5" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-right-0 border-dark"></div>
+        <div id="box6" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-top border-right border-dark"></div>
+        <div id="box7" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-bottom-0 border-dark"></div>
+        <div id="box8" class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-top border-left border-dark"> </div>
+      </div>
     </div>
-  </div>
     <div class="row mt-3 btn-group">
 
-            <button id="create-game" class="btn btn-primary btn-lg btn-block ">Create Game</button>
+      <button id="create-game" class="btn btn-primary btn-lg btn-block ">Create Game</button>
 
-              <button id="change-password" class="btn btn-secondary btn-lg btn-block ">Change Password</button>
-         <button id="sign-out" class="btn btn-secondary btn-lg btn-block ">Sign Out</button>
+      <button id="change-password" class="btn btn-secondary btn-lg btn-block ">Change Password</button>
+      <button id="sign-out" class="btn btn-secondary btn-lg btn-block ">Sign Out</button>
 
-         <div class="play-ai btn-block btn-group btn-group-toggle mt-2" data-toggle="buttons">
-         <label id = "change-color-single" class="btn btn-primary">
-           <input type="radio" name="options" id="single-player" autocomplete="off"> Single Play
-         </label>
-         <label id = 'change-color-easy' class="play-ai btn btn-secondary  ml-1">
-           <input type="radio" name="options" id="easy-mode" autocomplete="off"> Easy Mode
-         </label>
-         <label id = "change-color-hard" class="play-ai btn btn-secondary ml-1">
-           <input type="radio" name="options" id="hard-mode" autocomplete="off"> Hard Mode
-         </label>
+      <div class="play-ai btn-block btn-group btn-group-toggle mt-2" data-toggle="buttons">
+        <label id="change-color-single" class="btn btn-primary">
+          <input type="radio" name="options" id="single-player" autocomplete="off"> Single Play
+        </label>
+        <label id='change-color-easy' class="play-ai btn btn-secondary  ml-1">
+          <input type="radio" name="options" id="easy-mode" autocomplete="off"> Easy Mode
+        </label>
+        <label id="change-color-hard" class="play-ai btn btn-secondary ml-1">
+          <input type="radio" name="options" id="hard-mode" autocomplete="off"> Hard Mode
+        </label>
 
-        </div>
+      </div>
 
-         <div class="btn-block btn-group btn-group-toggle ui-modes mt-2" data-toggle="buttons">
-           <label class="btn btn-primary light-mode ml-1">
-             <input type="radio" name="options"  id="light-mode2" autocomplete="off"> Light Mode
-           </label>
-         <label class="btn btn-secondary dark-mode">
-           <input type="radio" name="options"  id="dark-mode2" autocomplete="off"> Dark Mode
-         </label>
+      <div class="btn-block btn-group btn-group-toggle ui-modes mt-2" data-toggle="buttons">
+        <label class="btn btn-primary light-mode ml-1">
+          <input type="radio" name="options" id="light-mode2" autocomplete="off"> Light Mode
+        </label>
+        <label class="btn btn-secondary dark-mode">
+          <input type="radio" name="options" id="dark-mode2" autocomplete="off"> Dark Mode
+        </label>
 
-         <label class="btn btn-danger ml-1">
-           <input type="radio" name="options" id="crazy-mode" autocomplete="off"> Crazy Mode
-         </label>
+        <label class="btn btn-danger ml-1">
+          <input type="radio" name="options" id="crazy-mode" autocomplete="off"> Crazy Mode
+        </label>
 
-       </div>
-
-
+      </div>
 
 
-<small> Please be aware of seizure risk with crazy mode </small>
+
+
+      <small> Please be aware of seizure risk with crazy mode </small>
     </div>
   </div>
 
-  <div class = "container">
-    <div class = "row">
-        <div class="col" id = "pw-form">
-            <h3 >Change Password</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col" id="pw-form">
+        <h3>Change Password</h3>
 
-            <form id="change-password-form">
-              <div class="form-group">
-                <label for="inputPassword3">Old Password</label>
-                <input type="password" name="passwords[old]" class="form-control" id="inputPassword3" placeholder="Old Password">
-              </div>
-
-              <div class="form-group">
-                <label for="inputPassword4">New Password </label>
-                <input type="password" name="passwords[new]" class="form-control" id="inputPassword4" placeholder="New Password">
-              </div>
-              <button type="submit" class="btn btn-primary">Change</button>
-              <button  id ="cancel" type="button" class="btn btn-secondary">Cancel</button>
-            </form>
+        <form id="change-password-form">
+          <div class="form-group">
+            <label for="inputPassword3">Old Password</label>
+            <input type="password" name="passwords[old]" class="form-control" id="inputPassword3" placeholder="Old Password">
           </div>
+
+          <div class="form-group">
+            <label for="inputPassword4">New Password </label>
+            <input type="password" name="passwords[new]" class="form-control" id="inputPassword4" placeholder="New Password">
+          </div>
+          <button type="submit" class="btn btn-primary">Change</button>
+          <button id="cancel" type="button" class="btn btn-secondary">Cancel</button>
+        </form>
+      </div>
     </div>
   </div>
 
 
   <div class="container signedOut">
-    <div class="row">
-      <div class="col-md-6">
-        <h3 >Sign in</h3>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="sign-in-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Sign In</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="sign-up-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Sign Up</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="col-md-6">
+          <!-- <h3></h3> -->
 
-        <form id="sign-in" class = "signedOut">
-          <div class="form-group">
-            <label for="inputEmail2">Email address</label>
-            <input type="email" name="credentials[email]" class="form-control" id="inputEmail2" aria-describedby="emailHelp" placeholder="Enter email">
-          </div>
+          <form id="sign-in" class="signedOut">
+            <div class="form-group">
+              <label class = "mt-3 " for="inputEmail2">Email address</label>
+              <input type="email" name="credentials[email]" class="form-control" id="inputEmail2" aria-describedby="email" placeholder="Enter email">
+            </div>
 
-          <div class="form-group">
-            <label for="inputPassword2">Password</label>
-            <input type="password" name="credentials[password]" class="form-control" id="inputPassword2" placeholder="Password">
-          </div>
+            <div class="form-group">
+              <label for="inputPassword2">Password</label>
+              <input type="password" name="credentials[password]" class="form-control" id="inputPassword2" placeholder="Password">
+            </div>
 
-          <button type="submit" class="btn btn-primary">Sign-In</button>
-        </form>
+            <button type="submit" class="mb-3 btn btn-primary">Sign-In</button>
+          </form>
+        </div>
       </div>
-
-      <div class="col-md-6">
-        <h3>Sign up</h3>
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
         <form id="sign-up">
-          <div class="form-group">
-            <label for="inputEmail">Email address</label>
+          <div class="form-group ml-3 mr-3 mb-3">
+            <label class = "mt-3 "for="inputEmail">Email address</label>
             <input type="email" name="credentials[email]" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email">
           </div>
 
-          <div class="form-group">
+          <div class="form-group m-3">
             <label for="inputPassword">Password</label>
             <input type="password" name="credentials[password]" class="form-control" id="inputPassword" placeholder="Password">
           </div>
 
-          <div class="form-group">
+          <div class="form-group m-3">
             <label for="inputPasswordConfirm">Password Confirmation</label>
             <input type="password" name="credentials[password_confirmation]" class="form-control" id="inputPasswordConfirm" placeholder="Password Confirmation">
           </div>
 
-          <button type="submit" class="btn btn-primary">Sign-Up</button>
+          <button type="submit" class="btn btn-primary mb-3 m-2 ">Sign-Up</button>
         </form>
       </div>
     </div>
+    <!-- <div class="row">
+
+
+      <div class="col-md-6">
+
+      </div>
+    </div> -->
   </div>
-</br>
-  <div class = "container light-toggle pt-5 mt-5">
-    <div class = "row">
-      <div class = "buttonFix col-10"></div>
-        <div class = "col-2">
-          <div class="btn-group ui-modes btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary dark-mode">
-            <input type="radio" name="options"  id="dark-mode" autocomplete="off"> Dark Mode
-          </label>
+  </br>
+  <div class="container light-toggle pt-5 mt-5">
+    <div class="row">
+      <div class="buttonFix col-10"></div>
+      <div class="col-2">
+        <div class="btn-group ui-modes btn-group-toggle" data-toggle="buttons">
           <label class="btn btn-primary light-mode ml-1">
             <input type="radio" name="options" id="light-mode" autocomplete="off"> Light Mode
           </label>
+          <label class="btn btn-secondary dark-mode">
+            <input type="radio" name="options" id="dark-mode" autocomplete="off"> Dark Mode
+          </label>
+
         </div>
+      </div>
     </div>
   </div>
-</div>
-<div></div>
+  <div></div>
 </body>
+
 </html>

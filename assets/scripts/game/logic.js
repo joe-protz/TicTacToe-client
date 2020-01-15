@@ -123,10 +123,10 @@ const playAiToggle = function (event) {
   }
 }
 const turnAiOff = function () {
-   playAi = false
-   $('#change-color-single').removeClass('btn-secondary').addClass('btn-primary')
-   $('#change-color-easy').removeClass('btn-primary').addClass('btn-secondary')
-   $('#change-color-hard').removeClass('btn-primary').addClass('btn-secondary')
+  playAi = false
+  $('#change-color-single').removeClass('btn-secondary').addClass('btn-primary')
+  $('#change-color-easy').removeClass('btn-primary').addClass('btn-secondary')
+  $('#change-color-hard').removeClass('btn-primary').addClass('btn-secondary')
 }
 module.exports = {
   onAttemptTurn,

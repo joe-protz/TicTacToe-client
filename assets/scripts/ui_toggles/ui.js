@@ -10,6 +10,10 @@ const activateDarkMode = function () {
     store.boxes.forEach(element => element.removeClass('rotated'))
   }
   $('body').css('background', 'rgb(45, 50, 57)')
+  $('.tab-content').css('background', '#6C757C')
+  $('.nav-tabs').css('background', 'rgb(45, 50, 57)')
+  $('.nav-tabs').css('border', '#6C757C')
+  $('.nav-link active').css('background', 'rgb(45, 50, 57)')
   $('.board').removeClass('border-dark').addClass('border-secondary')
     .removeClass('border-white')
   lightMode = false
@@ -22,6 +26,10 @@ const activateLightMode = function () {
     store.boxes.forEach(element => element.removeClass('rotated'))
   }
   $('body').css('background', '#D0E4FC')
+    $('.tab-content').css('background', 'white')
+    $('.nav-tabs').css('background', '#D0E4FC')
+    $('.nav-tabs').css('border-bottom', '#D0E4FC')
+    $('.nav-link active').css('background', 'white')
   $('.board').addClass('border-dark').removeClass('border-secondary')
     .removeClass('border-white')
   lightMode = true
@@ -65,17 +73,16 @@ const endCrazyMode = function () {
 }
 
 const buttonToggle = function () {
-if (crazyMode) {
-  $('.dark-mode').removeClass('btn-primary').addClass('btn-secondary')
-  $('.light-mode').removeClass('btn-primary').addClass('btn-secondary')
-
-} else if (lightMode) {
-  $('.dark-mode').removeClass('btn-primary').addClass('btn-secondary')
-  $('.light-mode').removeClass('btn-secondary').addClass('btn-primary')
-} else {
-  $('.dark-mode').removeClass('btn-secondary').addClass('btn-primary')
-  $('.light-mode').removeClass('btn-primary').addClass('btn-secondary')
-}
+  if (crazyMode) {
+    $('.dark-mode').removeClass('btn-primary').addClass('btn-secondary')
+    $('.light-mode').removeClass('btn-primary').addClass('btn-secondary')
+  } else if (lightMode) {
+    $('.dark-mode').removeClass('btn-primary').addClass('btn-secondary')
+    $('.light-mode').removeClass('btn-secondary').addClass('btn-primary')
+  } else {
+    $('.dark-mode').removeClass('btn-secondary').addClass('btn-primary')
+    $('.light-mode').removeClass('btn-primary').addClass('btn-secondary')
+  }
 }
 module.exports = {
   activateDarkMode,
