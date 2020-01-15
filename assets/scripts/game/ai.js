@@ -65,9 +65,7 @@ const aiMove = function () {
       store.occupiedSpots[spotID] = store.currentTurn // put the play into the board array
       store.currentIndex = spotID // store the current index to use for the update game
     } else {
-      ai = store.currentTurn
       const perfectIndex = perfectAI() // find the index representation of the best move
-      store.currentTurn = ai // TODO: check if this is needed, it shouldn't be
       const currentChoice = store.boxes[perfectIndex] // the current choice of the ai representation in the dom
       currentChoice.text(store.currentTurn).addClass('clicked') // add the x or o and don't let me click it
       store.occupiedSpots[perfectIndex] = store.currentTurn // take the turn in the board representation
