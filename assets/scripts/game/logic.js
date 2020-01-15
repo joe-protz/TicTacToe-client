@@ -8,6 +8,7 @@ const winConditions = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8], // horizontal
   [0, 3, 6], [1, 4, 7], [2, 5, 8], // vertical
   [0, 4, 8], [2, 4, 6]]// diagonal
+store.winConditions = winConditions
 let playAi = false
 let turnComplete = true // TODO: Make sure this is working as intended
 
@@ -109,16 +110,16 @@ const gameCreate = function (response) {
   store.game = response.game
 }
 
-const toggleAi = function () {
-  !playAi
-    ? $('#toggle-ai').removeClass('btn-outline-secondary').addClass('btn-outline-primary')
-    : $('#toggle-ai').removeClass('btn-outline-primary').addClass('btn-outline-secondary')
-
-  playAi = !playAi
-} // if button is pressed, play AI
-
+const playAiToggle = function (event) {
+  const button = event.target.id
+  if (button === 'single-player') {
+    playAi = false
+  } else {
+    playAi = true
+  }
+}
 module.exports = {
   onAttemptTurn,
   onCreateGame,
-  toggleAi
+  playAiToggle
 }

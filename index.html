@@ -46,11 +46,22 @@
 
             <button id="create-game" class="btn btn-primary btn-lg btn-block ">Create Game</button>
 
-
-              <button id="toggle-ai" class="btn btn-outline-secondary  btn-lg btn-block ">Play Computer?</button>
-
               <button id="change-password" class="btn btn-secondary btn-lg btn-block ">Change Password</button>
          <button id="sign-out" class="btn btn-secondary btn-lg btn-block ">Sign Out</button>
+
+         <div class="play-ai btn-block btn-group btn-group-toggle mt-2" data-toggle="buttons">
+         <label class="btn btn-primary">
+           <input type="radio" name="options" id="single-player" autocomplete="off"> Single Play
+         </label>
+         <label class="play-ai btn btn-secondary ml-1">
+           <input type="radio" name="options" id="easy-mode" autocomplete="off"> Easy Mode
+         </label>
+         <label class="play-ai btn btn-secondary ml-1">
+           <input type="radio" name="options" id="hard-mode" autocomplete="off"> Hard Mode
+         </label>
+
+        </div>
+
          <div class="btn-block btn-group btn-group-toggle mt-2" data-toggle="buttons">
          <label class="btn btn-secondary">
            <input type="radio" name="options" id="dark-mode2" autocomplete="off"> Dark Mode
@@ -63,6 +74,10 @@
          </label>
 
        </div>
+
+
+
+
 <small> Please be aware of seizure risk with crazy mode </small>
     </div>
   </div>

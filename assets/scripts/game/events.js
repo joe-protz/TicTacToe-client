@@ -1,9 +1,10 @@
 'use strict'
 const logic = require('./logic')
 const store = require('../store')
+const ai = require('./ai')
 store.currentTurn = 'X'
 store.gameOver = false
-store.occupiedSpot = new Array(9)
+store.occupiedSpots = new Array(9)
 store.boxes = [
   $('#box0'),
   $('#box1'),
@@ -26,7 +27,8 @@ const addHandlers = function () {
   $('#box7').on('click', logic.onAttemptTurn)
   $('#box8').on('click', logic.onAttemptTurn)
   $('#create-game').on('click', logic.onCreateGame)
-  $('#toggle-ai').on('click', logic.toggleAi)
+  $('.play-ai').on('click', logic.playAiToggle)
+    .on('click', ai.difficultyToggle)
 }
 
 module.exports = {
