@@ -33,14 +33,7 @@ const takeTurn = function (event) {
         $(`#${event.target.id}`).text(store.currentTurn).addClass('clicked')
         store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
         store.currentIndex = event.target.id.slice(3)
-
-        if (checkWin()) {
-          ui.displayWinner(store.currentTurn)
-        } else if (checkforTie(store.occupiedSpots)) {
-          $('#messages').text('Its a tie! Please click create game to play again')
-
-          store.gameOver = true
-        }
+        checkWin()
         api.updateGame()
           .then(ui.updateGameSuccess)
           .then(turnComplete = true)
@@ -68,10 +61,17 @@ const checkWin = function () {
     if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
       won = true
       store.gameOver = true
+      ui.displayWinner(store.currentTurn)
     }
   }
-  return won
-} // returns if a player has won
+  if (!won) {
+    if (checkforTie(store.occupiedSpots)) {
+      $('#messages').text('Its a tie! Please click create game to play again')
+
+      store.gameOver = true
+    }
+  }
+} // checks for a win and if no win, checks for a tie
 store.checkWin = checkWin
 
 const checkPastWins = function (game) {

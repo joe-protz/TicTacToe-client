@@ -5,8 +5,8 @@ const store = require('../store')
 let aiTurnFinished = true
 
 const takeTurn = function (event) {
-  if (aiTurnFinished) {
-    if (!store.gameOver) {
+  if (!store.gameOver) {
+    if (aiTurnFinished) {
       if (!($(`#${event.target.id}`).hasClass('clicked'))) { // if the spot on the board does not have the class clicked ,  add the move to the board and add the class to the spot
         $('.warnings').text('')
         $(`#${event.target.id}`).text(store.currentTurn).addClass('clicked')
@@ -31,13 +31,13 @@ const takeTurn = function (event) {
         $('.warnings').text('Please click an open space')
       }
     } else {
-      $('.warnings').text('Please click Create Game to play again!')
+      $('.warnings').text()
       setTimeout(function () {
-        $('.warnings').text('')
+        $('.warnings').text('Please wait for AI to finish turn.')
       }, 2000)
     }
   } else {
-    $('.warnings').text('Please wait for AI to take turn.')
+    $('.warnings').text('Please click Create Game to play again!')
     setTimeout(function () {
       $('.warnings').text('')
     }, 2000)
