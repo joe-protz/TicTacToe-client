@@ -7,6 +7,7 @@ const addHandlers = function () {
   $('#dark-mode2').on('click', ui.activateDarkMode)
   $('#light-mode2').on('click', ui.activateLightMode)
   $('#crazy-mode').on('click', ui.toggleCrazyMode)
+  $('.ui-modes').on('click', ui.buttonToggle)
 }
 
 module.exports = {

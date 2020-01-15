@@ -63,9 +63,24 @@ const endCrazyMode = function () {
   crazyMode = true
   toggleCrazyMode()
 }
+
+const buttonToggle = function () {
+if (crazyMode) {
+  $('.dark-mode').removeClass('btn-primary').addClass('btn-secondary')
+  $('.light-mode').removeClass('btn-primary').addClass('btn-secondary')
+
+} else if (lightMode) {
+  $('.dark-mode').removeClass('btn-primary').addClass('btn-secondary')
+  $('.light-mode').removeClass('btn-secondary').addClass('btn-primary')
+} else {
+  $('.dark-mode').removeClass('btn-secondary').addClass('btn-primary')
+  $('.light-mode').removeClass('btn-primary').addClass('btn-secondary')
+}
+}
 module.exports = {
   activateDarkMode,
   activateLightMode,
   endCrazyMode,
-  toggleCrazyMode
+  toggleCrazyMode,
+  buttonToggle
 }
