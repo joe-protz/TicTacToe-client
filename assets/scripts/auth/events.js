@@ -8,7 +8,7 @@ const logic = require('../game/logic')
 const onSignUp = function (event) {
   event.preventDefault()
   const data = getFormFields(this)
-  $('form').trigger('reset')
+
   // sign up request
   api.signUp(data)
     // if sign up successful then make sign in request
@@ -17,16 +17,25 @@ const onSignUp = function (event) {
     })
     // if sign in successful then run signInSuccess
     .then(ui.signInSuccess)
+    .then(response => {
+      $('form').trigger('reset')
+    })
     .catch(ui.signUpFailure)
+    .then(response => {
+      $('form').trigger('reset')
+    })
 }
 
 const onSignIn = function (event) {
   event.preventDefault()
   const data = getFormFields(this)
-  $('form').trigger('reset')
+
   api.signIn(data)
     .then(ui.signInSuccess)
     .catch(ui.signInFailure)
+    .then(response => {
+      $('form').trigger('reset')
+    })
 }
 const onSignOut = function (event) {
   event.preventDefault()
