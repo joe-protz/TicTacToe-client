@@ -13,13 +13,7 @@ const takeTurn = function (event) {
         store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
         store.currentIndex = event.target.id.slice(3)
 
-        if (store.checkWin()) {
-          ui.displayWinner(store.currentTurn)
-        } else if (store.checkforTie(store.occupiedSpots)) {
-          $('#messages').text('Its a tie! Please click create game to play again')
-
-          store.gameOver = true
-        }
+       store.checkWin()
         api.updateGame()
           .then(ui.updateGameSuccess)
           .then(ui.updatePlayer)
@@ -71,13 +65,7 @@ const aiMove = function () {
     store.occupiedSpots[spotID] = store.currentTurn // put the play into the board array
     store.currentIndex = spotID // store the current index to use for the update game
 
-    if (store.checkWin()) {
-      ui.displayWinner(store.currentTurn)
-    } else if (store.checkforTie(store.occupiedSpots)) {
-      $('#messages').text('Its a tie! Please click create game to play again')
-
-      store.gameOver = true
-    }
+    store.checkWin()
     api.updateGame()
       .then(ui.updateGameSuccess)
       .then(aiTurnFinished = true)
