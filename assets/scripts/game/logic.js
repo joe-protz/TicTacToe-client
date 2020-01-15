@@ -10,7 +10,7 @@ const winConditions = [
   [0, 4, 8], [2, 4, 6]]// diagonal
 store.winConditions = winConditions // for AI file
 let playAi = false
-let turnComplete = true // TODO: Make sure this is working as intended
+let turnComplete = true
 
 const onCreateGame = function () { // create API game, then reset the logic and DOM to defaults
   api.createGame()

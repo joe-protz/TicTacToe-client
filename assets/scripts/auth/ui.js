@@ -80,7 +80,6 @@ const closePWChange = function () {
 
 let loggedIn = false
 const changeView = function () {
-  // TODO: ADD signed in and signed out classes to other HTML ELEMENTS for clarity!!!!!!
   if (!loggedIn) {
     $('.signedOut').show()
     $('.gameBoard').hide()
