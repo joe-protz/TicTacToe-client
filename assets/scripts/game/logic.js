@@ -40,13 +40,11 @@ const takeTurn = function (event) {
         store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
         store.currentIndex = event.target.id.slice(3)
         checkWin()
-        $('.loading').show()
         api.updateGame()
           .then(ui.updateGameSuccess)
           .then(turnComplete = true)
           .catch(ui.updateGameFail)
           .then(response => {
-            $('.loading').hide()
           })
         ui.updatePlayer() // this updates both the variable as well as the ui
       } else {
@@ -112,6 +110,7 @@ const checkforTie = function (array) {
 store.checkforTie = checkforTie
 
 const gameCreate = function (response) {
+  store.game = response.game
   const color = $('body').css('color')
   for (const box of store.boxes) {
     box.css('color', `${color}`)
@@ -119,12 +118,11 @@ const gameCreate = function (response) {
   store.currentTurn = 'X'
   store.gameOver = false
   store.occupiedSpots = new Array(9)
-  turnComplete = true
   ai.resetAiTurnFinished()
   turnComplete = true
   ui.resetBoard()
   ui.showGame()
-  store.game = response.game
+
 } // just restore all defaults for  API, DOM, and JS representation
 
 const playAiToggle = function (event) {

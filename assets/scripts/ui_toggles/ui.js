@@ -2,6 +2,7 @@
 const store = require('../store')
 let crazyMode = false
 let lightMode = true
+let warned = false
 const activateDarkMode = function () {
   if (crazyMode) {
     clearInterval(crazyTimer)
@@ -37,7 +38,7 @@ const activateLightMode = function () {
 let crazyTimer
 
 const toggleCrazyMode = function () {
-  if (crazyMode) {
+  if (crazyMode ) {
     $('.innerGameBoard').removeClass('rotated')
     store.boxes.forEach(element => element.removeClass('rotated'))
     clearInterval(crazyTimer)
@@ -47,7 +48,7 @@ const toggleCrazyMode = function () {
       activateDarkMode()
     }
     crazyMode = false
-  } else {
+  } else if (warned) {
     crazyMode = true
     const body = $('body')
     const colors = ['red', 'green', 'blue', 'yellow', 'pink', 'purple', 'orange', 'black', 'teal']
@@ -71,6 +72,9 @@ const endCrazyMode = function () {
   crazyMode = true
   toggleCrazyMode()
 }
+const seizureWarning = function () {
+  $('.toast').toast('show')
+}
 
 const buttonToggle = function () {
   if (crazyMode) {
@@ -84,10 +88,17 @@ const buttonToggle = function () {
     $('.light-mode').removeClass('btn-primary').addClass('btn-secondary')
   }
 }
+
+const hasBeenWarned = function () {
+  warned = true
+}
+
 module.exports = {
   activateDarkMode,
   activateLightMode,
   endCrazyMode,
   toggleCrazyMode,
-  buttonToggle
+  buttonToggle,
+  seizureWarning,
+  hasBeenWarned
 }

@@ -13,19 +13,12 @@ const takeTurn = function (event) {
         store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
         store.currentIndex = event.target.id.slice(3)
         store.checkWin()
-        $('.loading').show()
         api.updateGame()
           .then(ui.updateGameSuccess)
-          .then(response => {
-            $('.loading').hide()
-          })
           .then(ui.updatePlayer)
           .then(aiTurnFinished = false)
           .then(aiMove)
           .catch(ui.updateGameFail)
-          .then(response => {
-            $('.loading').hide()
-          })
       } else {
         $('.warnings').text('Please click an open space')
       }
@@ -45,6 +38,8 @@ const takeTurn = function (event) {
 
 const aiMove = function () {
   if (!store.gameOver) {
+    $('#messages').text('Computer is thinking.. ')
+    $('.loading').show()
     const availableSpots = store.boxes.filter(box => !(box.hasClass('clicked')))
     const availableIndexes = availableSpots.map(spot => spot.attr('id').slice(3)) // index #'s for all available spots
     // filter the spots left for only spots that haven't been clicked
@@ -77,7 +72,6 @@ const aiMove = function () {
       store.occupiedSpots[perfectIndex] = store.currentTurn // take the turn in the board representation
       store.currentIndex = perfectIndex // for API, change the current index
     }
-    $('.loading').show()
     store.checkWin()
     api.updateGame()
       .then(ui.updateGameSuccess)
@@ -85,6 +79,7 @@ const aiMove = function () {
       .catch(ui.updateGameFail)
       .then(response => {
         $('.loading').hide()
+        $('#messages').text('')
       })
     ui.updatePlayer()
   }
