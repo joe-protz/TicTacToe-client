@@ -182,9 +182,9 @@ const scoreReturn = function () {
   let result = null
   for (const condition of store.winConditions) { // loop through each win condition and see iff the current player is in all 3 spots return 10 because we are maximizing score
     if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
-      result = 100
+      result = 10
     } else if (store.occupiedSpots[condition[0]] === getOtherPlayer() && store.occupiedSpots[condition[1]] === getOtherPlayer() && store.occupiedSpots[condition[2]] === getOtherPlayer()) { // if the other player would win, return -10 because their goal is to minimize their score
-      result = -100
+      result = -10
     }
   }
   if (result !== 10 && result !== -10 && store.checkforTie(store.occupiedSpots)) {
@@ -210,7 +210,7 @@ const minimax = function (board, depth, isMaximizing) {
         bestScore = Math.max(score, bestScore) // find the best score and return it after all loops
       }
     }
-    return (bestScore - depth)
+    return bestScore
   } else {
     let bestScore = Infinity // begin at Infinity because we're minimizing
     for (let i = 0; i < 9; i++) { // loop through the available spots left
@@ -221,7 +221,7 @@ const minimax = function (board, depth, isMaximizing) {
         bestScore = Math.min(score, bestScore) // find the worst score and return it
       }
     }
-    return (bestScore + depth)
+    return bestScore
   }
 }
 module.exports = {
