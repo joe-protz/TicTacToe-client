@@ -13,9 +13,14 @@ let playAi = false
 let turnComplete = true
 
 const onCreateGame = function () { // create API game, then reset the logic and DOM to defaults
+  $('#messages').text('Creating game')
+  $('.loading').show()
   api.createGame()
     .then(gameCreate)
     .catch(ui.createGameFail)
+    .then( response => {
+      $('.loading').hide()
+    })
 }
 
 const onAttemptTurn = function (event) { // allow toggle betweeen single play and AI play
@@ -35,10 +40,14 @@ const takeTurn = function (event) {
         store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
         store.currentIndex = event.target.id.slice(3)
         checkWin()
+        $('.loading').show()
         api.updateGame()
           .then(ui.updateGameSuccess)
           .then(turnComplete = true)
           .catch(ui.updateGameFail)
+          .then(response => {
+            $('.loading').hide()
+          })
         ui.updatePlayer() // this updates both the variable as well as the ui
       } else {
         $('.warnings').text('Please click an open space')

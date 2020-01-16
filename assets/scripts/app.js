@@ -8,6 +8,7 @@ $(() => {
   $('#currentTurn').hide()
   $('#pw-form').hide()
   $('#create-game').hide()
+  $('.loading').hide()
   gameEvents.addHandlers()
   authEvents.addHandlers()
   uiEvents.addHandlers()
