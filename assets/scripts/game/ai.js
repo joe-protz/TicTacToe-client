@@ -13,17 +13,17 @@ const takeTurn = function (event) {
         store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
         store.currentIndex = event.target.id.slice(3)
         store.checkWin()
-          $('.loading').show()
+        $('.loading').show()
         api.updateGame()
           .then(ui.updateGameSuccess)
-          .then( response => {
+          .then(response => {
             $('.loading').hide()
           })
           .then(ui.updatePlayer)
           .then(aiTurnFinished = false)
           .then(aiMove)
           .catch(ui.updateGameFail)
-          .then( response => {
+          .then(response => {
             $('.loading').hide()
           })
       } else {
@@ -71,7 +71,6 @@ const aiMove = function () {
       store.occupiedSpots[spotID] = store.currentTurn // put the play into the board array
       store.currentIndex = spotID // store the current index to use for the update game
     } else {
-
       const perfectIndex = perfectAI() // find the index representation of the best move
       const currentChoice = store.boxes[perfectIndex] // the current choice of the ai representation in the dom
       currentChoice.text(store.currentTurn).addClass('clicked') // add the x or o and don't let me click it
@@ -84,7 +83,7 @@ const aiMove = function () {
       .then(ui.updateGameSuccess)
       .then(aiTurnFinished = true)
       .catch(ui.updateGameFail)
-      .then( response => {
+      .then(response => {
         $('.loading').hide()
       })
     ui.updatePlayer()

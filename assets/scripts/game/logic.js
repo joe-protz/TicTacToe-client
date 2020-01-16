@@ -18,7 +18,7 @@ const onCreateGame = function () { // create API game, then reset the logic and 
   api.createGame()
     .then(gameCreate)
     .catch(ui.createGameFail)
-    .then( response => {
+    .then(response => {
       $('.loading').hide()
     })
 }

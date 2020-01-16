@@ -25,7 +25,6 @@ const showGame = function () {
   $('#currentTurn').show()
 }
 const updateGameSuccess = function (response) {
-
   api.getGames()
     .then(getGamesSuccess)
     .catch(getGamesFail)

@@ -26,7 +26,6 @@ const onSignUp = function (event) {
       $('form').trigger('reset')
       $('.loading').hide()
     })
-
 }
 // TODO; ADD message for 'loading' while data is sent.
 const onSignIn = function (event) {
