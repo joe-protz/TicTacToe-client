@@ -34,6 +34,7 @@ const updateGameFail = function () {
 }
 const createGameFail = function () {
   $('.warnings').text('Sorry, your game could not be created')
+  $('#messages').text('')
 }
 
 const getGamesSuccess = function (response) {
