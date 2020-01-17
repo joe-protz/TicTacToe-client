@@ -60,22 +60,28 @@ const changePasswordFailure = function (response) {
   $('form').trigger('reset')
   $('.warnings').text('Failed to Change Password')
 }
-
+let warnings
+let messages
 const openPWChange = function () {
+  warnings = $('.warnings').text()
+  messages = $('#messages').text()
   $('#pw-form').show()
   $('.gameBoard').hide()
   $('#currentTurn').hide()
   $('#messages').text('')
   $('.warnings').text('')
   $('.light-toggle').show()
-    $('#stats').hide()
+  $('#stats').hide()
+
+  console.log(warnings)
+  console.log(messages)
 }
 const closePWChange = function () {
   $('#pw-form').hide()
   $('.gameBoard').show()
   $('#currentTurn').show()
-  $('#messages').text('')
-  $('.warnings').text('')
+  $('#messages').text(messages)
+  $('.warnings').text(warnings)
   $('.light-toggle').hide()
   $('#stats').show()
 }

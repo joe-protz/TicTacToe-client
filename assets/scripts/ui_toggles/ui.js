@@ -38,7 +38,7 @@ const activateLightMode = function () {
 let crazyTimer
 
 const toggleCrazyMode = function () {
-  if (crazyMode ) {
+  if (crazyMode) {
     $('.innerGameBoard').removeClass('rotated')
     store.boxes.forEach(element => element.removeClass('rotated'))
     clearInterval(crazyTimer)

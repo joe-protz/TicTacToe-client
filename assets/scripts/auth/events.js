@@ -66,7 +66,6 @@ const onChangePassword = function (event) {
       $('.loading').hide()
       $('#messages').text('')
     })
-
 }
 
 const addHandlers = () => {

@@ -122,7 +122,6 @@ const gameCreate = function (response) {
   turnComplete = true
   ui.resetBoard()
   ui.showGame()
-
 } // just restore all defaults for  API, DOM, and JS representation
 
 const playAiToggle = function (event) {
