@@ -50,7 +50,7 @@ const changePasswordSuccess = function (response) {
   $('#messages').text('Successfully Changed Password')
   $('#pw-form').hide()
   $('.gameBoard').show()
-  $('.warnings').text('')
+  $('.warnings').text(warnings)
   $('#currentTurn').show()
   $('#messages').show()
   $('#create-game').show()
