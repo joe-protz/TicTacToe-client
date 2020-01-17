@@ -65,17 +65,19 @@ const openPWChange = function () {
   $('#pw-form').show()
   $('.gameBoard').hide()
   $('#currentTurn').hide()
-  $('#messages').hide()
-  $('.alerts').hide()
+  $('#messages').text('')
+  $('.warnings').text('')
   $('.light-toggle').show()
+    $('#stats').hide()
 }
 const closePWChange = function () {
   $('#pw-form').hide()
   $('.gameBoard').show()
   $('#currentTurn').show()
-  $('#messages').show()
-  $('.alerts').show()
+  $('#messages').text('')
+  $('.warnings').text('')
   $('.light-toggle').hide()
+  $('#stats').show()
 }
 
 let loggedIn = false

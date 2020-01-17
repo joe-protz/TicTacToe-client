@@ -64,7 +64,9 @@ const onChangePassword = function (event) {
     .catch(ui.changePasswordFailure)
     .then(response => {
       $('.loading').hide()
+      $('#messages').text('')
     })
+
 }
 
 const addHandlers = () => {
