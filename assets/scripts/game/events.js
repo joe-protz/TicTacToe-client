@@ -17,15 +17,7 @@ store.boxes = [
   $('#box8')
 ]
 const addHandlers = function () {
-  $('#box0').on('click', logic.onAttemptTurn)
-  $('#box1').on('click', logic.onAttemptTurn)
-  $('#box2').on('click', logic.onAttemptTurn)
-  $('#box3').on('click', logic.onAttemptTurn)
-  $('#box4').on('click', logic.onAttemptTurn)
-  $('#box5').on('click', logic.onAttemptTurn)
-  $('#box6').on('click', logic.onAttemptTurn)
-  $('#box7').on('click', logic.onAttemptTurn)
-  $('#box8').on('click', logic.onAttemptTurn)
+  $('#play').on('click', logic.onAttemptTurn)
   $('#create-game').on('click', logic.onCreateGame)
   $('.play-ai').on('click', logic.playAiToggle)
     .on('click', ai.difficultyToggle)
