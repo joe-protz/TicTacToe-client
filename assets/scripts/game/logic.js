@@ -4,11 +4,11 @@ const ui = require('./ui')
 const store = require('../store')
 const ai = require('./ai')
 
-const winConditions = [
+store.winConditions = [ // added to store for AI
   [0, 1, 2], [3, 4, 5], [6, 7, 8], // horizontal
   [0, 3, 6], [1, 4, 7], [2, 5, 8], // vertical
   [0, 4, 8], [2, 4, 6]]// diagonal
-store.winConditions = winConditions // for AI file
+
 let playAi = false
 let turnComplete = true
 
@@ -65,7 +65,7 @@ const takeTurn = function (event) {
 
 const checkWin = function () {
   let won = false
-  for (const condition of winConditions) { // if any combination of win conditions are met, then don't check for a tie , change game state, and display winner
+  for (const condition of store.winConditions) { // if any combination of win conditions are met, then don't check for a tie , change game state, and display winner
     if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
       store.boxes[condition[0]].css('color', '#11ed46')
       store.boxes[condition[1]].css('color', '#11ed46')
@@ -88,7 +88,7 @@ store.checkWin = checkWin // for AI file
 const checkPastWins = function (game) {
   const cells = game.cells
   let hasWon = false
-  for (const condition of winConditions) {
+  for (const condition of store.winConditions) {
     if (cells[condition[0]] === 'X' && cells[condition[1]] === 'X' && cells[condition[2]] === 'X') {
       hasWon = true
     }
