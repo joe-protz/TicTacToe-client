@@ -1,4 +1,6 @@
 'use strict'
+// TODO: WHY ISNT MINIMAX TAKING THE WINNING TURN?
+
 const api = require('./api')
 const ui = require('./ui')
 const store = require('../store')

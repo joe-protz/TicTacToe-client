@@ -2,9 +2,7 @@
 const logic = require('./logic')
 const store = require('../store')
 const ai = require('./ai')
-store.currentTurn = 'X'
-store.gameOver = false
-store.occupiedSpots = new Array(9)
+
 store.boxes = [
   $('#box0'),
   $('#box1'),
