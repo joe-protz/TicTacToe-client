@@ -4,11 +4,7 @@ const authEvents = require('./auth/events')
 const uiEvents = require('./ui_toggles/events')
 
 $(() => {
-  $('.gameBoard').hide()
-  $('#currentTurn').hide()
-  $('#pw-form').hide()
-  $('#create-game').hide()
-  $('.loading').hide()
+  $('.startup').hide()
   gameEvents.addHandlers()
   authEvents.addHandlers()
   uiEvents.addHandlers()
