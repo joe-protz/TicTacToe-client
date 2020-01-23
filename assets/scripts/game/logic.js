@@ -23,6 +23,21 @@ const onCreateGame = function () { // create API game, then reset the logic and 
     })
 }
 
+const gameCreate = function (response) {
+  store.game = response.game
+  const color = $('body').css('color')
+  for (const box of store.boxes) {
+    box.css('color', `${color}`)
+  }
+  store.currentTurn = 'X'
+  store.gameOver = false
+  store.occupiedSpots = new Array(9)
+  ai.resetAiTurnFinished()
+  turnComplete = true
+  ui.resetBoard()
+  ui.showGame()
+} // just restore all defaults for  API, DOM, and JS representation
+
 const onAttemptTurn = function (event) { // allow toggle betweeen single play and AI play
   if (!playAi) {
     takeTurn(event)
@@ -33,12 +48,12 @@ const onAttemptTurn = function (event) { // allow toggle betweeen single play an
 const takeTurn = function (event) {
   if (!store.gameOver) {
     if (turnComplete) { // dont let one player override the other if network connection is bad
-      if (!($(`#${event.target.id}`).hasClass('clicked'))) { // if the spot on the board does not have the class clicked ,  add the move to the board and add the class to the spot
+      if ($(event.target).text() === ' ') { // if the spot on the board is empty let the player click
         $('.warnings').text('')
         turnComplete = false
-        $(`#${event.target.id}`).text(store.currentTurn).addClass('clicked')
-        store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
-        store.currentIndex = event.target.id.slice(3)
+        $(event.target).text(store.currentTurn)
+        store.occupiedSpots[event.target.id] = store.currentTurn // add the move to the store.occupiedSpots array
+        store.currentIndex = event.target.id
         checkWin()
         api.updateGame()
           .then(ui.updateGameSuccess)
@@ -108,21 +123,6 @@ const checkforTie = function (array) {
   return (positionIsEmpty.length === 9)
 } // return true if tie is reached or false
 store.checkforTie = checkforTie
-
-const gameCreate = function (response) {
-  store.game = response.game
-  const color = $('body').css('color')
-  for (const box of store.boxes) {
-    box.css('color', `${color}`)
-  }
-  store.currentTurn = 'X'
-  store.gameOver = false
-  store.occupiedSpots = new Array(9)
-  ai.resetAiTurnFinished()
-  turnComplete = true
-  ui.resetBoard()
-  ui.showGame()
-} // just restore all defaults for  API, DOM, and JS representation
 
 const playAiToggle = function (event) {
   const button = event.target.id

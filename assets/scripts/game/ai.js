@@ -9,11 +9,11 @@ let difficulty = 'easy'
 const takeTurn = function (event) {
   if (!store.gameOver) {
     if (aiTurnFinished) {
-      if (!($(`#${event.target.id}`).hasClass('clicked'))) { // if the spot on the board does not have the class clicked ,  add the move to the board and add the class to the spot
+      if ($(event.target).text() === ' ') {
         $('.warnings').text('')
-        $(`#${event.target.id}`).text(store.currentTurn).addClass('clicked')
-        store.occupiedSpots[event.target.id.slice(3)] = store.currentTurn // add the move to the store.occupiedSpots array
-        store.currentIndex = event.target.id.slice(3)
+        $(event.target).text(store.currentTurn)
+        store.occupiedSpots[event.target.id] = store.currentTurn // add the move to the store.occupiedSpots array
+        store.currentIndex = event.target.id
         store.checkWin()
         api.updateGame()
           .then(ui.updateGameSuccess)
@@ -42,9 +42,11 @@ const aiMove = function () {
   if (!store.gameOver) {
     $('#messages').text('Computer is thinking.. ')
     $('.loading').show()
-    const availableSpots = store.boxes.filter(box => !(box.hasClass('clicked')))
-    const availableIndexes = availableSpots.map(spot => spot.attr('id').slice(3)) // index #'s for all available spots
+    const availableSpots = store.boxes.filter(box => (box.text() === ' ' ))
+    console.log(availableSpots)
+    const availableIndexes = availableSpots.map(spot => spot.attr('id')) // index #'s for all available spots
     // filter the spots left for only spots that haven't been clicked
+    console.log(availableIndexes)
     if (difficulty === 'easy') {
       let currentChoice = availableSpots[Math.floor((Math.random() * availableSpots.length))] // AI Base choice is random
       if (checkAiWins(store.currentTurn) !== false) { // if there is a win spot, take it
@@ -64,13 +66,13 @@ const aiMove = function () {
       }
 
       currentChoice.text(store.currentTurn).addClass('clicked') // just add an x and a class clicked to the first available spot.
-      const spotID = currentChoice.attr('id').slice(3) // the ID of this spot
+      const spotID = currentChoice.attr('id') // the ID of this spot
       store.occupiedSpots[spotID] = store.currentTurn // put the play into the board array
       store.currentIndex = spotID // store the current index to use for the update game
     } else {
       const perfectIndex = perfectAI() // find the index representation of the best move
       const currentChoice = store.boxes[perfectIndex] // the current choice of the ai representation in the dom
-      currentChoice.text(store.currentTurn).addClass('clicked') // add the x or o and don't let me click it
+      currentChoice.text(store.currentTurn) // add the x or o and don't let me click it
       store.occupiedSpots[perfectIndex] = store.currentTurn // take the turn in the board representation
       store.currentIndex = perfectIndex // for API, change the current index
     }

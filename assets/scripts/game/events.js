@@ -4,16 +4,17 @@ const store = require('../store')
 const ai = require('./ai')
 
 store.boxes = [
-  $('#box0'),
-  $('#box1'),
-  $('#box2'),
-  $('#box3'),
-  $('#box4'),
-  $('#box5'),
-  $('#box6'),
-  $('#box7'),
-  $('#box8')
+  $('#0'),
+  $('#1'),
+  $('#2'),
+  $('#3'),
+  $('#4'),
+  $('#5'),
+  $('#6'),
+  $('#7'),
+  $('#8')
 ]
+//TODO : See if there is a method to extract all Ids of child of #play??
 const addHandlers = function () {
   $('#play').on('click', logic.onAttemptTurn)
   $('#create-game').on('click', logic.onCreateGame)

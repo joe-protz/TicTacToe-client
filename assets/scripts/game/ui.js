@@ -13,7 +13,7 @@ const updatePlayer = function () {
 
 const resetBoard = function () {
   store.boxes.forEach(box => {
-    box.removeClass('clicked').text('')
+    box.text(' ')
   })
   $('#messages').text('')
   $('.warnings').text('')
