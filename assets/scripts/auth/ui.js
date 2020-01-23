@@ -3,6 +3,7 @@ const store = require('../store')
 const gameApi = require('../game/api')
 const gameUi = require('../game/ui')
 const ui_toggles = require('../ui_toggles/ui')
+const ai = require('../game/ai')
 
 const signUpSuccess = function (response) {
   $('#messages').text('Successfully Signed Up! Please Sign In')
@@ -36,6 +37,7 @@ const signOutSuccess = function () {
   $('#stats').text('')
   $('.warnings').text('')
   store.user = null
+  ai.resetSession()
   store.temp = null
   loggedIn = false
   changeView()
@@ -72,9 +74,6 @@ const openPWChange = function () {
   $('.warnings').text('')
   $('.light-toggle').show()
   $('#stats').hide()
-
-  console.log(warnings)
-  console.log(messages)
 }
 const closePWChange = function () {
   $('#pw-form').hide()

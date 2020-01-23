@@ -228,8 +228,14 @@ const checkAiWins = function (turn) {
 }
 // check if there is a win condition available, returns false if not. Needed for easy/challenge mode to check for win spots without triggering anything
 
+const resetSession = function() {
+  wins = 0
+  ties = 0
+}
+
 module.exports = {
   takeTurn,
   resetAiTurnFinished,
+  resetSession,
   difficultyToggle
 }
