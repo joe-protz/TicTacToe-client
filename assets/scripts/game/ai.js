@@ -6,8 +6,11 @@ const ui = require('./ui')
 const store = require('../store')
 let aiTurnFinished = true
 let difficulty = 'easy'
+let wins = 0
+let ties = 0
 
 const takeTurn = function (event) {
+  console.log('ties ' + ties)
   if (store.gameOver) {
     $('.warnings').text('Please click Create Game to play again!')
     setTimeout(function () {
@@ -32,6 +35,12 @@ const takeTurn = function (event) {
   store.occupiedSpots[event.target.id] = store.currentTurn // add the move to the store.occupiedSpots array
   store.currentIndex = event.target.id
   store.checkWin()
+  if (store.checkforTie(store.occupiedSpots)) {
+    ties++
+  }
+  if (store.checkWin()) {
+    wins++
+  }
   api.updateGame()
     .then(ui.updateGameSuccess)
     .then(ui.updatePlayer)
@@ -42,32 +51,28 @@ const takeTurn = function (event) {
 
 const aiMove = function () {
   if (!store.gameOver) {
-    const availableSpots = store.boxes.filter(box => (box.text() === ' '))
-    const availableIndexes = availableSpots.map(spot => spot.attr('id')) // index #'s for all available spots
-    // filter the spots left for only spots that haven't been clicked
-    if (difficulty === 'easy') { // TODO: CHANGE TO MINIMAX WITH % of RANDOM
-      let currentChoice = availableSpots[Math.floor((Math.random() * availableSpots.length))] // AI Base choice is random
-      if (checkAiWins(store.currentTurn) !== false) { // if there is a win spot, take it
-        currentChoice = store.boxes[checkAiWins(store.currentTurn)]
-      } else if (checkAiWins(getOtherPlayer()) !== false) { // if there is a way to block a win, take it
-        currentChoice = store.boxes[checkAiWins(getOtherPlayer())]
-      } else if (availableIndexes.includes('4')) {
-        currentChoice = store.boxes[4] // take center
-      } else if (availableIndexes.includes('0') && store.occupiedSpots[8] === getOtherPlayer()) {
-        currentChoice = store.boxes[0]
-      } else if (availableIndexes.includes('2') && store.occupiedSpots[6] === getOtherPlayer()) {
-        currentChoice = store.boxes[2]
-      } else if (availableIndexes.includes('6') && store.occupiedSpots[2] === getOtherPlayer()) {
-        currentChoice = store.boxes[6]
-      } else if (availableIndexes.includes('8') && store.occupiedSpots[0] === getOtherPlayer()) {
-        currentChoice = store.boxes[8] // opponent took corner, and opposite is empty, take that spot
-      }
+    let chance = Math.round(Math.random() * 10)
 
-      currentChoice.text(store.currentTurn) // just add an x and a class clicked to the first available spot.
+    console.log('chance is ' + chance)
+
+    if (difficulty === 'easy' && (chance) >= wins * 0.5) {
+      const availableSpots = store.boxes.filter(box => (box.text() === ' '))
+      let currentChoice = availableSpots[Math.floor((Math.random() * availableSpots.length))] // AI Base choice is random
+      chance = Math.round(Math.random() * 10)
+      if (checkAiWins(store.currentTurn) !== false && chance < 0.5 * (wins + 1)) { // if there is a win spot, take it
+        console.log('win')
+        currentChoice = store.boxes[checkAiWins(store.currentTurn)]
+      } else if (checkAiWins(getOtherPlayer()) !== false && chance < 0.5 * (wins + 1)) {
+        console.log('block')
+        // if there is a way to block a win, take it
+        currentChoice = store.boxes[checkAiWins(getOtherPlayer())]
+      }
+      currentChoice.text(store.currentTurn)
       const spotID = currentChoice.attr('id') // the ID of this spot
       store.occupiedSpots[spotID] = store.currentTurn // put the play into the board array
       store.currentIndex = spotID // store the current index to use for the update game
     } else {
+      console.log('minininininin')
       const perfectIndex = perfectAI() // find the index representation of the best move
       const currentChoice = store.boxes[perfectIndex] // the current choice of the ai representation in the dom
       currentChoice.text(store.currentTurn) // add the x or o and don't let me click it
@@ -75,6 +80,11 @@ const aiMove = function () {
       store.currentIndex = perfectIndex // for API, change the current index
     }
     store.checkWin()
+
+    if (store.checkWin() || ties > 5) {
+      wins = 0
+      ties = 0
+    }
     api.updateGame()
       .then(ui.updateGameSuccess)
       .then(aiTurnFinished = true)
@@ -83,57 +93,6 @@ const aiMove = function () {
   ui.updatePlayer()
 }
 
-const checkAiWins = function (turn) {
-  if (store.occupiedSpots[0] === turn && store.occupiedSpots[1] === turn && store.occupiedSpots[2] === undefined) {
-    return 2
-  } else if (store.occupiedSpots[1] === turn && store.occupiedSpots[2] === turn && store.occupiedSpots[0] === undefined) {
-    return 0
-  } else if (store.occupiedSpots[2] === turn && store.occupiedSpots[0] === turn && store.occupiedSpots[1] === undefined) {
-    return 1 // all row 1
-  } else if (store.occupiedSpots[3] === turn && store.occupiedSpots[4] === turn && store.occupiedSpots[5] === undefined) {
-    return 5
-  } else if (store.occupiedSpots[4] === turn && store.occupiedSpots[5] === turn && store.occupiedSpots[3] === undefined) {
-    return 3
-  } else if (store.occupiedSpots[3] === turn && store.occupiedSpots[5] === turn && store.occupiedSpots[4] === undefined) {
-    return 4 // all row 2
-  } else if (store.occupiedSpots[6] === turn && store.occupiedSpots[7] === turn && store.occupiedSpots[8] === undefined) {
-    return 8
-  } else if (store.occupiedSpots[7] === turn && store.occupiedSpots[8] === turn && store.occupiedSpots[6] === undefined) {
-    return 6
-  } else if (store.occupiedSpots[6] === turn && store.occupiedSpots[8] === turn && store.occupiedSpots[7] === undefined) {
-    return 7 // all row 3
-  } else if (store.occupiedSpots[0] === turn && store.occupiedSpots[3] === turn && store.occupiedSpots[6] === undefined) {
-    return 6
-  } else if (store.occupiedSpots[3] === turn && store.occupiedSpots[6] === turn && store.occupiedSpots[0] === undefined) {
-    return 0
-  } else if (store.occupiedSpots[6] === turn && store.occupiedSpots[0] === turn && store.occupiedSpots[3] === undefined) {
-    return 3 // all col 1
-  } else if (store.occupiedSpots[1] === turn && store.occupiedSpots[4] === turn && store.occupiedSpots[7] === undefined) {
-    return 7
-  } else if (store.occupiedSpots[4] === turn && store.occupiedSpots[7] === turn && store.occupiedSpots[1] === undefined) {
-    return 1
-  } else if (store.occupiedSpots[7] === turn && store.occupiedSpots[1] === turn && store.occupiedSpots[4] === undefined) {
-    return 4 // all col 2
-  } else if (store.occupiedSpots[2] === turn && store.occupiedSpots[5] === turn && store.occupiedSpots[8] === undefined) {
-    return 8
-  } else if (store.occupiedSpots[5] === turn && store.occupiedSpots[8] === turn && store.occupiedSpots[2] === undefined) {
-    return 2
-  } else if (store.occupiedSpots[2] === turn && store.occupiedSpots[8] === turn && store.occupiedSpots[5] === undefined) {
-    return 5 /// all col 3
-  } else if (store.occupiedSpots[0] === turn && store.occupiedSpots[4] === turn && store.occupiedSpots[8] === undefined) {
-    return 8
-  } else if (store.occupiedSpots[0] === turn && store.occupiedSpots[8] === turn && store.occupiedSpots[4] === undefined) {
-    return 4
-  } else if (store.occupiedSpots[4] === turn && store.occupiedSpots[8] === turn && store.occupiedSpots[0] === undefined) {
-    return 0 // all diag 1
-  } else if (store.occupiedSpots[2] === turn && store.occupiedSpots[4] === turn && store.occupiedSpots[6] === undefined) {
-    return 6
-  } else if (store.occupiedSpots[4] === turn && store.occupiedSpots[6] === turn && store.occupiedSpots[2] === undefined) {
-    return 2
-  } else if (store.occupiedSpots[2] === turn && store.occupiedSpots[6] === turn && store.occupiedSpots[4] === undefined) {
-    return 4 // all diag 2
-  } return false
-} // check if there is a win condition available, returns false if not
 const getOtherPlayer = function () {
   let otherPlayer
   store.currentTurn === 'X' ? otherPlayer = 'O' : otherPlayer = 'X' // TODO: Rethink  logic to refactor
@@ -205,7 +164,7 @@ const minimax = function (board, depth, isMaximizing) {
         board[i] = store.currentTurn // temportarily place the move on the board representation
         const score = minimax(board, depth + 1, false) // re-run minimax as minimizing, checking for a terminal condition first
         board[i] = undefined // put board back
-        bestScore = Math.max(score, bestScore) // find the best score and return it after all loops
+        bestScore = (Math.max(score - depth, bestScore)) // find the best score and return it after all loops
       }
     }
     return bestScore
@@ -216,12 +175,66 @@ const minimax = function (board, depth, isMaximizing) {
         board[i] = getOtherPlayer() // getOtherPlayer will return (X) if player clicked first
         const score = minimax(board, depth + 1, true) // run minimax for this version of the board, now maximizing
         board[i] = undefined
-        bestScore = Math.min(score, bestScore) // find the worst score and return it
+        bestScore = Math.min(score + depth, bestScore) // find the worst score and return it
       }
     }
     return bestScore
   }
 }
+
+const checkAiWins = function (turn) {
+  if (store.occupiedSpots[0] === turn && store.occupiedSpots[1] === turn && store.occupiedSpots[2] === undefined) {
+    return 2
+  } else if (store.occupiedSpots[1] === turn && store.occupiedSpots[2] === turn && store.occupiedSpots[0] === undefined) {
+    return 0
+  } else if (store.occupiedSpots[2] === turn && store.occupiedSpots[0] === turn && store.occupiedSpots[1] === undefined) {
+    return 1 // all row 1
+  } else if (store.occupiedSpots[3] === turn && store.occupiedSpots[4] === turn && store.occupiedSpots[5] === undefined) {
+    return 5
+  } else if (store.occupiedSpots[4] === turn && store.occupiedSpots[5] === turn && store.occupiedSpots[3] === undefined) {
+    return 3
+  } else if (store.occupiedSpots[3] === turn && store.occupiedSpots[5] === turn && store.occupiedSpots[4] === undefined) {
+    return 4 // all row 2
+  } else if (store.occupiedSpots[6] === turn && store.occupiedSpots[7] === turn && store.occupiedSpots[8] === undefined) {
+    return 8
+  } else if (store.occupiedSpots[7] === turn && store.occupiedSpots[8] === turn && store.occupiedSpots[6] === undefined) {
+    return 6
+  } else if (store.occupiedSpots[6] === turn && store.occupiedSpots[8] === turn && store.occupiedSpots[7] === undefined) {
+    return 7 // all row 3
+  } else if (store.occupiedSpots[0] === turn && store.occupiedSpots[3] === turn && store.occupiedSpots[6] === undefined) {
+    return 6
+  } else if (store.occupiedSpots[3] === turn && store.occupiedSpots[6] === turn && store.occupiedSpots[0] === undefined) {
+    return 0
+  } else if (store.occupiedSpots[6] === turn && store.occupiedSpots[0] === turn && store.occupiedSpots[3] === undefined) {
+    return 3 // all col 1
+  } else if (store.occupiedSpots[1] === turn && store.occupiedSpots[4] === turn && store.occupiedSpots[7] === undefined) {
+    return 7
+  } else if (store.occupiedSpots[4] === turn && store.occupiedSpots[7] === turn && store.occupiedSpots[1] === undefined) {
+    return 1
+  } else if (store.occupiedSpots[7] === turn && store.occupiedSpots[1] === turn && store.occupiedSpots[4] === undefined) {
+    return 4 // all col 2
+  } else if (store.occupiedSpots[2] === turn && store.occupiedSpots[5] === turn && store.occupiedSpots[8] === undefined) {
+    return 8
+  } else if (store.occupiedSpots[5] === turn && store.occupiedSpots[8] === turn && store.occupiedSpots[2] === undefined) {
+    return 2
+  } else if (store.occupiedSpots[2] === turn && store.occupiedSpots[8] === turn && store.occupiedSpots[5] === undefined) {
+    return 5 /// all col 3
+  } else if (store.occupiedSpots[0] === turn && store.occupiedSpots[4] === turn && store.occupiedSpots[8] === undefined) {
+    return 8
+  } else if (store.occupiedSpots[0] === turn && store.occupiedSpots[8] === turn && store.occupiedSpots[4] === undefined) {
+    return 4
+  } else if (store.occupiedSpots[4] === turn && store.occupiedSpots[8] === turn && store.occupiedSpots[0] === undefined) {
+    return 0 // all diag 1
+  } else if (store.occupiedSpots[2] === turn && store.occupiedSpots[4] === turn && store.occupiedSpots[6] === undefined) {
+    return 6
+  } else if (store.occupiedSpots[4] === turn && store.occupiedSpots[6] === turn && store.occupiedSpots[2] === undefined) {
+    return 2
+  } else if (store.occupiedSpots[2] === turn && store.occupiedSpots[6] === turn && store.occupiedSpots[4] === undefined) {
+    return 4 // all diag 2
+  } return false
+}
+// check if there is a win condition available, returns false if not
+
 module.exports = {
   takeTurn,
   resetAiTurnFinished,

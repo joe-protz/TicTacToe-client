@@ -88,7 +88,7 @@ const checkWin = function () {
       store.boxes[condition[2]].css('color', winColor)
       store.gameOver = true
       ui.displayWinner(store.currentTurn)
-      return
+      return true
     }
   }
   if (checkforTie(store.occupiedSpots)) {
