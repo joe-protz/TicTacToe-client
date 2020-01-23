@@ -6,6 +6,7 @@ const ui = require('./ui')
 const store = require('../store')
 let aiTurnFinished = true
 let difficulty = 'easy'
+
 const takeTurn = function (event) {
   if (!store.gameOver) {
     if (aiTurnFinished) {

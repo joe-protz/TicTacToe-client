@@ -61,6 +61,7 @@ const takeTurn = function (event) {
     $('.warnings').text('Please click an open space')
     return
   } // if the spot on the board is empty let the player click
+
   $('.warnings').text('')
   turnComplete = false
   $(event.target).text(store.currentTurn)
@@ -90,28 +91,22 @@ const checkWin = function () {
       return
     }
   }
-  checkforTie(store.occupiedSpots)
+  if (checkforTie(store.occupiedSpots)) {
+    $('#messages').text('Its a tie! Please click create game to play again')
+    store.gameOver = true
+  }
+
 } // checks for a win and tie
 store.checkWin = checkWin // for AI file
 
-const checkPastWins = function (game) {
+store.checkPastWins = function (game) { //TODO: Refactor with array.some()
   const cells = game.cells
-  let hasWon = false
-  for (const condition of store.winConditions) {
-    if (cells[condition[0]] === 'X' && cells[condition[1]] === 'X' && cells[condition[2]] === 'X') {
-      hasWon = true
-    }
-  }
-  return hasWon
+  return store.winConditions.some(condition => cells[condition[0]] === 'X' && cells[condition[1]] === 'X' && cells[condition[2]] === 'X')
 } // accepts array of gmames and returns amt of wins for X
-store.checkPastWins = checkPastWins // for ui to access
+
 
 const checkforTie = function (array) {
-if (array.every(position => position !== undefined)) {
-$('#messages').text('Its a tie! Please click create game to play again')
-store.gameOver = true
-}
-  return (array.every(position => position !== undefined))
+  return array.every(position => position !== undefined)
 } // return true if tie is reached or false
 store.checkforTie = checkforTie
 
