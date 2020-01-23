@@ -1,16 +1,15 @@
 'use strict'
-// TODO: WHY ISNT MINIMAX TAKING THE WINNING TURN?
 
 const api = require('./api')
 const ui = require('./ui')
 const store = require('../store')
-let aiTurnFinished = true
+let aiTurnFinished = true // For helping with race conditions
 let difficulty = 'easy'
-let wins = 0
+let wins = 0 // TODO: Create visual for player to know how many wins they have achieved as well as repurpose to
+// 'challenge mode', possibly allow crazy mode to be gated behind a streak
 let ties = 0
 
 const takeTurn = function (event) {
-  console.log('ties ' + ties)
   if (store.gameOver) {
     $('.warnings').text('Please click Create Game to play again!')
     setTimeout(function () {
@@ -52,19 +51,14 @@ const takeTurn = function (event) {
 const aiMove = function () {
   if (!store.gameOver) {
     let chance = Math.round(Math.random() * 10)
-
-    console.log('chance is ' + chance)
-
-    if (difficulty === 'easy' && (chance) >= wins * 0.5) {
+    if (difficulty === 'easy' && (chance) >= wins * 0.5) { // using probability scaling to decide if turn is optimal or 'easy'
       const availableSpots = store.boxes.filter(box => (box.text() === ' '))
       let currentChoice = availableSpots[Math.floor((Math.random() * availableSpots.length))] // AI Base choice is random
-      chance = Math.round(Math.random() * 10)
-      if (checkAiWins(store.currentTurn) !== false && chance < 0.5 * (wins + 1)) { // if there is a win spot, take it
-        console.log('win')
+      chance = Math.round(Math.random() * 10) // reset random number for more desirable AI behavior
+      if (checkAiWins(store.currentTurn) !== false && chance < 0.5 * (wins + 1)) { // if there is a win spot, and the chance wasn't in your favor,  take it
         currentChoice = store.boxes[checkAiWins(store.currentTurn)]
       } else if (checkAiWins(getOtherPlayer()) !== false && chance < 0.5 * (wins + 1)) {
-        console.log('block')
-        // if there is a way to block a win, take it
+        // if there is a way to block a win  and the chance wasn't in your favor,  take it
         currentChoice = store.boxes[checkAiWins(getOtherPlayer())]
       }
       currentChoice.text(store.currentTurn)
@@ -72,7 +66,6 @@ const aiMove = function () {
       store.occupiedSpots[spotID] = store.currentTurn // put the play into the board array
       store.currentIndex = spotID // store the current index to use for the update game
     } else {
-      console.log('minininininin')
       const perfectIndex = perfectAI() // find the index representation of the best move
       const currentChoice = store.boxes[perfectIndex] // the current choice of the ai representation in the dom
       currentChoice.text(store.currentTurn) // add the x or o and don't let me click it
@@ -81,7 +74,7 @@ const aiMove = function () {
     }
     store.checkWin()
 
-    if (store.checkWin() || ties > 5) {
+    if (store.checkWin() || ties > 5) { // condition for resetting wins and ties
       wins = 0
       ties = 0
     }
@@ -151,7 +144,7 @@ const scoreReturn = function () {
 }// returns 10 if ai wins this turn, 0 if tie, -10 if player wins, null if none of these
 
 const minimax = function (board, depth, isMaximizing) {
-  const result = scoreReturn() // at the beginning of each pass, see if the current state of the board is a terminal condition and if so, return the score
+  const result = scoreReturn() // at the beginning of each pass, see if the current state of the board is a terminal condition and if so, return the score.. Meaning, if a tie or win was found, report whether it was a win, loss, or tie
   if (result !== null) {
     return result
   }
@@ -164,7 +157,7 @@ const minimax = function (board, depth, isMaximizing) {
         board[i] = store.currentTurn // temportarily place the move on the board representation
         const score = minimax(board, depth + 1, false) // re-run minimax as minimizing, checking for a terminal condition first
         board[i] = undefined // put board back
-        bestScore = (Math.max(score - depth, bestScore)) // find the best score and return it after all loops
+        bestScore = (Math.max(score - depth, bestScore)) // find the best score and return it after all loops. Deduct depth because it shows how many turns it took to get to this score, so the algorith can take moves that lead to wins faster
       }
     }
     return bestScore
@@ -233,7 +226,7 @@ const checkAiWins = function (turn) {
     return 4 // all diag 2
   } return false
 }
-// check if there is a win condition available, returns false if not
+// check if there is a win condition available, returns false if not. Needed for easy/challenge mode to check for win spots without triggering anything
 
 module.exports = {
   takeTurn,

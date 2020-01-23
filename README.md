@@ -1,12 +1,12 @@
 
 # Web-Based Tic-Tac-Toe
-
-This application allows a user to sign up and login to an app to play Tic-Tac-Toe. The user will then see how many games he or she has completed, have the option to create new games, and reset their password.
+This is my first ever project done at General Assembly Boston during my third week of classes. The application allows a user to sign up and login to an app to play Tic-Tac-Toe. The user will then see how many games he or she has completed and won, have the option to create new games, and reset their password.
 
 ## Important Links
 
 - [Wireframes](https://imgur.com/a/nekb3Am)
 - [Deployed API](https://joe10994.github.io/TicTacToe-client/)
+- [LinkedIn](https://www.linkedin.com/in/joe-protz/)
 
 ## Planning Story
 
@@ -22,7 +22,7 @@ Next I needed logic to check for wins and ties. For the wins, I loop through an 
 
 For a tie, I check my array to see if all 9 spots are occupied by an 'X' or an 'O'. If it got to that point without a winner, then game over, and it is a tie.
 
-I attempted from the beginning to keep the project modular by separating major functios, so I refactored to move some of the UI handling to the ui.js file within the game foler.
+I attempted from the beginning to keep the project modular by separating major functions, so I refactored to move some of the UI handling to the ui.js file within the game foler.
 
 I needed a way to play again, so I created a reset buttton. The reset button called a function within the ui.js file which reset all of my variables and looped through an array of the game board Id's setting their text to empty quotes.
 
@@ -34,7 +34,7 @@ Once I was able to do all of the above, I added a sign out button that allowed m
 
 I realized here I would later need a cancel button, but it was not part of the requirements for this project, so I made a note of it and moved on.
 
-Once I had the game logic and authentication figured out, I needed to work on allowing the game to work with the API, however I was excited about this project at home after dinner and had some fun with bootstrap making it look much nicer. I made the who page much more responsive, so that a square board would always show , with centered text for a proper looking board. I added colors, and some bootstrap buttons and forms. It was again much more difficult than anticipated to create  the aesthetic I desired, and many hours were spent googling "how to align center" and 'how to make a square in bootstrap'. In the end I am very pleased. I am also going to add a night mode soon.
+Once I had the game logic and authentication figured out, I needed to work on allowing the game to work with the API, however I was excited about this project at home after dinner and had some fun with bootstrap making it look much nicer. I made the whole page much more responsive, so that a square board would always show , with centered text for a proper looking board. I added colors, and some bootstrap buttons and forms. It was again much more difficult than anticipated to create  the aesthetic I desired, and many hours were spent googling "how to align center" and 'how to make a square in bootstrap'. In the end I am very pleased. I am also going to add a night mode soon.
 
 I soon moved on to actual functionality. I needed to allow my game to interact with a game api that kept track of games as well as created them. First step was to simply allow the reset button to be repurposed. It was now a create game button, and in addition to resetting my local game board, it would create a game board within the api. The api documents were a little confusing, but with some help I got it to work. Once I had a created game, I needed to allow it to be updated. The idea behind this is still not perfect, but for now, it is hidden behind several gates. These are a successful move, a win, or a tie. This is because each turn it should be updated with that moves turn, and on a game over I need to update the game over value to true. I used pretty easy logic to tell the api what to update, I pushed the current turn to the index that I was already pushing to my local game array.
 
@@ -61,6 +61,15 @@ After all of this, I spent some time adding AI logic. According to wikipedia, Ti
 On the way to my classes on a train, I noticed that I was allowed to play against the AI many turns in a row. This was because the AI was waiting for me to click, but I had no check to see if the AI had completed it's update. I could click 3 x's in a row before the ai went. I got around this with a variable asking if the AI was finished, which was changed on player click and as a promise after the ai updated the game.
 
 For sake of consistency, I added the same gate to single player ('no ai').
+
+After some time passed, I found myself continually working on this project. I loved polishing it more and more. In the back of my head I kenw what I really wanted was an algorithm for the AI. I began implementing the minimax algorithm. This was a serious challenge for me, as debugging wasn't as simple as a console log when the function is recursive and happening thousands of times per click. It took many online resources such as youtube [Coding Train is awesome](www.youtube.com/codingtrain) and wikipedia psudocode, and reading over the algorithm several hundred times line by line, commenting it out, talking to my rubber duck, etc to start to make sense of what was happening and what needed to work in order for the
+algorithm to be correct.
+
+In the end, the biggest hurdle actually ended up being my score finding algoritm. Minimax relies on the ability to see if the path it's taking ends in a win, loss, or tie, and I was unfortunately not allowing for proper scoring as I had several overrides within my loop. Meaning, if my algorithm found a win, it would then continue to loop through and say "well this next possibility isnt a win, so it must be a tie after all". Anyway, I eventually got it to work, and even added depth heuristic without any resources. Not that resources are bad in any way, I had just finally understood the algorithm enough that I didn't need it.
+
+After minimax was added, a lot of refactoring, ui touch ups, and small changes to logic were the focus. I wanted my buttons to be more intuitive, I wanted who won to be obvious if the user could not see the message for whatever reason, I wanted to make sure my code was fairly easy to follow and as DRY as I could make it for my current skill level and free time. I added little loading spinners for auth events so that the user wtih a bad connection doesn't go crazy wondering if anything is happening. I made the crazy mode have a toast (popup) to ensure the user is warned of seizure risk.
+
+All in all, I have had a ton of fun with this project and cannot wait for the next one.
 
 
 
@@ -90,17 +99,19 @@ Unregistered User:
 ### Technologies Used
 
 - HTML
-- CSCC
+- CSS
+- SASS
 - Bootstrap
 - Javascript
-- Game api
+- Provided Rails API
 - Node
-- Jquery
+- jQuery
 - AJAX
 - getFormFields (provided by General Assembly)
 
 ### Unsolved Problems
 
 - I want to be able to finish unfinished games, I am working on the logic for this now.
-
-- I would like to add more AI logic.
+- I want to rethink warnings and messages to be more intuitive and possibly not need messages at all
+- I want a rethink easy mode as a possible challenge mode, where the difficulty scales with each win and the goal is to get maybe 5 or 10 wins without losing the challenge. If you get this, crazy mode is unlocked?
+- I want to continue to refactor as I learn more about good code principals

@@ -3,8 +3,13 @@ const api = require('./api')
 const ui = require('./ui')
 const store = require('../store')
 const ai = require('./ai')
+// win conditions are all combinations of indexes where if  the same player occupies all spots, they wins
+// the game is represented in the store as store.occupiedSpots, filled with 9x undefined on game createGame
+// store.currentIndex holds the last index of a turn taken
+// store.currentTurn holds the current player X or O, always starting each game with X and switching with the
+//  function switchPlayer
 
-store.winConditions = [ // added to store for AI
+store.winConditions = [ // added to store for AI,
   [0, 1, 2], [3, 4, 5], [6, 7, 8], // horizontal
   [0, 3, 6], [1, 4, 7], [2, 5, 8], // vertical
   [0, 4, 8], [2, 4, 6]]// diagonal
@@ -25,7 +30,7 @@ const onCreateGame = function () { // create API game, then reset the logic and 
 
 const gameCreate = function (response) {
   store.game = response.game
-  const color = $('body').css('color')
+  const color = $('body').css('color') // needed because on a win, text of winning pieces turn green
   for (const box of store.boxes) {
     box.css('color', `${color}`)
   }
@@ -35,7 +40,7 @@ const gameCreate = function (response) {
   ai.resetAiTurnFinished()
   turnComplete = true
   ui.resetBoard()
-  ui.showGame()
+  ui.showGame() // game is hidden until initial creation
 } // just restore all defaults for  API, DOM, and JS representation
 
 const onAttemptTurn = function (event) { // allow toggle betweeen single play and AI play
@@ -47,7 +52,7 @@ const onAttemptTurn = function (event) { // allow toggle betweeen single play an
 }
 const takeTurn = function (event) {
   if (store.gameOver) {
-    $('.warnings').text('Please click Create Game to play again!')
+    $('.warnings').text('Please click Create Game to play again!') // TODO: Rethink warnings and messages
     setTimeout(function () {
       $('.warnings').text('')
     }, 2000)
@@ -72,8 +77,6 @@ const takeTurn = function (event) {
     .then(ui.updateGameSuccess)
     .then(turnComplete = true)
     .catch(ui.updateGameFail)
-    .then(response => {
-    })
   ui.updatePlayer() // this updates both the variable as well as the ui
 }
 
@@ -83,9 +86,7 @@ const checkWin = function () {
   const winColor = '#11ed46'
   for (const condition of store.winConditions) { // if any combination of win conditions are met, then don't check for a tie , change game state, and display winner
     if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
-      store.boxes[condition[0]].css('color', winColor)
-      store.boxes[condition[1]].css('color', winColor)
-      store.boxes[condition[2]].css('color', winColor)
+      condition.forEach(condition => store.boxes[condition].css('color', winColor))
       store.gameOver = true
       ui.displayWinner(store.currentTurn)
       return true
@@ -124,7 +125,8 @@ const turnAiOff = function () {
   $('#change-color-single').removeClass('btn-secondary').addClass('btn-primary')
   $('#change-color-easy').removeClass('btn-primary').addClass('btn-secondary')
   $('#change-color-hard').removeClass('btn-primary').addClass('btn-secondary')
-}
+} // These functions toggle button classes for visuals as well as
+// actual game logic to decide if AI is being played
 module.exports = {
   onAttemptTurn,
   onCreateGame,
