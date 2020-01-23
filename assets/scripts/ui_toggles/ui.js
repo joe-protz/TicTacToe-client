@@ -71,6 +71,7 @@ const toggleCrazyMode = function () {
 const endCrazyMode = function () {
   crazyMode = true
   toggleCrazyMode()
+  buttonToggle()
 }
 const seizureWarning = function () {
   $('.toast').toast('show')
