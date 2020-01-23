@@ -8,35 +8,36 @@ let aiTurnFinished = true
 let difficulty = 'easy'
 
 const takeTurn = function (event) {
-  if (!store.gameOver) {
-    if (aiTurnFinished) {
-      if ($(event.target).text() === ' ') {
-        $('.warnings').text('')
-        $(event.target).text(store.currentTurn)
-        store.occupiedSpots[event.target.id] = store.currentTurn // add the move to the store.occupiedSpots array
-        store.currentIndex = event.target.id
-        store.checkWin()
-        api.updateGame()
-          .then(ui.updateGameSuccess)
-          .then(ui.updatePlayer)
-          .then(aiTurnFinished = false)
-          .then(aiMove)
-          .catch(ui.updateGameFail)
-      } else {
-        $('.warnings').text('Please click an open space')
-      }
-    } else {
-      $('.warnings').text('Please wait for AI to finish turn.')
-      setTimeout(function () {
-        $('.warnings').text('')
-      }, 2000)
-    }
-  } else {
+  if (store.gameOver) {
     $('.warnings').text('Please click Create Game to play again!')
     setTimeout(function () {
       $('.warnings').text('')
     }, 2000)
+    return
   }
+  if (!aiTurnFinished) {
+    $('.warnings').text('Please wait for AI to finish turn.')
+    setTimeout(function () {
+      $('.warnings').text('')
+    }, 2000)
+    return
+  }
+  if (!($(event.target).text() === ' ')) {
+    $('.warnings').text('Please click an open space')
+    return
+  }
+  // guard for reasons not to take turn
+  $('.warnings').text('')
+  $(event.target).text(store.currentTurn)
+  store.occupiedSpots[event.target.id] = store.currentTurn // add the move to the store.occupiedSpots array
+  store.currentIndex = event.target.id
+  store.checkWin()
+  api.updateGame()
+    .then(ui.updateGameSuccess)
+    .then(ui.updatePlayer)
+    .then(aiTurnFinished = false)
+    .then(aiMove)
+    .catch(ui.updateGameFail)
 }
 
 const aiMove = function () {
@@ -46,7 +47,7 @@ const aiMove = function () {
     const availableSpots = store.boxes.filter(box => (box.text() === ' '))
     const availableIndexes = availableSpots.map(spot => spot.attr('id')) // index #'s for all available spots
     // filter the spots left for only spots that haven't been clicked
-    if (difficulty === 'easy') {
+    if (difficulty === 'easy') { // TODO: CHANGE TO MINIMAX WITH % of RANDOM
       let currentChoice = availableSpots[Math.floor((Math.random() * availableSpots.length))] // AI Base choice is random
       if (checkAiWins(store.currentTurn) !== false) { // if there is a win spot, take it
         currentChoice = store.boxes[checkAiWins(store.currentTurn)]
@@ -141,7 +142,7 @@ const checkAiWins = function (turn) {
 } // check if there is a win condition available, returns false if not
 const getOtherPlayer = function () {
   let otherPlayer
-  store.currentTurn === 'X' ? otherPlayer = 'O' : otherPlayer = 'X'
+  store.currentTurn === 'X' ? otherPlayer = 'O' : otherPlayer = 'X' // TODO: Rethink  logic to refactor
   return otherPlayer
 } // returns opposite player
 

@@ -95,15 +95,13 @@ const checkWin = function () {
     $('#messages').text('Its a tie! Please click create game to play again')
     store.gameOver = true
   }
-
-} // checks for a win and tie
+} // checks for a win or tie
 store.checkWin = checkWin // for AI file
 
-store.checkPastWins = function (game) { //TODO: Refactor with array.some()
+store.checkPastWins = function (game) {
   const cells = game.cells
   return store.winConditions.some(condition => cells[condition[0]] === 'X' && cells[condition[1]] === 'X' && cells[condition[2]] === 'X')
 } // accepts array of gmames and returns amt of wins for X
-
 
 const checkforTie = function (array) {
   return array.every(position => position !== undefined)

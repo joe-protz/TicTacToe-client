@@ -3,7 +3,7 @@ const store = require('../store')
 const api = require('./api')
 
 const displayWinner = function (currentTurn) {
-  $('#messages').text(currentTurn.toUpperCase() + ' is the winner!! Please click Create Game to play again')
+  $('#messages').text(currentTurn + ' is the winner!! Please click Create Game to play again')
 }
 
 const updatePlayer = function () {
@@ -17,7 +17,7 @@ const resetBoard = function () {
   })
   $('#messages').text('')
   $('.warnings').text('')
-  $('#currentTurn').text('Current player is X')
+  $('#currentTurn').text((`Current player is ${store.currentTurn}`))
 } // removes clicked class from boxes, resets text, resets all messages
 
 const showGame = function () {
