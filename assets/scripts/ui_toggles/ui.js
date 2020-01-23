@@ -3,6 +3,7 @@ const store = require('../store')
 let crazyMode = false
 let lightMode = true
 let warned = false
+
 const activateDarkMode = function () {
   if (crazyMode) {
     clearInterval(crazyTimer)

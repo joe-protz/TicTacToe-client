@@ -42,8 +42,6 @@ const takeTurn = function (event) {
 
 const aiMove = function () {
   if (!store.gameOver) {
-    $('#messages').text('Computer is thinking.. ')
-    $('.loading').show()
     const availableSpots = store.boxes.filter(box => (box.text() === ' '))
     const availableIndexes = availableSpots.map(spot => spot.attr('id')) // index #'s for all available spots
     // filter the spots left for only spots that haven't been clicked
@@ -81,12 +79,8 @@ const aiMove = function () {
       .then(ui.updateGameSuccess)
       .then(aiTurnFinished = true)
       .catch(ui.updateGameFail)
-      .then(response => {
-        $('.loading').hide()
-        $('#messages').text('')
-      })
-    ui.updatePlayer()
   }
+  ui.updatePlayer()
 }
 
 const checkAiWins = function (turn) {
