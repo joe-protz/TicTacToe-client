@@ -63,7 +63,7 @@ const aiMove = function () {
         currentChoice = store.boxes[8] // opponent took corner, and opposite is empty, take that spot
       }
 
-      currentChoice.text(store.currentTurn).addClass('clicked') // just add an x and a class clicked to the first available spot.
+      currentChoice.text(store.currentTurn) // just add an x and a class clicked to the first available spot.
       const spotID = currentChoice.attr('id') // the ID of this spot
       store.occupiedSpots[spotID] = store.currentTurn // put the play into the board array
       store.currentIndex = spotID // store the current index to use for the update game

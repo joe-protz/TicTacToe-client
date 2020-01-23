@@ -31,7 +31,7 @@ const gameCreate = function (response) {
   }
   store.currentTurn = 'X'
   store.gameOver = false
-  store.occupiedSpots = new Array(9)
+  store.occupiedSpots = new Array(9).fill(undefined)
   ai.resetAiTurnFinished()
   turnComplete = true
   ui.resetBoard()
@@ -79,25 +79,19 @@ const takeTurn = function (event) {
 // main function called each time a click is made
 
 const checkWin = function () {
-  let won = false
+  const winColor = '#11ed46'
   for (const condition of store.winConditions) { // if any combination of win conditions are met, then don't check for a tie , change game state, and display winner
     if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
-      store.boxes[condition[0]].css('color', '#11ed46')
-      store.boxes[condition[1]].css('color', '#11ed46')
-      store.boxes[condition[2]].css('color', '#11ed46')
-      won = true
+      store.boxes[condition[0]].css('color', winColor)
+      store.boxes[condition[1]].css('color', winColor)
+      store.boxes[condition[2]].css('color', winColor)
       store.gameOver = true
       ui.displayWinner(store.currentTurn)
+      return
     }
   }
-  if (!won) { // if nobody won, check for a tie , update the messages and game state
-    if (checkforTie(store.occupiedSpots)) {
-      $('#messages').text('Its a tie! Please click create game to play again')
-
-      store.gameOver = true
-    }
-  }
-} // checks for a win and if no win, checks for a tie
+  checkforTie(store.occupiedSpots)
+} // checks for a win and tie
 store.checkWin = checkWin // for AI file
 
 const checkPastWins = function (game) {
@@ -113,14 +107,11 @@ const checkPastWins = function (game) {
 store.checkPastWins = checkPastWins // for ui to access
 
 const checkforTie = function (array) {
-  const positionIsEmpty = []
-  for (const spot of array) {
-    if (spot === 'X' || spot === 'O') {
-      positionIsEmpty.push(spot)
-    }
-  }
-
-  return (positionIsEmpty.length === 9)
+if (array.every(position => position !== undefined)) {
+$('#messages').text('Its a tie! Please click create game to play again')
+store.gameOver = true
+}
+  return (array.every(position => position !== undefined))
 } // return true if tie is reached or false
 store.checkforTie = checkforTie
 
