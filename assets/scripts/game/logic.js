@@ -46,34 +46,34 @@ const onAttemptTurn = function (event) { // allow toggle betweeen single play an
   }
 }
 const takeTurn = function (event) {
-  if (!store.gameOver) {
-    if (turnComplete) { // dont let one player override the other if network connection is bad
-      if ($(event.target).text() === ' ') { // if the spot on the board is empty let the player click
-        $('.warnings').text('')
-        turnComplete = false
-        $(event.target).text(store.currentTurn)
-        store.occupiedSpots[event.target.id] = store.currentTurn // add the move to the store.occupiedSpots array
-        store.currentIndex = event.target.id
-        checkWin()
-        api.updateGame()
-          .then(ui.updateGameSuccess)
-          .then(turnComplete = true)
-          .catch(ui.updateGameFail)
-          .then(response => {
-          })
-        ui.updatePlayer() // this updates both the variable as well as the ui
-      } else {
-        $('.warnings').text('Please click an open space')
-      }
-    } else {
-      $('.warnings').text('Please wait for game to update')
-    }
-  } else {
+  if (store.gameOver) {
     $('.warnings').text('Please click Create Game to play again!')
     setTimeout(function () {
       $('.warnings').text('')
     }, 2000)
+    return
   }
+  if (!turnComplete) {
+    $('.warnings').text('Please wait for game to update')
+    return
+  } // dont let one player override the other if network connection is bad
+  if (!($(event.target).text() === ' ')) {
+    $('.warnings').text('Please click an open space')
+    return
+  } // if the spot on the board is empty let the player click
+  $('.warnings').text('')
+  turnComplete = false
+  $(event.target).text(store.currentTurn)
+  store.occupiedSpots[event.target.id] = store.currentTurn // add the move to the store.occupiedSpots array
+  store.currentIndex = event.target.id
+  checkWin()
+  api.updateGame()
+    .then(ui.updateGameSuccess)
+    .then(turnComplete = true)
+    .catch(ui.updateGameFail)
+    .then(response => {
+    })
+  ui.updatePlayer() // this updates both the variable as well as the ui
 }
 
 // main function called each time a click is made

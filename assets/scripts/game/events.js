@@ -14,7 +14,7 @@ store.boxes = [
   $('#7'),
   $('#8')
 ]
-//TODO : See if there is a method to extract all Ids of child of #play??
+// TODO : See if there is a method to extract all Ids of child of #play??
 const addHandlers = function () {
   $('#play').on('click', logic.onAttemptTurn)
   $('#create-game').on('click', logic.onCreateGame)

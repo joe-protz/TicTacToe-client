@@ -42,11 +42,9 @@ const aiMove = function () {
   if (!store.gameOver) {
     $('#messages').text('Computer is thinking.. ')
     $('.loading').show()
-    const availableSpots = store.boxes.filter(box => (box.text() === ' ' ))
-    console.log(availableSpots)
+    const availableSpots = store.boxes.filter(box => (box.text() === ' '))
     const availableIndexes = availableSpots.map(spot => spot.attr('id')) // index #'s for all available spots
     // filter the spots left for only spots that haven't been clicked
-    console.log(availableIndexes)
     if (difficulty === 'easy') {
       let currentChoice = availableSpots[Math.floor((Math.random() * availableSpots.length))] // AI Base choice is random
       if (checkAiWins(store.currentTurn) !== false) { // if there is a win spot, take it
