@@ -10,9 +10,8 @@ const updatePlayer = function () {
   store.currentTurn === 'X' ? store.currentTurn = 'O' : store.currentTurn = 'X'
   $('#currentTurn').text((`Current player is ${store.currentTurn}`))
 }
-// needed because on a win, text of winning pieces turn green
 
-const resetBoard = function () {
+const resetBoard = function () {  // returns board colors to normal and resets messages
   const color = $('body').css('color')
   const bgColor = $('body').css('background-color')
   store.boxes.forEach(box => {
@@ -38,13 +37,7 @@ const createGameFail = function () {
 
 const getGamesSuccess = function (response) {
   store.completedGames = response.games
-  let wins = 0
-  for (let i = 0; i < store.completedGames.length; i++) {
-    if (store.checkPastWins(store.completedGames[i])) {
-      wins++
-    }
-  }
-
+  const wins = store.completedGames.filter(game => store.checkPastWins(game)).length
   $('#stats').text('Hello ' + store.user.email + '! You have completed ' + store.completedGames.length + ' games, and you have won ' + wins)
 }
 

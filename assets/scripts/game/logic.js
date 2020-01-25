@@ -91,7 +91,7 @@ store.checkWin = checkWin // for AI file
 store.checkPastWins = function (game) {
   const cells = game.cells
   return store.winConditions.some(condition => cells[condition[0]] === 'X' && cells[condition[1]] === 'X' && cells[condition[2]] === 'X')
-} // accepts array of gmames and returns amt of wins for X
+} // accepts array  and returns true if  X won
 
 const checkforTie = function (array, updateGame) {
   if (updateGame && (array.every(position => position !== undefined)) && !store.gameOver) {
