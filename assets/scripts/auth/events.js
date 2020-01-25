@@ -7,7 +7,7 @@ const logic = require('../game/logic')
 
 const onSignUp = function (event) {
   event.preventDefault()
-  const data = getFormFields(this)
+  const data = getFormFields(event.target)
   $('.loading').show()
   $('#messages').text('Signing up...')
   // sign up request
@@ -30,7 +30,7 @@ const onSignUp = function (event) {
 
 const onSignIn = function (event) {
   event.preventDefault()
-  const data = getFormFields(this)
+  const data = getFormFields(event.target)
   $('.loading').show()
   $('#messages').text('Signing in...')
   api.signIn(data)
@@ -58,7 +58,7 @@ const onChangePassword = function (event) {
   event.preventDefault()
   $('.loading').show()
   $('#messages').show().text('Attempting to change password ...')
-  const data = getFormFields(this)
+  const data = getFormFields(event.target)
   api.changePassword(data)
     .then(ui.changePasswordSuccess)
     .catch(ui.changePasswordFailure)
