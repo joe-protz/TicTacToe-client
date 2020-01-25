@@ -33,6 +33,7 @@ const gameCreate = function (response) {
   turnComplete = true
   ui.resetBoard()
 } // just restore all defaults for  API, DOM, and JS representation
+
 const storeReset = function (response) {
   store.game = response.game
   store.currentTurn = 'X'
@@ -56,7 +57,7 @@ const takeTurn = function (event) {
   } // dont let one player override the other if network connection is bad
   turnSuccess()
   checkWin()
-  checkforTie(store.occupiedSpots,true)
+  checkforTie(store.occupiedSpots, true)
   updateState()
 } // main function called each time a click is made
 
@@ -76,19 +77,16 @@ const updateState = function () {
   ui.updatePlayer() // this updates both the variable as well as the ui
 }
 
-
 const checkWin = function () {
   for (const condition of store.winConditions) { // if any combination of win conditions are met, then don't check for a tie , change game state, and display winner
     if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
-       ui.winnerView(condition)
+      ui.winnerView(condition)
       store.gameOver = true
       return true
     }
   }
 } // checks for a win or tie
 store.checkWin = checkWin // for AI file
-
-
 
 store.checkPastWins = function (game) {
   const cells = game.cells
@@ -97,7 +95,7 @@ store.checkPastWins = function (game) {
 
 const checkforTie = function (array, updateGame) {
   if (updateGame && (array.every(position => position !== undefined)) && !store.gameOver) {
-    $('#messages').text('Its a tie! Please click create game to play again')
+    ui.showTieView()
     store.gameOver = true
     return true
   }
@@ -109,7 +107,7 @@ store.checkforTie = checkforTie
 const playAiToggle = function (event) {
   const button = event.target.id
   if (button === 'single-player') {
-  ui.toggleDifficultyButton('singlePlayer')
+    ui.toggleDifficultyButton('singlePlayer')
     playAi = false
   } else {
     playAi = true

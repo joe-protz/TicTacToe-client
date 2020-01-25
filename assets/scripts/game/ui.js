@@ -10,12 +10,13 @@ const updatePlayer = function () {
   store.currentTurn === 'X' ? store.currentTurn = 'O' : store.currentTurn = 'X'
   $('#currentTurn').text((`Current player is ${store.currentTurn}`))
 }
- // needed because on a win, text of winning pieces turn green
+// needed because on a win, text of winning pieces turn green
 
 const resetBoard = function () {
-const color = $('body').css('color')
+  const color = $('body').css('color')
+  const bgColor = $('body').css('background-color')
   store.boxes.forEach(box => {
-    box.text(' ').css('color', `${color}`)
+    box.text(' ').css({'color': `${color}`, 'background': `${bgColor}`})
   })
   $('.warnings, #messages').text('')
   $('#play, #currentTurn').show()
@@ -52,27 +53,38 @@ const getGamesFail = function () {
 }
 
 const winnerView = function (condition) {
-    const winColor = '#11ed46'
+  const winColor = '#11ed46'
   condition.forEach(index => store.boxes[index].css('color', winColor))
   displayWinner(store.currentTurn)
 }
 
-const toggleDifficultyButton = function ( difficulty) {
-  switch (difficulty){
-  case "singlePlayer":
-  $('#change-color-single').removeClass('btn-secondary').addClass('btn-primary')
-  $('#change-color-easy, #change-color-hard').removeClass('btn-primary').addClass('btn-secondary')
-  break
-  case 'hardMode':
-  $('#change-color-hard').removeClass('btn-secondary').addClass('btn-primary')
-  $('#change-color-easy, #change-color-single').removeClass('btn-primary').addClass('btn-secondary')
-  break
-  case 'easyMode':
-  $('#change-color-easy').removeClass('btn-secondary').addClass('btn-primary')
-  $('#change-color-hard, #change-color-single').removeClass('btn-primary').addClass('btn-secondary')
-}
+const toggleDifficultyButton = function (difficulty) {
+  switch (difficulty) {
+    case 'singlePlayer':
+      $('#change-color-single').removeClass('btn-secondary').addClass('btn-primary')
+      $('#change-color-easy, #change-color-hard').removeClass('btn-primary').addClass('btn-secondary')
+      break
+    case 'hardMode':
+      $('#change-color-hard').removeClass('btn-secondary').addClass('btn-primary')
+      $('#change-color-easy, #change-color-single').removeClass('btn-primary').addClass('btn-secondary')
+      break
+    case 'easyMode':
+      $('#change-color-easy').removeClass('btn-secondary').addClass('btn-primary')
+      $('#change-color-hard, #change-color-single').removeClass('btn-primary').addClass('btn-secondary')
+  }
 }
 
+const showTieView = function () {
+  $('#messages').text('Its a tie! Please click create game to play again')
+  $('.board').css('background', '#D6D8D9')
+}
+
+const waitForTurn = function () {
+  $('.warnings').text('Please wait for AI to finish turn.')
+  setTimeout(function () {
+    $('.warnings').text('')
+  }, 2000)
+}
 module.exports = {
   displayWinner,
   updatePlayer,
@@ -83,5 +95,7 @@ module.exports = {
   getGamesFail,
   getGamesSuccess,
   winnerView,
-  toggleDifficultyButton
+  toggleDifficultyButton,
+  showTieView,
+  waitForTurn
 }
