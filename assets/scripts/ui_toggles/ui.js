@@ -3,17 +3,12 @@ const store = require('../store')
 let crazyMode = false
 let lightMode = true
 let warned = false
+let crazyTimer
 
 const activateDarkMode = function () {
-  if (crazyMode) {
-    clearInterval(crazyTimer)
-    crazyMode = false
-    $('.innerGameBoard').removeClass('rotated')
-    store.boxes.forEach(element => element.removeClass('rotated'))
-  }
-  $('body').css('background', 'rgb(45, 50, 57)')
+  clearCrazyMode()
+  $('body, .nav-tabs').css('background', 'rgb(45, 50, 57)')
   $('.tab-content').css('background', '#6C757C')
-  $('.nav-tabs').css('background', 'rgb(45, 50, 57)')
   $('.nav-tabs').css('border', '#6C757C')
   $('.nav-link active').css('background', 'rgb(45, 50, 57)')
   $('.board').removeClass('border-dark').addClass('border-secondary')
@@ -21,12 +16,7 @@ const activateDarkMode = function () {
   lightMode = false
 }
 const activateLightMode = function () {
-  if (crazyMode) {
-    clearInterval(crazyTimer)
-    crazyMode = false
-    $('.innerGameBoard').removeClass('rotated')
-    store.boxes.forEach(element => element.removeClass('rotated'))
-  }
+  clearCrazyMode()
   $('body').css('background', '#D0E4FC')
   $('.tab-content').css('background', 'white')
   $('.nav-tabs').css('background', '#D0E4FC')
@@ -36,19 +26,16 @@ const activateLightMode = function () {
     .removeClass('border-white')
   lightMode = true
 }
-let crazyTimer
+
 
 const toggleCrazyMode = function () {
   if (crazyMode) {
-    $('.innerGameBoard').removeClass('rotated')
-    store.boxes.forEach(element => element.removeClass('rotated'))
-    clearInterval(crazyTimer)
+  clearCrazyMode()
     if (lightMode) {
       activateLightMode()
     } else {
       activateDarkMode()
     }
-    crazyMode = false
   } else if (warned) {
     crazyMode = true
     const body = $('body')
@@ -68,6 +55,8 @@ const toggleCrazyMode = function () {
     }, 100)
   }
 }
+
+
 
 const endCrazyMode = function () {
   crazyMode = true
@@ -95,6 +84,14 @@ const hasBeenWarned = function () {
   warned = true
 }
 
+const clearCrazyMode = function () {
+  if (crazyMode) {
+    clearInterval(crazyTimer)
+    crazyMode = false
+    $('.innerGameBoard').removeClass('rotated')
+    store.boxes.forEach(element => element.removeClass('rotated'))
+  }
+}
 module.exports = {
   activateDarkMode,
   activateLightMode,
