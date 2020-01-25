@@ -10,20 +10,18 @@ const updatePlayer = function () {
   store.currentTurn === 'X' ? store.currentTurn = 'O' : store.currentTurn = 'X'
   $('#currentTurn').text((`Current player is ${store.currentTurn}`))
 }
+ // needed because on a win, text of winning pieces turn green
 
 const resetBoard = function () {
+const color = $('body').css('color')
   store.boxes.forEach(box => {
-    box.text(' ')
+    box.text(' ').css('color', `${color}`)
   })
-  $('#messages').text('')
-  $('.warnings').text('')
+  $('.warnings, #messages').text('')
+  $('#play, #currentTurn').show()
   $('#currentTurn').text((`Current player is ${store.currentTurn}`))
 } // removes clicked class from boxes, resets text, resets all messages
 
-const showGame = function () {
-  $('#play').show()
-  $('#currentTurn').show()
-}
 const updateGameSuccess = function (response) {
   api.getGames()
     .then(getGamesSuccess)
@@ -52,14 +50,38 @@ const getGamesSuccess = function (response) {
 const getGamesFail = function () {
   $('.warnings').text('Sorry, your game files were not able to be loaded')
 }
+
+const winnerView = function (condition) {
+    const winColor = '#11ed46'
+  condition.forEach(index => store.boxes[index].css('color', winColor))
+  displayWinner(store.currentTurn)
+}
+
+const toggleDifficultyButton = function ( difficulty) {
+  switch (difficulty){
+  case "singlePlayer":
+  $('#change-color-single').removeClass('btn-secondary').addClass('btn-primary')
+  $('#change-color-easy, #change-color-hard').removeClass('btn-primary').addClass('btn-secondary')
+  break
+  case 'hardMode':
+  $('#change-color-hard').removeClass('btn-secondary').addClass('btn-primary')
+  $('#change-color-easy, #change-color-single').removeClass('btn-primary').addClass('btn-secondary')
+  break
+  case 'easyMode':
+  $('#change-color-easy').removeClass('btn-secondary').addClass('btn-primary')
+  $('#change-color-hard, #change-color-single').removeClass('btn-primary').addClass('btn-secondary')
+}
+}
+
 module.exports = {
   displayWinner,
   updatePlayer,
   resetBoard,
-  showGame,
   updateGameSuccess,
   updateGameFail,
   createGameFail,
   getGamesFail,
-  getGamesSuccess
+  getGamesSuccess,
+  winnerView,
+  toggleDifficultyButton
 }

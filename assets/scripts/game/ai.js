@@ -34,7 +34,8 @@ const takeTurn = function (event) {
   store.occupiedSpots[event.target.id] = store.currentTurn // add the move to the store.occupiedSpots array
   store.currentIndex = event.target.id
   store.checkWin()
-  if (store.checkforTie(store.occupiedSpots)) {
+  store.checkforTie(store.occupiedSpots,true)
+  if (store.checkforTie(store.occupiedSpots,false)) {
     ties++
   }
   if (store.checkWin()) {
@@ -56,12 +57,15 @@ const aiMove = function () {
       const availableSpots = store.boxes.filter(box => (box.text() === ' '))
       let currentChoice = availableSpots[Math.floor((Math.random() * availableSpots.length))] // AI Base choice is random
       chance = Math.round(Math.random() * 10) // reset random number for more desirable AI behavior
-      if (checkAiWins(store.currentTurn) && chance < oddsScale * (wins + 1)) { // if there is a win spot, and the chance wasn't in your favor,  take it
-        currentChoice = store.boxes[checkAiWins(store.currentTurn)]
-      } else if (checkAiWins(getOtherPlayer()) && chance < oddsScale * (wins + 1)) {
+      const aiWinsCurrent = checkAiWins(store.currentTurn)
+      const aiWinsOther = checkAiWins(getOtherPlayer())
+
+      if (aiWinsCurrent && chance < oddsScale * (wins + 1)) { // if there is a win spot, and the chance wasn't in your favor,  take it
+        currentChoice = store.boxes[aiWinsCurrent]
+      } else if (aiWinsOther && chance < oddsScale * (wins + 1)) {
         console.log('blockarino')
         // if there is a way to block a win  and the chance wasn't in your favor,  take it
-        currentChoice = store.boxes[checkAiWins(getOtherPlayer())]
+        currentChoice = store.boxes[aiWinsOther]
       }
       currentChoice.text(store.currentTurn)
       const spotID = currentChoice.attr('id') // the ID of this spot
@@ -75,6 +79,7 @@ const aiMove = function () {
       store.currentIndex = perfectIndex // for API, change the current index
     }
     store.checkWin()
+    store.checkforTie(store.occupiedSpots,true)
 
     if (store.checkWin() || ties > 5) { // condition for resetting wins and ties
       wins = 0
@@ -102,14 +107,10 @@ const difficultyToggle = function (event) {
   const button = event.target.id
   if (button === 'easy-mode') {
     difficulty = 'easy'
-    $('#change-color-easy').removeClass('btn-secondary').addClass('btn-primary')
-    $('#change-color-hard').removeClass('btn-primary').addClass('btn-secondary')
-    $('#change-color-single').removeClass('btn-primary').addClass('btn-secondary')
+    ui.toggleDifficultyButton('easyMode')
   } else if (button === 'hard-mode') {
     difficulty = 'hard'
-    $('#change-color-hard').removeClass('btn-secondary').addClass('btn-primary')
-    $('#change-color-easy').removeClass('btn-primary').addClass('btn-secondary')
-    $('#change-color-single').removeClass('btn-primary').addClass('btn-secondary')
+    ui.toggleDifficultyButton('hardMode')
   }
 }
 const perfectAI = function () {
@@ -139,7 +140,7 @@ const scoreReturn = function () {
       result = -10
     }
   }
-  if (result !== 10 && result !== -10 && store.checkforTie(store.occupiedSpots)) {
+  if (result !== 10 && result !== -10 && store.checkforTie(store.occupiedSpots, false)) {
     result = 0 // if tie, return 0
   }
   return result
