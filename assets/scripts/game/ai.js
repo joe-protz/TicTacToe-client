@@ -10,7 +10,7 @@ let wins = 0 // TODO: Create visual for player to know how many wins they have a
 let ties = 0
 
 const takeTurn = function (event) {
-  if (store.gameOver && (!($(event.target).text() === ' '))) {
+  if (store.gameOver || (!($(event.target).text() === ' '))) {
     return
   }
   if (!aiTurnFinished) {
