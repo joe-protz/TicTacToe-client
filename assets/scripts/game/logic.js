@@ -17,7 +17,8 @@ store.winConditions = [ // added to store for AI,
 let playAi = false
 let turnComplete = true
 
-const onCreateGame = function () { // create API game, then reset the logic and DOM to defaults
+// create API game and JS representation, then reset the logic and DOM to defaults
+const onCreateGame = function () {
   $('#messages').text('Creating game')
   $('.loading').show()
   api.createGame()
@@ -27,12 +28,14 @@ const onCreateGame = function () { // create API game, then reset the logic and 
       $('.loading').hide()
     })
 }
+
+// restore all defaults for  API, DOM, and JS representation
 const gameCreate = function (response) {
   storeReset(response)
   ai.resetAiTurnFinished()
   turnComplete = true
   ui.resetBoard()
-} // just restore all defaults for  API, DOM, and JS representation
+}
 
 const storeReset = function (response) {
   store.game = response.game
@@ -41,7 +44,8 @@ const storeReset = function (response) {
   store.occupiedSpots = new Array(9).fill(undefined)
 }
 
-const onAttemptTurn = function (event) { // allow toggle betweeen single play and AI play
+// allow toggle betweeen single play and AI play
+const onAttemptTurn = function (event) {
   if (!playAi) {
     takeTurn(event)
   } else {
@@ -49,6 +53,7 @@ const onAttemptTurn = function (event) { // allow toggle betweeen single play an
   }
 }
 
+// main function called each time a click is made in single player mode
 const takeTurn = function (event) {
   if (store.gameOver || (!($(event.target).text() === ' '))) { return }
   if (!turnComplete) {
@@ -59,8 +64,9 @@ const takeTurn = function (event) {
   checkWin()
   checkforTie(store.occupiedSpots, true)
   updateState()
-} // main function called each time a click is made
+}
 
+// update game data and allow the player to take next move
 const turnSuccess = function () {
   $('.warnings').text('')
   turnComplete = false
@@ -69,14 +75,16 @@ const turnSuccess = function () {
   store.currentIndex = event.target.id
 }
 
+// updates API representation of game as well as the current player
 const updateState = function () {
   api.updateGame()
     .then(ui.updateGameSuccess)
     .then(turnComplete = true)
     .catch(ui.updateGameFail)
-  ui.updatePlayer() // this updates both the variable as well as the ui
+  ui.updatePlayer()
 }
 
+// checks for a win, and if it finds one updates the winning tiles to green
 const checkWin = function () {
   for (const condition of store.winConditions) { // if any combination of win conditions are met, then don't check for a tie , change game state, and display winner
     if (store.occupiedSpots[condition[0]] === store.currentTurn && store.occupiedSpots[condition[1]] === store.currentTurn && store.occupiedSpots[condition[2]] === store.currentTurn) {
@@ -85,14 +93,16 @@ const checkWin = function () {
       return true
     }
   }
-} // checks for a win or tie
+}
 store.checkWin = checkWin // for AI file
 
+// accepts game obkect from API  and returns true if  X won
 store.checkPastWins = function (game) {
   const cells = game.cells
   return store.winConditions.some(condition => cells[condition[0]] === 'X' && cells[condition[1]] === 'X' && cells[condition[2]] === 'X')
-} // accepts array  and returns true if  X won
+}
 
+// accepts an array representation of game state and returns if there is a tie. accepts boolean to decide if the game should be updated based on outcome
 const checkforTie = function (array, updateGame) {
   if (updateGame && (array.every(position => position !== undefined)) && !store.gameOver) {
     ui.showTieView()
@@ -104,6 +114,8 @@ const checkforTie = function (array, updateGame) {
 
 store.checkforTie = checkforTie
 
+// These functions toggle button classes for visuals as well as
+// actual game logic to decide if AI is being played
 const playAiToggle = function (event) {
   const button = event.target.id
   if (button === 'single-player') {
@@ -116,8 +128,7 @@ const playAiToggle = function (event) {
 const turnAiOff = function () {
   playAi = false
   ui.toggleDifficultyButton('singlePlayer')
-} // These functions toggle button classes for visuals as well as
-// actual game logic to decide if AI is being played
+}
 module.exports = {
   onAttemptTurn,
   onCreateGame,

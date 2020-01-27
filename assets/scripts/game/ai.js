@@ -9,6 +9,7 @@ let wins = 0 // TODO: Create visual for player to know how many wins they have a
 // 'challenge mode', possibly allow crazy mode to be gated behind a streak
 let ties = 0
 
+// Takes a click event when AI mode is active and attempts to take a turn , then activates ai
 const takeTurn = function (event) {
   if (store.gameOver || (!($(event.target).text() === ' '))) {
     return
@@ -22,9 +23,11 @@ const takeTurn = function (event) {
   store.occupiedSpots[event.target.id] = store.currentTurn // add the move to the store.occupiedSpots array
   store.currentIndex = event.target.id
   updateGameState()
-  playerIsDone()
+  playerIsDone() // calls ai move
 }
 
+// if hard mode is active, simply call minimax. if not, ai will have higher chances of either using minimax or
+// taking win spots and blocking wins based on amount of wins since reset. If all 'smart' moves are not called, random is used.
 const aiMove = function () {
   if (!store.gameOver) {
     const oddsScale = 0.5
@@ -47,6 +50,8 @@ const aiMove = function () {
   }
   ui.updatePlayer()
 }
+
+// checks for wins and ties, and updates resets win/tie counters if ties are >5
 const aiUpdateGameState = function () {
   store.checkWin()
   store.checkforTie(store.occupiedSpots, true)
@@ -56,6 +61,8 @@ const aiUpdateGameState = function () {
     ties = 0
   }
 }
+
+// check for wins and ties, increments counts if one is found
 const updateGameState = function () {
   store.checkWin()
   store.checkforTie(store.occupiedSpots, true)
@@ -76,21 +83,24 @@ const playerIsDone = function () {
     .catch(ui.updateGameFail)
 }
 
+// returns opposite player
 const getOtherPlayer = function () {
   let otherPlayer
   store.currentTurn === 'X' ? otherPlayer = 'O' : otherPlayer = 'X' // TODO: Rethink  logic to refactor
   return otherPlayer
-} // returns opposite player
+}
 
 const resetAiTurnFinished = function () {
   aiTurnFinished = true
 }
 
+// choses a random spot for ai based on available positions
 const takeRandomSpot = function () {
   const availableSpots = store.boxes.filter(box => (box.text() === ' '))
-  return availableSpots[Math.floor((Math.random() * availableSpots.length))] // AI Base choice is random
+  return availableSpots[Math.floor((Math.random() * availableSpots.length))]
 }
 
+// checks for win spots and spots to block wins for ai. takes these spots if odds are in favor of doing so
 const takeEducatedSpot = function (currentChoice, chance, oddsScale) {
   chance = Math.round(Math.random() * 10) // reset random number for more desirable AI behavior
   const aiWinsCurrent = checkAiWins(store.currentTurn)
@@ -105,6 +115,7 @@ const takeEducatedSpot = function (currentChoice, chance, oddsScale) {
   return currentChoice
 }
 
+// upatws game array , DOM, and index for API
 const aiUpdateBoard = function (currentChoice, index) {
   currentChoice.text(store.currentTurn)
   store.occupiedSpots[index] = store.currentTurn // put the play into the board array
@@ -121,14 +132,13 @@ const difficultyToggle = function (event) {
     ui.toggleDifficultyButton('hardMode')
   }
 }
-
+//  function called on hard mode. utilizes minimax algorithm and returns the index of the optimal move
 const perfectAI = function () {
   let bestScore = -Infinity // any move is better
   let move
   for (let i = 0; i < 9; i++) { // loop through all spots
     if (store.occupiedSpots[i] === undefined) { // find available spots
       store.occupiedSpots[i] = store.currentTurn // add the x or o to the board representation
-      // for (const condition of store.winConditions) {
       const score = minimax(store.occupiedSpots, 0, false) // run the minimax function for each available spot , is not maximizing because AI already 'took a turn '
       store.occupiedSpots[i] = undefined // after each loop put the board back to how it was
       if (score > bestScore) { // if the returned score is better than the previous score, keep it
@@ -138,8 +148,9 @@ const perfectAI = function () {
     }
   }
   return move
-} // initiates minimax and returns the index of the optimal move
+}
 
+// returns 10 if ai wins this turn, 0 if tie, -10 if player wins, null if none of these. used for minimax
 const scoreReturn = function () {
   let result = null
   for (const condition of store.winConditions) { // loop through each win condition and see iff the current player is in all 3 spots return 10 because we are maximizing score
@@ -153,15 +164,16 @@ const scoreReturn = function () {
     result = 0 // if tie, return 0
   }
   return result
-}// returns 10 if ai wins this turn, 0 if tie, -10 if player wins, null if none of these
+}
 
+// recursively checks every possible outcome with the goal of not losing, and winning in as few moves as possible
 const minimax = function (board, depth, isMaximizing) {
   const result = scoreReturn() // at the beginning of each pass, see if the current state of the board is a terminal condition and if so, return the score.. Meaning, if a tie or win was found, report whether it was a win, loss, or tie
   if (result !== null) {
     return result
   }
 
-  if (isMaximizing) { // this happens second if player clicks first,
+  if (isMaximizing) {
     let bestScore = -Infinity // the best score would be anything better than -Infinity
     for (let i = 0; i < 9; i++) {
       // Is the spot available?
@@ -173,7 +185,7 @@ const minimax = function (board, depth, isMaximizing) {
       }
     }
     return bestScore
-  } else {
+  } else { // this happens first because the ai takes a move before checking minimax, meaning the next move would be the players
     let bestScore = Infinity // begin at Infinity because we're minimizing
     for (let i = 0; i < 9; i++) { // loop through the available spots left
       if (board[i] === undefined) { // pick the next available spot
@@ -186,7 +198,7 @@ const minimax = function (board, depth, isMaximizing) {
     return bestScore
   }
 }
-
+// accepts a win condition in the form of 3 spots and the current turn, checks the 3 possible ways the win condition could be arranged, and if it finds a possible win, it returns the index of the spot to take.
 const winIndex = function (spot1, spot2, spot3, turn) {
   const combos = [
     [[spot1], [spot2], [spot3]],
@@ -199,10 +211,12 @@ const winIndex = function (spot1, spot2, spot3, turn) {
     }
   }
 }
+
+// finds if there is a spot on the board for the player passed in that will cause a win by passing win conditions to winIndex. accepts a turn state x or o
 const checkAiWins = function (turn) {
-  const winIndexes = store.winConditions.map(condition => winIndex(condition[0], condition[1], condition[2], turn))
+  const winIndexes = store.winConditions.map(condition => winIndex(condition[0], condition[1], condition[2], turn))// maps out the results of calling winIndex on each win condition, if a win is found, the index needed to win is stored in winIndexes.
   for (let i = 0; i < winIndexes.length; i++) {
-    if (winIndexes[i]) {
+    if (winIndexes[i]) { // if a win index exists, return it. TODO: Rethink this logic
       return winIndexes[i]
     }
   }
