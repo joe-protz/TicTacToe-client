@@ -13,10 +13,10 @@ const updatePlayer = function () {
 
 const resetBoard = function () { // returns board colors to normal and resets messages
   const color = $('body').css('color')
-  const bgColor = $('body').css('background-color')
   store.boxes.forEach(box => {
-    box.text(' ').css({'color': `${color}`, 'background': `${bgColor}`})
+    box.text(' ')
   })
+  $('.board').css({'color': `${color}`, 'background': ``})
   $('.warnings, #messages').text('')
   $('#play, #currentTurn').show()
   $('#currentTurn').text((`Current player is ${store.currentTurn}`))

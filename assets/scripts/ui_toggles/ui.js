@@ -47,6 +47,9 @@ const toggleCrazyMode = function () {
       body.css({
         backgroundColor: colors[currentIndex]
       })
+    // store.boxes.forEach(element => element.css({
+    //   backgroundColor: colors[currentIndex]
+    // }))
       if (!colors[currentIndex]) {
         currentIndex = 0
       } else {

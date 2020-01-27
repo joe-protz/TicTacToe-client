@@ -15,7 +15,7 @@ const signUpFailure = function () {
 }
 
 const signInSuccess = function (response) {
-  $('#messages').text('Successfully Signed In! Click on Create Game to play!')
+  $('#messages').text('Successfully Signed In! Click on New Game to play!')
   $('.warnings').text('')
   store.user = response.user
   loggedIn = true
