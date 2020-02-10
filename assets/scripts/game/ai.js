@@ -34,7 +34,7 @@ const aiMove = function () {
     const chance = Math.round(Math.random() * 10)
     if (difficulty === 'easy' && (chance) >= wins * oddsScale) { // using probability scaling to decide if turn is optimal or 'easy'
       let currentChoice = takeRandomSpot()
-      currentChoice = takeEducatedSpot(currentChoice, chance, oddsScale)// if odds are bad and there is a win spot or block, ai will take it, if not it will return the same random choice
+      currentChoice = takeEducatedSpot(currentChoice, chance, oddsScale) // if odds are bad and there is a win spot or block, ai will take it, if not it will return the same random choice
       const spotID = currentChoice.attr('id') // the ID of this spot
       aiUpdateBoard(currentChoice, spotID)
     } else {
@@ -201,9 +201,9 @@ const minimax = function (board, depth, isMaximizing) {
 // accepts a win condition in the form of 3 spots and the current turn, checks the 3 possible ways the win condition could be arranged, and if it finds a possible win, it returns the index of the spot to take.
 const winIndex = function (spot1, spot2, spot3, turn) {
   const combos = [
-    [[spot1], [spot2], [spot3]],
-    [[spot1], [spot3], [spot2]],
-    [[spot3], [spot2], [spot1]]
+    [ [spot1], [spot2], [spot3] ],
+    [ [spot1], [spot3],  [spot2] ],
+    [  [spot3], [spot2], [spot1] ]
   ]
   for (const combo of combos) {
     if (store.occupiedSpots[combo[0]] === turn && store.occupiedSpots[combo[1]] === turn && store.occupiedSpots[combo[2]] === undefined) {
@@ -214,7 +214,7 @@ const winIndex = function (spot1, spot2, spot3, turn) {
 
 // finds if there is a spot on the board for the player passed in that will cause a win by passing win conditions to winIndex. accepts a turn state x or o
 const checkAiWins = function (turn) {
-  const winIndexes = store.winConditions.map(condition => winIndex(condition[0], condition[1], condition[2], turn))// maps out the results of calling winIndex on each win condition, if a win is found, the index needed to win is stored in winIndexes.
+  const winIndexes = store.winConditions.map(condition => winIndex(condition[0], condition[1], condition[2], turn)) // maps out the results of calling winIndex on each win condition, if a win is found, the index needed to win is stored in winIndexes.
   for (let i = 0; i < winIndexes.length; i++) {
     if (winIndexes[i]) { // if a win index exists, return it. TODO: Rethink this logic
       return winIndexes[i]
