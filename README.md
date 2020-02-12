@@ -7,6 +7,8 @@ This is my first ever project done at General Assembly Boston during my third we
 - [Wireframes](https://imgur.com/a/nekb3Am)
 - [Deployed Client](https://joe-protz.github.io/TicTacToe-client/)
 - [LinkedIn](https://www.linkedin.com/in/joe-protz/)
+- [GitHub](https://www.github.com/joe-protz)
+- [Portfolio](https://joe-protz.github.io/#)
 
 ## Planning Story
 
