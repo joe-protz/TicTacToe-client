@@ -60,6 +60,10 @@ small {
 .stats {
   font-size: 1.2rem;
 }
+body {
+  min-height: 100vh;
+  overflow-y: clip;
+}
 // .page-footer {
 //   position: fixed;
 //   bottom: 0.5vh;
