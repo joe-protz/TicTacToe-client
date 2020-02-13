@@ -1,11 +1,10 @@
-@import '~bootstrap/scss/bootstrap';
-@import 'variables';
-body{
+@import "~bootstrap/scss/bootstrap";
+@import "variables";
+body {
   background: $text-accent;
   color: $text-color;
   transition: 200ms ease;
-  font-family: 'Raleway', sans-serif;
-
+  font-family: "Raleway", sans-serif;
 }
 
 h1,
@@ -17,34 +16,29 @@ h3 {
   font-size: 5vw;
   transition: 2000ms ease;
   &:hover {
-    background:#6C757D;
+    background: #6c757d;
   }
 }
 .alerts {
-   min-height: 6.3vh;
-   font-size: 100%;
+  min-height: 6.3vh;
+  font-size: 100%;
 }
 .warnings {
   color: $warnings;
 }
 .square {
-    height: 50vw;
-    width: 50vw;
-    max-height: 60vh;
-    max-width: 60vh;
+  height: 50vw;
+  width: 50vw;
+  max-height: 60vh;
+  max-width: 60vh;
 }
-.buttonFix{
-  min-height: 1px;
-  font-size: 5vw;
-}
-.rotated {
 
-animation: rotation 10s infinite linear;
+.rotated {
+  animation: rotation 10s infinite linear;
 }
 @keyframes rotation {
   from {
-transform: rotate3d(0, 0, 0, 0deg);
-
+    transform: rotate3d(0, 0, 0, 0deg);
   }
   to {
     transform: rotate3d(1, 1, 5, 359deg);
@@ -56,14 +50,17 @@ small {
   color: $warnings;
   font-weight: bold;
 }
-.tab-content{
-background: white;
-transition: 200ms ease;
-
+.tab-content {
+  background: white;
+  transition: 200ms ease;
 }
 .nav-tabs {
   transition: 200ms ease;
 }
-.stats{
+.stats {
   font-size: 1.2rem;
 }
+// .page-footer {
+//   position: fixed;
+//   bottom: 0.5vh;
+// }
