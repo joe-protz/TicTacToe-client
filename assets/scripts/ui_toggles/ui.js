@@ -27,10 +27,9 @@ const activateLightMode = function () {
   lightMode = true
 }
 
-
 const toggleCrazyMode = function () {
   if (crazyMode) {
-  clearCrazyMode()
+    clearCrazyMode()
     if (lightMode) {
       activateLightMode()
     } else {
@@ -47,9 +46,9 @@ const toggleCrazyMode = function () {
       body.css({
         backgroundColor: colors[currentIndex]
       })
-    // store.boxes.forEach(element => element.css({
-    //   backgroundColor: colors[currentIndex]
-    // }))
+      // store.boxes.forEach(element => element.css({
+      //   backgroundColor: colors[currentIndex]
+      // }))
       if (!colors[currentIndex]) {
         currentIndex = 0
       } else {
@@ -58,8 +57,6 @@ const toggleCrazyMode = function () {
     }, 100)
   }
 }
-
-
 
 const endCrazyMode = function () {
   crazyMode = true

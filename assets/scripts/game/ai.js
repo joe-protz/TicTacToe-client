@@ -20,6 +20,7 @@ const takeTurn = function (event) {
   }
   $('.warnings').text('')
   $(event.target).text(store.currentTurn)
+  $(event.target).attr('data-descr', '')
   store.occupiedSpots[event.target.id] = store.currentTurn // add the move to the store.occupiedSpots array
   store.currentIndex = event.target.id
   updateGameState()
@@ -202,8 +203,8 @@ const minimax = function (board, depth, isMaximizing) {
 const winIndex = function (spot1, spot2, spot3, turn) {
   const combos = [
     [ [spot1], [spot2], [spot3] ],
-    [ [spot1], [spot3],  [spot2] ],
-    [  [spot3], [spot2], [spot1] ]
+    [ [spot1], [spot3], [spot2] ],
+    [ [spot3], [spot2], [spot1] ]
   ]
   for (const combo of combos) {
     if (store.occupiedSpots[combo[0]] === turn && store.occupiedSpots[combo[1]] === turn && store.occupiedSpots[combo[2]] === undefined) {

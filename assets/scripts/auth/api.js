@@ -1,48 +1,48 @@
-"use strict";
+'use strict'
 
-const config = require("../config");
-const store = require("../store");
+const config = require('../config')
+const store = require('../store')
 
 const signUp = data => {
   return $.ajax({
-    url: config.apiUrl + "/sign-up",
-    method: "POST",
+    url: config.apiUrl + '/sign-up',
+    method: 'POST',
     data: data
-  });
-};
+  })
+}
 
 const signIn = data => {
   return $.ajax({
-    url: config.apiUrl + "/sign-in",
-    method: "POST",
+    url: config.apiUrl + '/sign-in',
+    method: 'POST',
     data: data
-  });
-};
+  })
+}
 
-const signOut = function() {
+const signOut = function () {
   return $.ajax({
-    url: config.apiUrl + "/sign-out",
-    method: "DELETE",
+    url: config.apiUrl + '/sign-out',
+    method: 'DELETE',
     headers: {
-      Authorization: "Token token=" + store.user.token
+      Authorization: 'Token token=' + store.user.token
     }
-  });
-};
+  })
+}
 
-const changePassword = function(data) {
+const changePassword = function (data) {
   return $.ajax({
-    url: config.apiUrl + "/change-password",
-    method: "PATCH",
+    url: config.apiUrl + '/change-password',
+    method: 'PATCH',
     headers: {
-      Authorization: "Token token=" + store.user.token
+      Authorization: 'Token token=' + store.user.token
     },
     data: data
-  });
-};
+  })
+}
 
 module.exports = {
   signUp,
   signIn,
   signOut,
   changePassword
-};
+}

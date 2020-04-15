@@ -53,7 +53,6 @@ const changePasswordSuccess = function (response) {
   $('#pw-form').hide()
   $('.gameBoard').show()
   $('.warnings').text(warnings)
-  $('#currentTurn').show()
   $('#messages').show()
   $('#create-game').show()
   $('.light-toggle').hide()
@@ -69,7 +68,6 @@ const openPWChange = function () {
   messages = $('#messages').text()
   $('#pw-form').show()
   $('.gameBoard').hide()
-  $('#currentTurn').hide()
   $('#messages').text('')
   $('.warnings').text('')
   $('.light-toggle').show()
@@ -78,7 +76,6 @@ const openPWChange = function () {
 const closePWChange = function () {
   $('#pw-form').hide()
   $('.gameBoard').show()
-  $('#currentTurn').show()
   $('#messages').text(messages)
   $('.warnings').text(warnings)
   $('.light-toggle').hide()
@@ -90,7 +87,6 @@ const changeView = function () {
   if (!loggedIn) {
     $('.signedOut').show()
     $('.gameBoard').hide()
-    $('#currentTurn').hide()
     $('#create-game').hide()
     $('.light-toggle').show()
   } else {
