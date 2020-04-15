@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+  <title>Tic-Tac-Toe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Do not add `link` tags-->
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Do not add `script` tags-->
+  <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+  <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+</head>
+
+<body>
+  <h1 class="text-primary">Tic Tac Toe!</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-2"></div>
+      <div id="messages" class="col-8 text-center alerts font-weight-bold"> Please sign in or sign up to play!</div>
+      <div id="loading" class=" spinner-border loading startup spinner-border-sm" role="status" aria-hidden="true">
+      </div>
+      <p class="signedOut">Tic Tac Toe is a turn based game of X's an O's  where the winner is the first player to place three in a row. Click the button below to login without a sign-up. </p>
+      <button class="btn btn-primary dummy signedOut">Login Here</button>
+
+    </div>
+    <div class="col-12 text-center warnings alerts"> </div>
+  </div>
+  <div class="row">
+    <div id="stats" class="col stats alerts text-center">
+
+    </div>
+  </div>
+
+
+
+  <div class="container gameBoard square startup ">
+    <div class="innerGameBoard pb-2 mb-5">
+      <div class="row" id="play">
+        <div id="0" data-descr=""
+          class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-bottom border-right border-dark">
+        </div>
+        <div id="1" data-descr=""
+          class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-top-0 border-dark">
+        </div>
+        <div id="2" data-descr=""
+          class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-bottom border-left border-dark">
+        </div>
+        <div id="3" data-descr=""
+          class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-left-0 border-dark">
+        </div>
+        <div id="4" data-descr=""
+          class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-dark">
+        </div>
+        <div id="5" data-descr=""
+          class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-right-0 border-dark">
+        </div>
+        <div id="6" data-descr=""
+          class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-top border-right border-dark">
+        </div>
+        <div id="7" data-descr=""
+          class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border border-bottom-0 border-dark">
+        </div>
+        <div id="8" data-descr=""
+          class="col-4 col d-flex align-items-center board embed-responsive embed-responsive-1by1 justify-content-center  border-top border-left border-dark">
+        </div>
+        </div>
+      </div>
+
+    <div class="row overflow btn-group ">
+      <small> Please be aware of seizure risk with crazy mode </small>
+      <button id="create-game" class="btn btn-primary btn-lg btn-block ">New Game</button>
+
+      <button id="change-password" class="btn btn-secondary btn-lg btn-block ">Change Password</button>
+      <button id="sign-out" class="btn btn-secondary btn-lg btn-block ">Sign Out</button>
+
+      <div class="play-ai btn-block btn-group btn-group-toggle mt-2" data-toggle="buttons">
+        <label id="change-color-single" class="btn btn-primary">
+          <input type="radio" name="options" id="single-player" autocomplete="off"> Single Play
+        </label>
+        <label id='change-color-easy' class="play-ai btn btn-secondary  ml-1">
+          <input type="radio" name="options" id="easy-mode" autocomplete="off"> Easy Mode
+        </label>
+        <label id="change-color-hard" class="play-ai btn btn-secondary ml-1">
+          <input type="radio" name="options" id="hard-mode" autocomplete="off"> Hard Mode
+        </label>
+
+      </div>
+
+      <div class="btn-block btn-group btn-group-toggle ui-modes " data-toggle="buttons">
+        <label class="btn btn-primary  light-mode ">
+          <input type="radio" name="options" id="light-mode2" autocomplete="off"> Light Mode
+        </label>
+        <label class="btn btn-secondary ml-1 dark-mode">
+          <input type="radio" name="options" id="dark-mode2" autocomplete="off"> Dark Mode
+        </label>
+
+        <label class="btn btn-danger ml-1 ">
+          <input type="radio" name="options" id="crazy-mode" autocomplete="off"> Crazy Mode
+        </label>
+
+      </div>
+
+
+
+</div>
+
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col startup" id="pw-form">
+        <h3>Change Password</h3>
+
+        <form id="change-password-form">
+          <div class="form-group">
+            <label for="inputPassword3">Old Password</label>
+            <input type="password" name="passwords[old]" class="form-control" id="inputPassword3"
+              placeholder="Old Password">
+          </div>
+
+          <div class="form-group">
+            <label for="inputPassword4">New Password </label>
+            <input type="password" name="passwords[new]" class="form-control" id="inputPassword4"
+              placeholder="New Password">
+          </div>
+          <button type="submit" class="btn btn-primary">Change</button>
+          <button id="cancel" type="button" class="btn btn-secondary">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container signedOut">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="sign-in-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+          aria-selected="true">Sign In</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="sign-up-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+          aria-selected="false">Sign Up</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="col-md-6">
+          <!-- <h3></h3> -->
+
+          <form id="sign-in" class="signedOut">
+            <div class="form-group">
+              <label class="mt-3 " for="inputEmail2">Email address</label>
+              <input type="email" name="credentials[email]" class="form-control" id="inputEmail2"
+                aria-describedby="email" placeholder="Enter email">
+            </div>
+
+            <div class="form-group">
+              <label for="inputPassword2">Password</label>
+              <input type="password" name="credentials[password]" class="form-control" id="inputPassword2"
+                placeholder="Password">
+            </div>
+
+            <button type="submit" class="mb-3 btn btn-primary">Sign-In</button>
+          </form>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+        <form id="sign-up">
+          <div class="form-group ml-3 mr-3 mb-3">
+            <label class="mt-3 " for="inputEmail">Email address</label>
+            <input type="email" name="credentials[email]" class="form-control" id="inputEmail"
+              aria-describedby="emailHelp" placeholder="Enter email">
+          </div>
+
+          <div class="form-group m-3">
+            <label for="inputPassword">Password</label>
+            <input type="password" name="credentials[password]" class="form-control" id="inputPassword"
+              placeholder="Password">
+          </div>
+
+          <div class="form-group m-3">
+            <label for="inputPasswordConfirm">Password Confirmation</label>
+            <input type="password" name="credentials[password_confirmation]" class="form-control"
+              id="inputPasswordConfirm" placeholder="Password Confirmation">
+          </div>
+
+          <button type="submit" class="btn btn-primary mb-3 m-2 ">Sign-Up</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+  </br>
+
+
+
+  <div class="toast" style="position: fixed; top: 0; right: 0; " data-autohide="false" role="alert"
+    aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="mr-auto">Howdy!</strong>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body">
+      Please note seizure risk with crazy mode. Dismiss this notification to allow activation.
+    </div>
+  </div>
+
+  <footer class="page-footer font-small blue fixed-bottom">
+
+
+    <div class="footer-copyright text-center  py-3 bg-dark">
+      <span>
+<a  target="_blank" href="https://www.linkedin.com/in/joe-protz/"class=" ml-2 mr-2 fa fa-linkedin"></a>
+<a  target="_blank" href="https://github.com/joe-protz"class=" ml-2 mr-2  fa fa-github"></a>
+</span>
+
+
+  <span class="btn-group ui-modes  btn-group-toggle light-toggle" data-toggle="buttons">
+    <label class="btn btn-primary mr-1 light-mode ">
+      <input type="radio" name="options" id="light-mode" autocomplete="off"> Light Mode
+    </label>
+    <label class="btn btn-secondary dark-mode ">
+      <input type="radio" name="options" id="dark-mode" autocomplete="off"> Dark Mode
+    </label>
+
+  </span>
+    </div>
+
+
+  </footer>
+</body>
+
+</html>
